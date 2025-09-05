@@ -2,4 +2,4 @@
     'title',
 ])
 
-<p class="text-6xl">{{ $title }}</p>
+<p class="text-6xl font-bold">{{ $title }}</p>

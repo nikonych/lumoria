@@ -8,17 +8,25 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
-new #[Layout('components.layouts.auth')] class extends Component {
-    #[Validate('required|string|email')]
-    public string $email = '';
+new #[Layout('components.layouts.auth')]
+class extends Component {
+    #[Validate('required|string')]
+    public string $name = '';
 
     #[Validate('required|string')]
     public string $password = '';
 
     public bool $remember = false;
+
+    #[On('input-value-updated')]
+    public function updatePasswordValue(string $name, string $value): void
+    {
+        $this->{$name} = $value;
+    }
 
     /**
      * Handle an incoming authentication request.
@@ -29,11 +37,11 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (!Auth::attempt(['name' => $this->name, 'password' => $this->password], $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'name' => __('auth.failed'),
             ]);
         }
 
@@ -48,7 +56,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
      */
     protected function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -57,7 +65,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
+            'name' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -69,59 +77,58 @@ new #[Layout('components.layouts.auth')] class extends Component {
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->name) . '|' . request()->ip());
     }
 }; ?>
 
-<div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
+<div class="gap-6 mx-12 mt-12 min-h-full">
+    <x-auth-header title="Login"/>
 
     <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <x-auth-session-status class="text-center" :status="session('status')"/>
 
-    <form method="POST" wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Email address')"
-            type="email"
-            required
-            autofocus
-            autocomplete="email"
-            placeholder="email@example.com"
-        />
+    <form method="POST" wire:submit="login" class="flex flex-col gap-6 mt-8 text-slate-50">
 
-        <!-- Password -->
+        <div>
+            <label for="username" class="block mb-2 text-sm font-medium">Benutzername</label>
+            <input type="text" id="username" wire:model="name"
+                   class="focus:outline-none accent-slate-50 font-light text-xs bg-input-dark/85 focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500 w-full p-2.5"
+                   placeholder="John" required/>
+
+            @error('name')
+            <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+            @enderror
+        </div>
         <div class="relative">
-            <flux:input
-                wire:model="password"
-                :label="__('Password')"
-                type="password"
-                required
-                autocomplete="current-password"
-                :placeholder="__('Password')"
-                viewable
-            />
+            @livewire('password-input', [
+                       'name' => 'password',
+                       'label' => 'Passwort'
+                   ], key('password'))
 
-            @if (Route::has('password.request'))
-                <flux:link class="absolute end-0 top-0 text-sm" :href="route('password.request')" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </flux:link>
-            @endif
+            <a href="{{ route('register') }}"
+               class="absolute right-0 mt-2 text-sm text-indigo-400 font-light hover:text-indigo-300">Passwort
+                vergessen?</a>
+
+            @error('password')
+            <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+            @enderror
         </div>
 
-        <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" :label="__('Remember me')" />
 
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
+        <div class="flex items-center justify-end mt-8">
+            <button type="submit"
+                    class="w-full cursor-pointer rounded-lg h-9 bg-indigo-700 hover:bg-indigo-600 text-white font-light text-sm">
+                Anmelden
+            </button>
         </div>
+
     </form>
 
     @if (Route::has('register'))
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
-            <span>{{ __('Don\'t have an account?') }}</span>
-            <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
+        <div class="space-x-1 rtl:space-x-reverse text-sm text-slate-50 mt-5">
+            <span>Du hast noch keinen Account?</span>
+            <a href="{{ route('register') }}" wire:navigate class="text-indigo-400 hover:text-indigo-300">Jetzt
+                registrieren.</a>
         </div>
     @endif
 </div>
