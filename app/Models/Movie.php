@@ -58,8 +58,16 @@ class Movie extends Model
 
     protected function ratings(): HasMany
     {
-        return $this->hasMany(Rating::class);
+        return $this->hasMany(Review::class);
     }
 
-    ##TODO persons from crew & persons with role
+    public function actors(): BelongsToMany
+    {
+        return $this->belongsToMany(Person::class, 'roles');
+    }
+
+    public function crew(): BelongsToMany
+    {
+        return $this->belongsToMany(Person::class, 'crew_positions');
+    }
 }

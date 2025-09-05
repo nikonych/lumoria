@@ -6,6 +6,7 @@ use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Person extends Model
 {
@@ -33,14 +34,14 @@ class Person extends Model
         return $this->belongsToMany(Department::class);
     }
 
-    protected function photos(): BelongsToMany
+    protected function photos(): HasMany
     {
-        return $this->belongsToMany(Photo::class);
+        return $this->hasMany(Photo::class);
     }
 
-    protected function roles(): BelongsToMany
+    protected function roles(): HasMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->hasMany(Role::class);
     }
 
     protected function crewPositions(): BelongsToMany

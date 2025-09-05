@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     protected function ratings(): HasMany
     {
-        return $this->hasMany(Rating::class);
+        return $this->hasMany(Review::class);
     }
 
     /**
