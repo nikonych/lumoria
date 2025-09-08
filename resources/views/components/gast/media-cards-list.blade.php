@@ -2,7 +2,7 @@
     <x-media-card
         title="Alle Filme anzeigen"
         imageUrl="{{ Vite::asset('resources/images/films/avatar.png') }}"
-        linkUrl="/filme"
+        linkUrl="/films/all"
     />
     <x-media-card
         title="Genre"

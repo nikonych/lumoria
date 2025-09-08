@@ -1,5 +1,4 @@
-<x-app>
-    <x-header/>
+<x-layouts.app>
     <div class="mx-24 mt-12">
         <p class="text-indigo-400 text-sm"><a href="/films" class="font-light cursor-pointer">Filme</a> / <a
                 href="/films/top-actual" class="font-semibold cursor-pointer">Top - aktuell</a></p>
@@ -97,4 +96,4 @@
             }
         });
     </script>
-</x-app>
+</x-layouts.app>

@@ -15,11 +15,16 @@ class FilmController extends Controller
 
     public function genres(): View
     {
-        return view('pages.films.genres');
+        return view('pages.films.all-genres');
     }
 
     public function top_actual(): View
     {
-        return view('pages.films.top-actual');
+        return view('films-top-actual');
+    }
+
+    public function all(): View
+    {
+        return view('pages.films.all-films');
     }
 }

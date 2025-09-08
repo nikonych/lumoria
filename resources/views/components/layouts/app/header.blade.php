@@ -1,124 +1,67 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        @include('partials.head')
-    </head>
-    <body class="min-h-screen">
-        <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-
-            <a href="{{ route('dashboard') }}" class="ms-2 me-5 flex items-center space-x-2 rtl:space-x-reverse lg:ms-0" wire:navigate>
-                <x-app-logo />
+<header>
+    <div class="flex justify-between items-center my-3.5 mx-24">
+        <img src="{{ Vite::asset('resources/images/logo_dunkel.svg') }}" alt="logo" class="pb-1.5 cursor-pointer">
+        <nav class="space-x-24 text-lg">
+            <a href="/"
+               class="{{ request()->is('/') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
+                Home
+            </a>
+            <a href="/films"
+               class="{{ request()->is('films*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
+                Filme
             </a>
 
-            <flux:navbar class="-mb-px max-lg:hidden">
-                <flux:navbar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                    {{ __('Dashboard') }}
-                </flux:navbar.item>
-            </flux:navbar>
+            <a href="/personen"
+               class="{{ request()->is('personen*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
+                Personen
+            </a>
+        </nav>
+        <div class="flex space-x-6 items-center">
+            @auth
+                <button
+                    class="bg-indigo-700 w-8 h-8 flex justify-center items-center rounded-md hover:bg-indigo-600 cursor-pointer">
+                    <img src="{{ Vite::asset('resources/images/plus.svg') }}" alt="plus" class="w-3 h-3">
+                </button>
+            @endauth
 
-            <flux:spacer />
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11.8125 11.5391C12.0469 11.7734 12.0469 12.125 11.8125 12.3359C11.7188 12.4531 11.5781 12.5 11.4375 12.5C11.2734 12.5 11.1328 12.4531 11.0156 12.3359L7.875 9.19531C7.03125 9.875 5.97656 10.25 4.85156 10.25C2.17969 10.25 0 8.07031 0 5.375C0 2.70312 2.15625 0.5 4.85156 0.5C7.52344 0.5 9.72656 2.70312 9.72656 5.375C9.72656 6.52344 9.35156 7.57812 8.67188 8.39844L11.8125 11.5391ZM1.125 5.375C1.125 7.46094 2.78906 9.125 4.875 9.125C6.9375 9.125 8.625 7.46094 8.625 5.375C8.625 3.3125 6.9375 1.625 4.875 1.625C2.78906 1.625 1.125 3.3125 1.125 5.375Z"
+                            class="fill-slate-50 group-focus-within:fill-indigo-400"/>
+                        />
 
-            <flux:navbar class="me-1.5 space-x-0.5 rtl:space-x-reverse py-0!">
-                <flux:tooltip :content="__('Search')" position="bottom">
-                    <flux:navbar.item class="!h-10 [&>div>svg]:size-5" icon="magnifying-glass" href="#" :label="__('Search')" />
-                </flux:tooltip>
-                <flux:tooltip :content="__('Repository')" position="bottom">
-                    <flux:navbar.item
-                        class="h-10 max-lg:hidden [&>div>svg]:size-5"
-                        icon="folder-git-2"
-                        href="https://github.com/laravel/livewire-starter-kit"
-                        target="_blank"
-                        :label="__('Repository')"
-                    />
-                </flux:tooltip>
-                <flux:tooltip :content="__('Documentation')" position="bottom">
-                    <flux:navbar.item
-                        class="h-10 max-lg:hidden [&>div>svg]:size-5"
-                        icon="book-open-text"
-                        href="https://laravel.com/docs/starter-kits#livewire"
-                        target="_blank"
-                        label="Documentation"
-                    />
-                </flux:tooltip>
-            </flux:navbar>
+                    </svg>
 
-            <!-- Desktop User Menu -->
-            <flux:dropdown position="top" align="end">
-                <flux:profile
-                    class="cursor-pointer"
-                    :initials="auth()->user()->initials()"
-                />
-
-                <flux:menu>
-                    <flux:menu.radio.group>
-                        <div class="p-0 text-sm font-normal">
-                            <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                    <span
-                                        class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                    >
-                                        {{ auth()->user()->initials() }}
-                                    </span>
-                                </span>
-
-                                <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
-                                </div>
+                </div>
+                <input type="text" id="search" wire:model="search"
+                       class="pl-7 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark/85 focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500 w-3xs p-2.5"
+                       placeholder="Suche..."/>
+            </div>
+            @auth
+                <div>
+                    <a href="/profile">
+                        @if (auth()->user()->profile_image)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt="avatar"
+                                 class="w-10 h-10 rounded-full object-cover">
+                        @else
+                            <div class="w-10 h-10 rounded-full bg-indigo-900 flex items-center justify-center">
+                            <span class="text-indigo-200 text-lg">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
+                            </span>
                             </div>
-                        </div>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <flux:menu.radio.group>
-                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                            {{ __('Log Out') }}
-                        </flux:menu.item>
-                    </form>
-                </flux:menu>
-            </flux:dropdown>
-        </flux:header>
-
-        <!-- Mobile Menu -->
-        <flux:sidebar stashable sticky class="lg:hidden border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
-
-            <a href="{{ route('dashboard') }}" class="ms-1 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-                <x-app-logo />
-            </a>
-
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')">
-                    <flux:navlist.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                    {{ __('Dashboard') }}
-                    </flux:navlist.item>
-                </flux:navlist.group>
-            </flux:navlist>
-
-            <flux:spacer />
-
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
-        </flux:sidebar>
-
-        {{ $slot }}
-
-        @fluxScripts
-    </body>
-</html>
+                        @endif
+                    </a>
+                </div>
+            @endauth
+            @guest
+                <a href="{{ route('login') }}"
+                   class="bg-indigo-700 h-8 px-4 flex text-xs justify-center items-center rounded-sm font-light hover:bg-indigo-600">
+                    Login
+                </a>
+            @endguest
+        </div>
+    </div>
+    <div class="w-full border-b border-indigo-950"></div>
+</header>

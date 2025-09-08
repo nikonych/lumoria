@@ -1,5 +1,4 @@
-<x-app>
-    <x-header/>
+<x-layouts.app>
     <div class="mx-24 mt-12">
         @auth
             <x-home/>
@@ -8,4 +7,4 @@
             <x-gast-page/>
         @endguest
     </div>
-</x-app>
+</x-layouts.app>
