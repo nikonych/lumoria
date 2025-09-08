@@ -1,7 +1,3 @@
-@props([
-    'title',
-])
-
 <header>
     <div class="flex justify-between items-center my-3.5 mx-24">
         <img src="{{ Vite::asset('resources/images/logo_dunkel.svg') }}" alt="logo" class="pb-1.5 cursor-pointer">
@@ -10,8 +6,8 @@
                class="{{ request()->is('/') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
                 Home
             </a>
-            <a href="/filme"
-               class="{{ request()->is('filme*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
+            <a href="/films"
+               class="{{ request()->is('films*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
                 Filme
             </a>
 

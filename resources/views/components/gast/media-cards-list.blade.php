@@ -17,7 +17,7 @@
     <x-media-card
         title="Top - aktuell"
         imageUrl="{{ Vite::asset('resources/images/films/deadpool.png') }}"
-        linkUrl="/filme"
+        linkUrl="/films/top-actual"
     />
     <x-media-card
         title="Top - aller Zeiten"

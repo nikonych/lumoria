@@ -1,5 +1,5 @@
 <x-app>
-    <x-header title="gg" description="gggg"/>
+    <x-header/>
     <div class="mx-24 mt-12">
         @auth
             <x-home/>
