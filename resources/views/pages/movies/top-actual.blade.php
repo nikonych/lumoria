@@ -30,7 +30,7 @@
         <div class="mt-10">
             <div class="space-y-2.5">
                 @for($i = 0; $i < 10; $i++)
-                    <x-films.movie-card/>
+                    <x-movies.movie-card-list/>
                 @endfor
             </div>
         </div>

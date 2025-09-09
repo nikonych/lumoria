@@ -23,40 +23,40 @@ class Movie extends Model
         'age_rating',
         'description',
         'trailer_url',
-        'poster_image'
+        'poster_image',
     ];
 
-    protected function country(): BelongsTo
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
 
-    protected function genres(): BelongsToMany
+    public function genres(): BelongsToMany
     {
         return $this->belongsToMany(Genre::class);
     }
 
-    protected function photos(): HasMany
+    public function photos(): HasMany
     {
         return $this->hasMany(Photo::class);
     }
 
-    protected function language(): HasOne
+    public function language(): BelongsTo
     {
-        return $this->hasOne(Language::class);
+        return $this->belongsTo(Language::class);
     }
 
-    protected function persons(): BelongsToMany
+    public function persons(): BelongsToMany
     {
         return $this->belongsToMany(Person::class);
     }
 
-    protected function awards(): HasMany
+    public function awards(): HasMany
     {
         return $this->hasMany(Award::class);
     }
 
-    protected function ratings(): HasMany
+    public function ratings(): HasMany
     {
         return $this->hasMany(Review::class);
     }

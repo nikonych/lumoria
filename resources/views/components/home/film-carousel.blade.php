@@ -1,6 +1,6 @@
 @props([
     'title',
-    'films' => [],
+    'movies' => [],
 ])
 
 <div class="mt-8">
@@ -12,14 +12,14 @@
                 <div class="snap-start flex-shrink-0 w-48">
                     <x-film-card
                         title="Die Entdeckung der Unendlichkeit"
-                        imageUrl="{{ Vite::asset('resources/images/films/theory.png') }}"
+                        imageUrl="{{ Vite::asset('resources/images/movies/theory.png') }}"
                         :genres="['Drama', 'Biografie']"
                     />
                 </div>
                 <div class="snap-start flex-shrink-0 w-48">
                     <x-film-card
                         title="Die Entdeckung"
-                        imageUrl="{{ Vite::asset('resources/images/films/theory.png') }}"
+                        imageUrl="{{ Vite::asset('resources/images/movies/theory.png') }}"
                         :genres="['Drama', 'Biografie']"
                     />
                 </div>

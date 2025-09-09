@@ -16,7 +16,7 @@ class Language extends Model
         'name'
     ];
 
-    protected function persons(): BelongsToMany
+    public function persons(): BelongsToMany
     {
         return $this->belongsToMany(Person::class);
     }

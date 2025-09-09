@@ -12,7 +12,7 @@
             <div class="flex justify-between items-center">
 
                 <div class="flex items-center gap-4">
-                    <img src="{{ Vite::asset('resources/images/films/alles.png') }}"
+                    <img src="{{ Vite::asset('resources/images/movies/alles.png') }}"
                          alt="Imitation Game Poster"
                          class="w-12 h-12 rounded-full object-cover">
                     <div>

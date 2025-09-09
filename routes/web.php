@@ -8,10 +8,10 @@ use Livewire\Volt\Volt;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('films', [FilmController::class, 'index'])->name('films');
-Route::get('films/genres', [FilmController::class, 'genres'])->name('genres');
-Route::get('films/top-actual', FilmsTopActual::class)->name('top_actual');
-Route::get('films/all', [FilmController::class, 'all'])->name('all');
+Route::get('movies', [FilmController::class, 'index'])->name('movies');
+Route::get('movies/genres', [FilmController::class, 'genres'])->name('genres');
+Route::get('movies/top-actual', FilmsTopActual::class)->name('top_actual');
+Route::get('movies/all', [FilmController::class, 'all'])->name('all');
 
 
 Route::middleware(['auth'])->group(function () {

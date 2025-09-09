@@ -1,7 +1,7 @@
 <x-layouts.app>
     <div class="mx-24 mt-12">
-        <p class="text-indigo-400 text-sm"><a href="/films" class="font-light cursor-pointer">Filme</a> / <a
-                href="/films/top-actual" class="font-semibold cursor-pointer">Alle Filme</a></p>
+        <p class="text-indigo-400 text-sm"><a href="/movies" class="font-light cursor-pointer">Filme</a> / <a
+                href="/movies/top-actual" class="font-semibold cursor-pointer">Alle Filme</a></p>
         <div class="flex mt-8 space-x-10">
             <div class="w-3/12 p-6 rounded-lg text-white">
                 <div class="flex items-center space-x-2.5 pb-4">
@@ -139,7 +139,7 @@
                 <div class="mt-10">
                     <div class="space-y-2.5">
                         @for($i = 0; $i < 10; $i++)
-                            <x-films.movie-card/>
+                            <x-movies.movie-card-list/>
                         @endfor
                     </div>
                 </div>

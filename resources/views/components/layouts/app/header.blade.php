@@ -7,7 +7,7 @@
                 Home
             </a>
             <a href="/films"
-               class="{{ request()->is('films*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
+               class="{{ request()->is('movies*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
                 Filme
             </a>
 

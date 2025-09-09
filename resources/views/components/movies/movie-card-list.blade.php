@@ -1,4 +1,4 @@
-{{-- resources/views/components/movie-card.blade.php --}}
+{{-- resources/views/components/movie-card-list.blade.php --}}
 @props([
     'rank' => 1,
     'title' => 'Die Verurteilten',
@@ -7,7 +7,7 @@
     'rating' => 4.6,
     'maxRating' => 5,
     'reviewsCount' => 216,
-    'poster' => Vite::asset("resources/images/films/shawshank.png"),
+    'poster' => Vite::asset("resources/images/movies/shawshank.png"),
     'movieId' => null,
     'isFavorite' => false
 ])
@@ -25,7 +25,7 @@
              class="w-16 h-24 object-cover rounded-md">
     </div>
 
-    {{-- Movie Info --}}
+    {{-- MovieSeeder Info --}}
     <div class="flex-1 ml-6 content-around">
         <h3 class="text-2xl font-semibold mb-3">
             {{ $title }}

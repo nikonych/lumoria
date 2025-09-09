@@ -16,12 +16,12 @@ class Photo extends Model
         'file_path'
     ];
 
-    protected function person(): BelongsTo
+    public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
     }
 
-    protected function movie(): BelongsTo
+    public function movie(): BelongsTo
     {
         return $this->belongsTo(Movie::class);
     }

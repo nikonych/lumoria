@@ -24,32 +24,32 @@ class Person extends Model
         'description',
     ];
 
-    protected function languages(): BelongsToMany
+    function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class);
     }
 
-    protected function departments(): BelongsToMany
+    function departments(): BelongsToMany
     {
         return $this->belongsToMany(Department::class);
     }
 
-    protected function photos(): HasMany
+    function photos(): HasMany
     {
         return $this->hasMany(Photo::class);
     }
 
-    protected function roles(): HasMany
+    function roles(): HasMany
     {
         return $this->hasMany(Role::class);
     }
 
-    protected function crewPositions(): BelongsToMany
+    function crewPositions(): BelongsToMany
     {
         return $this->belongsToMany(CrewPosition::class);
     }
 
-    protected function awards(): BelongsToMany
+    function awards(): BelongsToMany
     {
         return $this->belongsToMany(Award::class);
     }

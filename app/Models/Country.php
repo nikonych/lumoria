@@ -16,7 +16,7 @@ class Country extends Model
         'name',
     ];
 
-    protected function movies(): HasMany
+    public function movies(): HasMany
     {
         return $this->hasMany(Movie::class);
     }
