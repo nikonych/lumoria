@@ -22,7 +22,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
+    public $fillable = [
         'name',
         'email',
         'password',
@@ -30,32 +30,32 @@ class User extends Authenticatable
         'biography',
     ];
 
-    protected function settings(): HasOne
+    public function settings(): HasOne
     {
         return $this->hasOne(UserNotificationSettings::Class);
     }
 
-    protected function favoriteGenres(): BelongsToMany
+    public function favoriteGenres(): BelongsToMany
     {
-        return $this->belongsToMany(Genre::class);
+        return $this->belongsToMany(Genre::class, 'favorite_genre');
     }
 
-    protected function favoriteMovies(): BelongsToMany
+    public function favoriteMovies(): BelongsToMany
     {
-        return $this->belongsToMany(Movie::class);
+        return $this->belongsToMany(Movie::class, 'favorite_movie');
     }
 
-    protected function friends(): HasMany
+    public function friends(): HasMany
     {
         return $this->hasMany(Friendship::class);
     }
 
-    protected function collections(): BelongsToMany
+    public function collections(): BelongsToMany
     {
         return $this->belongsToMany(UserCollection::class);
     }
 
-    protected function ratings(): HasMany
+    public function ratings(): HasMany
     {
         return $this->hasMany(Review::class);
     }
@@ -65,7 +65,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $hidden = [
+    public $hidden = [
         'password',
         'remember_token',
     ];
@@ -75,7 +75,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    public function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',

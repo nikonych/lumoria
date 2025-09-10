@@ -8,6 +8,16 @@
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 @font-face {
     font-family: 'Helvetica';
     font-style: normal;
@@ -74,4 +84,5 @@
     --color-input-dark: #EEF2FF26;
     --color-bg-card: rgba(30, 27, 75, 0.4);
     --color-bg-secondary: #334155B2;
+    --color-rot: #B20707;
 }

@@ -10,14 +10,14 @@
              class="w-full flex flex-nowrap overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide gap-5">
             @for ($i = 0; $i < 8; $i++)
                 <div class="snap-start flex-shrink-0 w-48">
-                    <x-film-card
+                    <x-movies.card
                         title="Die Entdeckung der Unendlichkeit"
                         imageUrl="{{ Vite::asset('resources/images/movies/theory.png') }}"
                         :genres="['Drama', 'Biografie']"
                     />
                 </div>
                 <div class="snap-start flex-shrink-0 w-48">
-                    <x-film-card
+                    <x-movies.card
                         title="Die Entdeckung"
                         imageUrl="{{ Vite::asset('resources/images/movies/theory.png') }}"
                         :genres="['Drama', 'Biografie']"

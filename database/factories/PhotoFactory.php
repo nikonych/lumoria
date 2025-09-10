@@ -9,15 +9,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PhotoFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $width = 1280;
+        $height = 720;
+
         return [
-            'file_path' => $this->faker->imageUrl(1280, 720, 'abstract', true),
+            'file_path' => "https://picsum.photos/{$width}/{$height}",
         ];
     }
 }

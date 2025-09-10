@@ -7,12 +7,12 @@
     <x-media-card
         title="Genre"
         imageUrl="{{ Vite::asset('resources/images/movies/alles.png') }}"
-        linkUrl="/filme"
+        linkUrl="/movies/genres"
     />
     <x-media-card
         title="Neuerscheinungen"
         imageUrl="{{ Vite::asset('resources/images/movies/nur_noch.png') }}"
-        linkUrl="/filme"
+        linkUrl="/movies/new"
     />
     <x-media-card
         title="Top - aktuell"

@@ -18,12 +18,12 @@ class Review extends Model
         'rating',
     ];
 
-    protected function movie(): BelongsTo
+    public function movie(): BelongsTo
     {
         return $this->belongsTo(Movie::class);
     }
 
-    protected function user(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

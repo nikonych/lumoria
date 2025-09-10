@@ -24,6 +24,7 @@ class Movie extends Model
         'description',
         'trailer_url',
         'poster_image',
+        'rating'
     ];
 
     public function country(): BelongsTo
@@ -56,7 +57,7 @@ class Movie extends Model
         return $this->hasMany(Award::class);
     }
 
-    public function ratings(): HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }

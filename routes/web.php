@@ -1,17 +1,20 @@
 <?php
 
-use App\Http\Controllers\FilmController;
 use App\Http\Controllers\HomeController;
-use App\Livewire\FilmsTopActual;
+use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('movies', [FilmController::class, 'index'])->name('movies');
-Route::get('movies/genres', [FilmController::class, 'genres'])->name('genres');
-Route::get('movies/top-actual', FilmsTopActual::class)->name('top_actual');
-Route::get('movies/all', [FilmController::class, 'all'])->name('all');
+Route::get('movies', [MovieController::class, 'index'])->name('movies');
+Route::get('movies/genres', [MovieController::class, 'genres'])->name('genres');
+Route::get('movies/top-actual', [MovieController::class, 'top_actual'])->name('top_actual');
+Route::get('movies/all', [MovieController::class, 'all'])->name('all');
+Route::get('movies/new', [MovieController::class, 'new'])->name('new');
+
+Route::get('/movies/genre/{genre}', [MovieController::class, 'showByGenre'])->name('movies.by-genre');
+Route::get('/movies/{movie}', [MovieController::class, 'movieDetails'])->name('movies.details');
 
 
 Route::middleware(['auth'])->group(function () {
