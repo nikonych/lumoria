@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
 
             AwardSeeder::class,
             ReviewSeeder::class,
+            CrewPositionsSeeder::class
         ]);
     }
 }

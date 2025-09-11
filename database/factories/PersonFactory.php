@@ -22,7 +22,7 @@ class PersonFactory extends Factory
             'birth_place' => $this->faker->city() . ', ' . $this->faker->country(),
             'biography' => $this->faker->paragraph(6),
             'nationality' => $this->faker->country(),
-            'profile_image' => $this->faker->imageUrl(400, 400, 'people', true),
+            'profile_image' => 'https://picsum.photos/seed/' . fake()->word() . '/400/600',
         ];
     }
 }

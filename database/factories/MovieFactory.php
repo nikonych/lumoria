@@ -25,7 +25,7 @@ class MovieFactory extends Factory
             'duration_minutes' => $this->faker->numberBetween(90, 180),
             'age_rating' => $this->faker->randomElement([0, 6, 12, 16, 18]),
             'description' => $this->faker->paragraph(4),
-            'trailer_url' => 'https://youtube.com/watch?v=dQw4w9WgXcQ',
+            'trailer_url' => 'https://www.youtube.com/watch?v=wqAp4h7cjoM',
             'poster_image' =>'https://picsum.photos/seed/' . fake()->word() . '/400/600',
             'country_id' => Country::inRandomOrder()->first()->id ?? null, // Assign a random existing country
         ];

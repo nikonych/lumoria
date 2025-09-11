@@ -60,7 +60,7 @@
                     <div class="flex space-x-12">
                         <!-- Movie poster and info here -->
                         <div class="flex-shrink-0">
-                            <img src="{{ $movie->poster_image }}" alt="{{ $movie->title }}" class="w-80 rounded-lg">
+                            <img src="{{ $movie->poster_image }}" alt="{{ $movie->title }}" class="w-xs rounded-xs">
                         </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-center">
@@ -96,40 +96,14 @@
                                 @endif
                             </div>
                             <div class="flex items-center gap-3 mt-3.5">
-                                <div class="flex items-center gap-0.5">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($i <= floor($movie->rating))
-                                            <svg class="w-6 h-6 text-indigo-600 fill-current" viewBox="0 0 20 20">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                            </svg>
-                                        @elseif($i == ceil($movie->rating) && $movie->rating - floor($movie->rating) >= 0.5)
-                                            <svg class="w-6 h-6 text-indigo-600" viewBox="0 0 20 20">
-                                                <defs>
-                                                    <linearGradient id="half-{{ $movie->id }}-{{ $i }}">
-                                                        <stop offset="50%" stop-color="currentColor"/>
-                                                        <stop offset="50%" stop-color="transparent"/>
-                                                    </linearGradient>
-                                                </defs>
-                                                <path fill="url(#half-{{ $movie->id }}-{{ $i }})"
-                                                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                                <path stroke="currentColor" stroke-width="1" fill="none"
-                                                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                            </svg>
-                                        @else
-                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 20 20">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                            </svg>
-                                        @endif
-                                    @endfor
-                                </div>
+                                <x-base.stars :rating="$movie->rating" :movie_id="$movie->id" spacing="space-x-1.5"
+                                              size="5"/>
 
                                 <span class="font-light text-sm">
                                     {{ number_format($movie->rating, 1) }} von {{ 5 }}
                                 </span>
 
-                                                    <span class="text-slate-400 text-sm font-light">
+                                <span class="text-slate-400 text-sm font-light">
                                     ({{ number_format($movie->reviews_count) }} Bewertungen)
                                 </span>
                             </div>
@@ -165,8 +139,11 @@
 
                                     <div class="flex items-center space-x-2.5 text-sm">
                                         <p>Sammlung</p>
-                                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.4766 1.75C12.3203 1.75 12.9766 2.42969 12.9766 3.25V9.25C12.9766 10.0938 12.2969 10.75 11.4766 10.75H2.47656C1.63281 10.75 0.976562 10.0938 0.976562 9.25V1.75C0.976562 0.929688 1.63281 0.25 2.47656 0.25H5.24219C5.64062 0.25 6.01562 0.414062 6.29688 0.695312L7.44531 1.75H11.4766ZM11.8516 9.25V3.25C11.8516 3.0625 11.6641 2.875 11.4766 2.875H6.97656L5.47656 1.49219C5.40625 1.42188 5.3125 1.375 5.21875 1.375H2.47656C2.26562 1.375 2.10156 1.5625 2.10156 1.75V9.25C2.10156 9.46094 2.26562 9.625 2.47656 9.625H11.4766C11.6641 9.625 11.8516 9.46094 11.8516 9.25Z" fill="white"/>
+                                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M11.4766 1.75C12.3203 1.75 12.9766 2.42969 12.9766 3.25V9.25C12.9766 10.0938 12.2969 10.75 11.4766 10.75H2.47656C1.63281 10.75 0.976562 10.0938 0.976562 9.25V1.75C0.976562 0.929688 1.63281 0.25 2.47656 0.25H5.24219C5.64062 0.25 6.01562 0.414062 6.29688 0.695312L7.44531 1.75H11.4766ZM11.8516 9.25V3.25C11.8516 3.0625 11.6641 2.875 11.4766 2.875H6.97656L5.47656 1.49219C5.40625 1.42188 5.3125 1.375 5.21875 1.375H2.47656C2.26562 1.375 2.10156 1.5625 2.10156 1.75V9.25C2.10156 9.46094 2.26562 9.625 2.47656 9.625H11.4766C11.6641 9.625 11.8516 9.46094 11.8516 9.25Z"
+                                                fill="white"/>
                                         </svg>
                                     </div>
                                 </button>
@@ -176,52 +153,132 @@
                     </div>
                 </section>
 
-                <!-- Gallery Section -->
-                <section id="gallery" class="mb-16">
-                    <h2 class="text-2xl font-bold mb-6">Galerie</h2>
-                    <!-- Gallery content here -->
-                </section>
+                <x-base.section title="Galerie" id="gallery">
+                    @if($movie->photos->isNotEmpty())
+                        <x-carousel-pagination :items="$movie->photos" :per-page="4">
 
-                <!-- Cast Section -->
-                <section id="cast" class="mb-16">
-                    <h2 class="text-2xl font-bold mb-6">Besetzung</h2>
-                    <!-- Cast content here -->
-                </section>
+                            <div x-ref="container"
+                                 class="flex scrollbar-hide overflow-x-auto scroll-smooth snap-x snap-mandatory space-x-3">
+                                @foreach($movie->photos as $photo)
+                                    <div class="snap-start flex-shrink-0 w-full sm:w-1/2 lg:w-1/4">
+                                        <img src="{{$photo->file_path}}" alt="Galeriebild"
+                                             class="w-full rounded-sm aspect-5/3 object-cover">
+                                    </div>
+                                @endforeach
+                            </div>
 
-                <section id="crew" class="mb-16">
-                    <h2 class="text-2xl font-bold mb-6">Filmstab</h2>
+                        </x-carousel-pagination>
+                    @endif
+                </x-base.section>
+                <x-base.section title="Besetzung" id="cast">
+                    @if($movie->actors->isNotEmpty())
+                        <x-carousel-pagination :items="$movie->actors" :per-page="5">
+
+                            <div x-ref="container"
+                                 class="flex scrollbar-hide overflow-x-auto scroll-smooth snap-x snap-mandatory space-x-5">
+                                @foreach($movie->actors as $actor)
+                                    <div class="flex-shrink-0 w-full sm:w-1/3 lg:w-1/6">
+                                        <x-movies.person-card :person="$actor"/>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </x-carousel-pagination>
+                    @endif
+                </x-base.section>
+                <x-base.section title="Filmstab" id="crew">
+                    @if($movie->crew->isNotEmpty())
+                        <x-movies.crew-list :crew="$movie->crew"/>
+                    @endif
+                </x-base.section>
+                <x-base.section title="Auszeichnungen" id="awards">
+                    <x-movies.awards-list :awards="$movie->awards"/>
+                </x-base.section>
+                <x-base.section title="Bewertungen" id="reviews">
                     <div>
-                        <p><strong class="text-white">Regisseur:</strong> John Doe</p>
-                        <p><strong class="text-white">Drehbuch:</strong> Jane Smith</p>
+                        <div class="flex space-x-5">
+                            <div class="flex flex-col items-center w-1/3 bg-bg-card p-5 rounded-sm">
+                                <div class="flex items-center gap-0.5">
+                                    <x-base.stars :rating="$movie->rating" :movie_id="$movie->id"
+                                                  spacing="space-x-1.5"/>
+                                </div>
+                                <span class="font-semibold text-2xl mt-5">
+                                    {{ number_format($movie->rating, 1) }} von {{ 5 }}
+                                </span>
+
+                                <span class="text-indigo-200 text-sm font-light">
+                                    {{ number_format($movie->reviews_count) }} Bewertungen
+                                </span>
+                                <div class="rating-histogram space-y-2 mt-5 w-full">
+                                    @if($movie->hasReviews())
+                                        @for($rating = 5; $rating >= 1; $rating--)
+                                            @php
+                                                $percentage = $ratingPercentages[$rating] ?? 0;
+                                                $count = $movie->reviews()->where('rating', $rating)->count();
+                                            @endphp
+                                            <div class="flex items-center space-x-3">
+                                                <span class=" font-light">{{ $rating }}</span>
+                                                <div class="flex-1 bg-indigo-950 rounded-full h-3 relative">
+                                                    <div
+                                                        class="bg-indigo-700 h-3 rounded-full transition-all duration-300"
+                                                        style="width: {{ $percentage }}%"></div>
+                                                </div>
+                                                <span class="text-sm font-light min-w-[40px] text-right">{{ $percentage }}%</span>
+                                            </div>
+                                        @endfor
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="flex flex-col w-2/3 bg-bg-card p-5 rounded-sm">
+                                <div class="flex justify-between">
+                                    <p class="text-2xl font-semibold">Deine Bewertung:</p>
+                                    <x-base.stars :rating="0" :movie_id="$movie->id"
+                                                  spacing="space-x-3" size="8"/>
+
+                                </div>
+                                <div class="mt-4">
+                                    <x-base.input>
+                                        <x-slot name="label">
+                                            Titel (optional)
+                                        </x-slot>
+                                    </x-base.input>
+                                </div>
+                                <div class="mt-4 flex flex-col flex-1 overflow-hidden min-h-0 rounded-sm">
+                                    <x-base.input type="textarea">
+                                        <x-slot name="label" class="">
+                                            Bewertung (optional)
+                                        </x-slot>
+                                    </x-base.input>
+                                </div>
+                                <div class="mt-4 flex justify-end">
+                                    <button class="bg-indigo-700 text-sm py-2 px-4 rounded-sm">Bewertung abschicken
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <livewire:movies.movie-reviews :movie="$movie" />
+                        </div>
                     </div>
-                </section>
+                </x-base.section>
+                <x-base.section title="Trailer" id="trailer">
+                    @if($movie->trailer_url)
+                        <div class="aspect-video mx-28">
+                            <iframe
+                                src="{{ str_replace('watch?v=', 'embed/', $movie->trailer_url) }}"
+                                title="Trailer"
+                                class="w-full h-full"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    @endif
+                </x-base.section>
 
-                <section id="awards" class="mb-16">
-                    <h2 class="text-2xl font-bold mb-6">Auszeichnungen</h2>
-                    <ul>
-                        <li class="mb-2">🏆 Bester Film - Academy Awards</li>
-                        <li class="mb-2"> номинация - Golden Globes</li>
-                    </ul>
-                </section>
-
-
-                <!-- Reviews Section -->
-                <section id="reviews" class="mb-16">
-                    <h2 class="text-2xl font-bold mb-6">Bewertungen</h2>
-                    <!-- Reviews content here -->
-                </section>
-
-                <!-- Trailer Section -->
-                <section id="trailer" class="mb-16">
-                    <h2 class="text-2xl font-bold mb-6">Trailer</h2>
-                    <!-- Trailer content here -->
-                </section>
-
-                <!-- Similar Movies Section -->
-                <section id="similar" class="mb-16">
-                    <h2 class="text-2xl font-bold mb-6">Ähnliche Titel</h2>
-                    <!-- Similar movies content here -->
-                </section>
+                <x-base.section title="Ähnliche Titel" id="similar">
+                    <x-movies.awards-list :awards="$movie->awards"/>
+                </x-base.section>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ class Input extends Component
     public string $name = '';
     public string $placeholder = 'Search...';
     public bool $hasIcon = false;
+    public ?string $label = null;
     public ?string $iconSvg = null;
     public string $class = '';
     public string $type = 'text';
@@ -21,6 +22,7 @@ class Input extends Component
         string $placeholder = 'Search...',
         bool $hasIcon = false,
         string $class = '',
+        string $label = null,
         string $type = 'text',
         string $iconSvg = null
     ) {
@@ -29,6 +31,7 @@ class Input extends Component
         $this->placeholder = $placeholder;
         $this->hasIcon = $hasIcon;
         $this->class = $class;
+        $this->label = $label;
         $this->type = $type;
         $this->iconSvg = $iconSvg;
 

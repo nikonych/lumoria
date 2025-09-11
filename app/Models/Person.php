@@ -49,8 +49,9 @@ class Person extends Model
         return $this->belongsToMany(CrewPosition::class);
     }
 
-    function awards(): BelongsToMany
+    public function awards(): BelongsToMany
     {
-        return $this->belongsToMany(Award::class);
+        return $this->belongsToMany(Award::class, 'award_person')
+            ->withPivot('movie_id');
     }
 }

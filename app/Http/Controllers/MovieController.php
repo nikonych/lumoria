@@ -51,6 +51,24 @@ class MovieController extends Controller
     public function movieDetails(Movie $movie): View
     {
         $movie->loadCount('reviews');
-        return view('pages.movies.details', compact('movie'));
+        $movie->loadAvg('reviews', 'rating');
+
+        $ratingDistribution = $movie->reviews()
+            ->selectRaw('rating, COUNT(*) as count')
+            ->groupBy('rating')
+            ->orderBy('rating', 'desc')
+            ->pluck('count', 'rating')
+            ->toArray();
+
+        $totalReviews = $movie->reviews_count;
+        $ratingPercentages = [];
+
+        for ($i = 5; $i >= 1; $i--) {
+            $count = $ratingDistribution[$i] ?? 0;
+            $percentage = $totalReviews > 0 ? round(($count / $totalReviews) * 100) : 0;
+            $ratingPercentages[$i] = $percentage;
+        }
+
+        return view('pages.movies.details', compact('movie', 'ratingPercentages'));
     }
 }

@@ -11,11 +11,9 @@ class PhotoFactory extends Factory
 {
     public function definition(): array
     {
-        $width = 1280;
-        $height = 720;
 
         return [
-            'file_path' => "https://picsum.photos/{$width}/{$height}",
+            'file_path' => 'https://picsum.photos/seed/' . fake()->word() . '1280/720',
         ];
     }
 }

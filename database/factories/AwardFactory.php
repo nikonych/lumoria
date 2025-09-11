@@ -16,12 +16,15 @@ class AwardFactory extends Factory
      */
     public function definition(): array
     {
-        $awardNames = ['Academy Award', 'Golden Globe', 'BAFTA Award', 'Screen Actors Guild Award'];
-        $awardCategories = ['Best Actor', 'Best Actress', 'Best Director', 'Best Picture', 'Best Screenplay', 'Best Cinematography'];
+        $awardNames = ['Oscar', 'Golden Globe', 'Palme d\'Or', 'Goldener Bär', 'BAFTA'];
+        $categories = [
+            'Bester Film', 'Beste Regie', 'Bester Hauptdarsteller',
+            'Beste Hauptdarstellerin', 'Bestes Drehbuch', 'Beste Kamera'
+        ];
 
         return [
             'name' => $this->faker->randomElement($awardNames),
-            'category' => $this->faker->randomElement($awardCategories),
+            'category' => $this->faker->randomElement($categories),
         ];
     }
 }

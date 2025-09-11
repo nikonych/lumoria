@@ -6,6 +6,7 @@ use Database\Factories\AwardFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Award extends Model
 {
@@ -18,15 +19,15 @@ class Award extends Model
     ];
 
 
-    public function person(): BelongsTo
+    public function people(): BelongsToMany
     {
-        return $this->belongsTo(Person::class);
+        return $this->belongsToMany(Person::class, 'award_person')
+            ->withPivot('movie_id');
     }
 
-    public function movie(): BelongsTo
+    public function movie(): BelongsToMany
     {
-        return $this->belongsTo(Movie::class);
+        return $this->belongsToMany(Movie::class, 'award_movie');
     }
 
-    ##TODO is shared award boolean function
 }

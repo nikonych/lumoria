@@ -19,7 +19,7 @@ class MovieSeeder extends Seeder
 
 
         Movie::factory(50)
-            ->has(Photo::factory()->count(rand(4, 8)))
+            ->has(Photo::factory()->count(rand(8, 12)))
             ->create()
             ->each(function (Movie $movie) use ($allGenres, $allLanguages) {
                 $movie->genres()->attach($allGenres->random(rand(1, 3))->pluck('id')->toArray());
