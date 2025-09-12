@@ -13,8 +13,8 @@
                 Filme
             </a>
 
-            <a href="/personen"
-               class="{{ request()->is('personen*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
+            <a href="/people"
+               class="{{ request()->is('people*') ? 'text-indigo-400' : 'text-slate-50' }} transition-colors cursor-pointer duration-200 hover:text-indigo-400">
                 Personen
             </a>
         </nav>

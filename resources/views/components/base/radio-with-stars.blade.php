@@ -25,13 +25,11 @@
            value="{{ $value }}"
            @if($checked) checked @endif>
 
-    {{-- Круглый radio button --}}
     <div class="relative flex items-center justify-center w-4 h-4 bg-transparent border border-indigo-700 rounded-xs group-hover:border-indigo-600 transition-colors">
         <div class="absolute w-2.5 h-2.5 bg-indigo-700 transition-opacity {{ $checked ? 'opacity-100' : 'opacity-0' }}"></div>
     </div>
 
     <span class="ml-2 flex items-center">
-        {{-- Отображаем звезды --}}
         @for($i = 1; $i <= 5; $i++)
             <svg class="w-4 h-4 {{ $i <= $stars ? 'text-indigo-500' : 'text-gray-600' }}"
                  fill="currentColor"

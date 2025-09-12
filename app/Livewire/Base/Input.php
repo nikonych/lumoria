@@ -44,12 +44,9 @@ class Input extends Component
     {
         $classes = 'fill-slate-400 group-focus-within:fill-indigo-500';
 
-        // Check if the SVG already has a class attribute
         if (str_contains($svg, 'class="')) {
-            // If it does, append our classes to the existing ones
             return str_replace('class="', 'class="' . $classes . ' ', $svg);
         } else {
-            // If not, add the class attribute right after the <svg tag
             return str_replace('<svg', '<svg class="' . $classes . '"', $svg);
         }
     }

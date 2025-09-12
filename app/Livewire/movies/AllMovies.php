@@ -51,16 +51,12 @@ class AllMovies extends Component
             ['value' => 'release_year_asc', 'text' => 'Älteste zuerst'],
         ];
 
-        // Get countries and convert to a plain array to avoid hydration issues
         $countriesArray = Country::orderBy('name')->get(['id', 'name'])->toArray();
 
-        // Create the "All Countries" option as an array
         $allCountriesOption = ['id' => null, 'name' => 'Alle Länder'];
 
-        // Prepend the "All Countries" option to the beginning of the array
         array_unshift($countriesArray, $allCountriesOption);
 
-        // Convert the final array back to a collection of objects
         $this->countries = collect($countriesArray)->map(function ($country) {
             return (object) $country;
         });
@@ -132,17 +128,6 @@ class AllMovies extends Component
         $column = implode('_', $parts);
         $query = $query->withCount('reviews');
 
-        if ($user = auth()->user()) {
-            $pivotTable = $user->favoriteMovies()->getTable();
-
-            $query->selectSub(function ($subQuery) use ($user, $pivotTable) {
-                $subQuery->selectRaw('1') // Select 1 for existence
-                ->from($pivotTable)
-                    ->where('user_id', $user->id)
-                    ->whereColumn('movie_id', 'movies.id')
-                    ->limit(1);
-            }, 'is_favorite')->withCasts(['is_favorite' => 'boolean']);
-        }
 
         if ($column === 'rating') {
             $query->orderBy('rating', $direction);

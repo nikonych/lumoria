@@ -20,12 +20,11 @@
             </div>
         @endif
 
-        {{-- Новая логика: рендерим textarea или input в зависимости от type --}}
         @if ($type === 'textarea')
             <textarea
                 id="{{ $id }}"
                 {{ $attributes->except('class')->merge([
-                    'class' => 'w-full h-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark ' . // Убрал focus:border и focus:ring-indigo-500 отсюда
+                    'class' => 'w-full h-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark ' .
                                'rounded-sm ' .
                                'appearance-none border-0 ' .
                                'focus:ring-indigo-500 focus:border-indigo-500 ' .

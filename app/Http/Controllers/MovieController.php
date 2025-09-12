@@ -37,7 +37,7 @@ class MovieController extends Controller
         return view('pages.movies.new-movies');
     }
 
-    public function top_actual(): View
+    public function topActual(): View
     {
         return view('pages.movies.top-actual');
     }

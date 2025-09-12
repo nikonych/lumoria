@@ -12,6 +12,7 @@
                 'countries' => $countries,
                 'ageRatings' => $ageRatings,
                 'showGenres' => false,
+
             ])
     </div>
     <div class="w-8/10">
