@@ -18,7 +18,7 @@ class MovieSeeder extends Seeder
         $allLanguages = Language::all();
 
 
-        Movie::factory(50)
+        Movie::factory(150)
             ->has(Photo::factory()->count(rand(8, 12)))
             ->create()
             ->each(function (Movie $movie) use ($allGenres, $allLanguages) {

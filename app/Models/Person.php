@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Person extends Model
 {
     /** @use HasFactory<PersonFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -34,9 +36,9 @@ class Person extends Model
         return $this->belongsToMany(Department::class);
     }
 
-    function photos(): HasMany
+    public function photos(): MorphMany
     {
-        return $this->hasMany(Photo::class);
+        return $this->morphMany(Photo::class, 'imageable');
     }
 
     function roles(): HasMany
@@ -49,9 +51,8 @@ class Person extends Model
         return $this->belongsToMany(CrewPosition::class);
     }
 
-    public function awards(): BelongsToMany
+    public function awards(): HasMany
     {
-        return $this->belongsToMany(Award::class, 'award_person')
-            ->withPivot('movie_id');
+        return $this->hasMany(AwardWinner::class);
     }
 }

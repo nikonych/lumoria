@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -43,6 +44,30 @@ class User extends Authenticatable
     public function favoriteMovies(): BelongsToMany
     {
         return $this->belongsToMany(Movie::class, 'favorite_movie');
+    }
+
+    public function watchlist(): BelongsToMany
+    {
+        return $this->belongsToMany(Movie::class, 'watchlist')->withTimestamps();
+    }
+    public function recommendations(): Builder
+    {
+        $favoriteGenreIds = $this->favoriteGenres()->pluck('genres.id');
+
+        if ($favoriteGenreIds->isEmpty()) {
+            return Movie::query()->whereRaw('1 = 0');
+        }
+
+        $favoriteMovieIds = $this->favoriteMovies()->pluck('movies.id');
+        $watchlistMovieIds = $this->watchlist()->pluck('movies.id');
+        $excludeMovieIds = $favoriteMovieIds->merge($watchlistMovieIds)->unique();
+
+        return Movie::query()
+            ->whereHas('genres', function (Builder $query) use ($favoriteGenreIds) {
+                $query->whereIn('genres.id', $favoriteGenreIds);
+            })
+            ->whereNotIn('movies.id', $excludeMovieIds)
+            ->orderByDesc('rating');
     }
 
     public function friends(): HasMany

@@ -15,21 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('category');
+
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
+            $table->softDeletes();
         });
 
-        Schema::create('award_person', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('award_id')->constrained('awards')->onDelete('cascade');
-            $table->foreignId('person_id')->constrained('people')->onDelete('cascade');
-            $table->foreignId('movie_id')->nullable()->constrained('movies')->onDelete('cascade');
-        });
-
-        Schema::create('award_movie', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('award_id')->constrained('awards')->onDelete('cascade');
-            $table->foreignId('movie_id')->constrained('movies')->onDelete('cascade');
-        });
     }
 
     /**
@@ -38,7 +30,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('awards');
-        Schema::dropIfExists('award_person');
-        Schema::dropIfExists('award_movie');
     }
 };

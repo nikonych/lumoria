@@ -26,7 +26,7 @@ class MovieReviews extends Component
             ->latest()
             ->paginate($this->perPage);
 
-        return view('livewire.movie-reviews', [
+        return view('livewire.movies.movie-reviews', [
             'reviews' => $reviews
         ])->with(['wire:navigate' => true]);
     }

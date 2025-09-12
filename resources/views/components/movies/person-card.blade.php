@@ -2,9 +2,9 @@
     'person' => null
 ])
 
-<div class="flex flex-col w-40 overflow-hidden group">
+<div class="flex flex-col overflow-hidden group">
 
-    <div class="relative w-full h-60 overflow-hidden">
+    <div class="relative w-full overflow-hidden">
         <a class="cursor-pointer" href="/">
         <img src="{{$person->profile_image}}" alt="{{$person->name}}"
              class="w-full h-full object-cover rounded-sm">
@@ -14,7 +14,7 @@
     <div class="flex flex-col flex-grow py-3">
         <div class="flex-grow">
             <a class="cursor-pointer" href="/">
-            <p class="text-indigo-300 line-clamp-2 h-12 cursor-pointer">{{$person->name}}</p>
+            <p class="text-indigo-300 line-clamp-1 cursor-pointer">{{$person->name}}</p>
             </a>
         </div>
 

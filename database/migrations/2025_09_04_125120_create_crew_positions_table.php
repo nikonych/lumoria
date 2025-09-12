@@ -17,7 +17,11 @@ return new class extends Migration
             $table->foreignId('person_id')->constrained('people')->onDelete('cascade');
             $table->foreignId('movie_id')->constrained('movies')->onDelete('cascade');
             $table->foreignId('department_id')->constrained('departments')->onDelete('cascade');
+
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

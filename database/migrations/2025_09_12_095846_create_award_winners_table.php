@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('photos', function (Blueprint $table) {
+        Schema::create('award_winners', function (Blueprint $table) {
             $table->id();
-            $table->string('file_path');
-            $table->morphs('imageable');
+            $table->foreignId('award_id')->constrained('awards')->onDelete('cascade');
+
+            $table->foreignId('movie_id')->nullable()->constrained('movies')->onDelete('cascade');
+            $table->foreignId('person_id')->nullable()->constrained('people')->onDelete('cascade');
+
 
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos');
+        Schema::dropIfExists('award_winners');
     }
 };

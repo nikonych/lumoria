@@ -1,10 +1,10 @@
 <x-layouts.app>
     <div class="mx-24 mt-12">
         @auth
-            <x-home/>
+            <x-home.show/>
         @endauth
         @guest
-            <x-gast-page/>
+            <x-gast.show/>
         @endguest
     </div>
 </x-layouts.app>

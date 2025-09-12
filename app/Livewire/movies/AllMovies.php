@@ -7,6 +7,7 @@ use App\Models\Genre;
 use App\Models\Movie;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\On;
 
 class AllMovies extends Component
 {
@@ -26,6 +27,18 @@ class AllMovies extends Component
     public ?int $yearTo = null;
     public ?int $minRating = null;
     public string $viewMode = 'list';
+
+    #[On('filtersUpdated')]
+    public function updateFilters($filters): void
+    {
+        $this->countryId = $filters['countryId'] === '' ? null : (int) $filters['countryId'];
+        $this->yearFrom = $filters['yearFrom'];
+        $this->yearTo = $filters['yearTo'];
+        $this->selectedAgeRatings = $filters['selectedAgeRatings'];
+        $this->selectedGenres = $filters['selectedGenres'];
+        $this->selectedRating = $filters['selectedRating'];
+        $this->resetPage();
+    }
 
     public function mount()
     {
@@ -72,10 +85,6 @@ class AllMovies extends Component
         }
     }
 
-    public function resetFilters(): void
-    {
-        $this->reset(['countryId', 'yearFrom', 'yearTo', 'selectedGenres', 'selectedAgeRatings', 'selectedRating', 'minRating', 'sortBy']);
-    }
 
     public function updatedSortBy(): void
     {

@@ -22,11 +22,11 @@
     <x-media-card
         title="Top - aller Zeiten"
         imageUrl="{{ Vite::asset('resources/images/movies/shawshank.png') }}"
-        linkUrl="/filme"
+        linkUrl="/movies/top-actual"
     />
     <x-media-card
         title="Ausgezeichnete Persönlichkeiten"
         imageUrl="{{ Vite::asset('resources/images/movies/cillian.png') }}"
-        linkUrl="/filme"
+        linkUrl="/people/all"
     />
 </div>

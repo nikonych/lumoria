@@ -2,34 +2,37 @@
 
 namespace App\Models;
 
-use Database\Factories\CrewPositionFactory;
+use Database\Factories\AwardWinnerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CrewPosition extends Model
+class AwardWinner extends Model
 {
-    /** @use HasFactory<CrewPositionFactory> */
+    /** @use HasFactory<AwardWinnerFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'position',
+        'award_id',
+        'movie_id',
+        'person_id',
     ];
 
-    protected function department(): BelongsTo
+    protected $table = 'award_winners';
+
+    public function award(): BelongsTo
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Award::class);
     }
 
-    protected function person(): BelongsTo
+    public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
     }
 
-    protected function movie(): BelongsTo
+    public function movie(): BelongsTo
     {
         return $this->belongsTo(Movie::class);
     }
-
 }

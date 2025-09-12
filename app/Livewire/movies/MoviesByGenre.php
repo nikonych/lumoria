@@ -5,6 +5,7 @@ namespace App\Livewire\movies;
 use App\Models\Country;
 use App\Models\Genre;
 use App\Models\Movie;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,6 +25,17 @@ class MoviesByGenre extends Component
     public ?int $yearTo = null;
     public ?int $minRating = null;
     public string $viewMode = 'list';
+
+    #[On('filtersUpdated')]
+    public function updateFilters($filters): void
+    {
+        $this->countryId = $filters['countryId'] === '' ? null : (int) $filters['countryId'];
+        $this->yearFrom = $filters['yearFrom'];
+        $this->yearTo = $filters['yearTo'];
+        $this->selectedAgeRatings = $filters['selectedAgeRatings'];
+        $this->selectedRating = $filters['selectedRating'];
+        $this->resetPage();
+    }
 
     public function mount()
     {

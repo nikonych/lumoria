@@ -24,7 +24,11 @@ return new class extends Migration
             $table->decimal('rating', 3, 2)->default(0);
             $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
             $table->foreignId('language_id')->nullable()->constrained('languages')->onDelete('set null');
+
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('genre_movie', function (Blueprint $table) {

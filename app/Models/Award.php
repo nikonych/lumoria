@@ -5,13 +5,13 @@ namespace App\Models;
 use Database\Factories\AwardFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Award extends Model
 {
     /** @use HasFactory<AwardFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -19,15 +19,9 @@ class Award extends Model
     ];
 
 
-    public function people(): BelongsToMany
+    public function winners(): HasMany
     {
-        return $this->belongsToMany(Person::class, 'award_person')
-            ->withPivot('movie_id');
-    }
-
-    public function movie(): BelongsToMany
-    {
-        return $this->belongsToMany(Movie::class, 'award_movie');
+        return $this->hasMany(AwardWinner::class);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AwardWinner;
 use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Http\Request;
@@ -69,6 +70,12 @@ class MovieController extends Controller
             $ratingPercentages[$i] = $percentage;
         }
 
-        return view('pages.movies.details', compact('movie', 'ratingPercentages'));
+        $awards = AwardWinner::where('movie_id', $movie->id)
+            ->with(['award', 'person'])
+            ->get()
+            ->groupBy('award.name');
+
+
+        return view('pages.movies.details', compact('movie', 'ratingPercentages', 'awards'));
     }
 }

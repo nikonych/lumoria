@@ -9,7 +9,7 @@
                 <span class="font-light text-sm">{{ $review->created_at->format('j, M Y') }}</span>
             </div>
         </div>
-        <x-base.stars :rating="$review->rating" spacing="space-x-3"/>
+        <x-base.stars :rating="$review->rating" spacing="space-x-3" size="6"/>
     </div>
     <div class="flex flex-col px-7">
         <span class="text-lg text-indigo-200 mt-2.5">{{$review->title}}</span>

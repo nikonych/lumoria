@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Movie extends Model
 {
     /** @use HasFactory<MovieFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -38,9 +38,9 @@ class Movie extends Model
         return $this->belongsToMany(Genre::class);
     }
 
-    public function photos(): HasMany
+    public function photos(): MorphMany
     {
-        return $this->hasMany(Photo::class);
+        return $this->morphMany(Photo::class, 'imageable');
     }
 
     public function language(): BelongsTo
@@ -53,9 +53,9 @@ class Movie extends Model
         return $this->belongsToMany(Person::class);
     }
 
-    public function awards(): BelongsToMany
+    public function awards(): HasMany
     {
-        return $this->belongsToMany(Award::class, 'award_movie');
+        return $this->hasMany(AwardWinner::class);
     }
 
     public function reviews(): HasMany

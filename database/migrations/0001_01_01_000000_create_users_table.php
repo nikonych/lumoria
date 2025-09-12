@@ -49,6 +49,15 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('genre_id')->constrained()->onDelete('cascade');
         });
+
+        Schema::create('watchlist', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('movie_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+
+            $table->unique(['user_id', 'movie_id']);
+        });
     }
 
     /**
@@ -61,5 +70,6 @@ return new class extends Migration
         Schema::dropIfExists('sessions');
         Schema::dropIfExists('favorite_movie');
         Schema::dropIfExists('favorite_genre');
+        Schema::dropIfExists('watchlist');
     }
 };

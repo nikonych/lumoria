@@ -21,7 +21,7 @@ return new class extends Migration
 
         Schema::create('movie_user_collection', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_collection_id')->constrained('user_collections')->onDelete('cascade'); ##TODO
+            $table->foreignId('user_collection_id')->constrained('user_collections')->onDelete('cascade');
             $table->foreignId('movie_id')->constrained('movies')->onDelete('cascade');
         });
     }

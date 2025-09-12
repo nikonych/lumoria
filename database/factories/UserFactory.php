@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Genre;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -31,6 +32,19 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_image' => 'https://picsum.photos/seed/' . fake()->word() . '/400/600',
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (\App\Models\User $user) {
+            $genres = Genre::pluck('id');
+
+            if ($genres->isNotEmpty()) {
+                $genresToAttach = $genres->random(rand(1, 3));
+
+                $user->favoriteGenres()->attach($genresToAttach);
+            }
+        });
     }
 
     /**

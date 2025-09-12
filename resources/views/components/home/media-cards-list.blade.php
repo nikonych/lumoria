@@ -1,10 +1,12 @@
 <div class="flex flex-col md:flex-row mt-8 gap-8">
     <div class="w-full md:w-1/2">
         <x-media-card title="Top - aktuell"
-                      image-url="{{ Vite::asset('resources/images/movies/shawshank.png') }}"/>
+                      image-url="{{ Vite::asset('resources/images/movies/shawshank.png') }}"
+        link-url="/movies/top-actual"/>
     </div>
     <div class="w-full md:w-1/2">
         <x-media-card title="Neuerscheinungen"
-                      image-url="{{ Vite::asset('resources/images/movies/nur_noch.png') }}"/>
+                      image-url="{{ Vite::asset('resources/images/movies/nur_noch.png') }}"
+        link-url="movies/new"/>
     </div>
 </div>
