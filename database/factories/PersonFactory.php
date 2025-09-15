@@ -20,8 +20,9 @@ class PersonFactory extends Factory
             'birth_date' => $birthDate,
             'death_date' => $this->faker->optional(0.2)->dateTimeBetween($birthDate, 'now'),
             'birth_place' => $this->faker->city() . ', ' . $this->faker->country(),
-            'biography' => $this->faker->paragraph(6),
+            'biography' => $this->faker->paragraph(30),
             'nationality' => $this->faker->country(),
+            'description' => $this->faker->paragraph(12),
             'profile_image' => 'https://picsum.photos/seed/' . fake()->word() . '/400/600',
         ];
     }

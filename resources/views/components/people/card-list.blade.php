@@ -10,7 +10,7 @@
                 'content-center',
                 'ml-2',
         ])>
-        <a class="cursor-pointer" href="/">
+        <a class="cursor-pointer" href="{{route('people.details', $person)}}">
             <img src="{{ $person->profile_image }}"
                  alt="{{ $person->name }}"
                  class="w-15 h-15 object-cover rounded-xs">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="flex ml-6 items-center">
-        <a class="cursor-pointer" href="{{route('movies.details', $person)}}">
+        <a class="cursor-pointer" href="{{route('people.details', $person)}}">
             <h3 class="text-2xl font-semibold">
                 {{ $person->name }}
             </h3>

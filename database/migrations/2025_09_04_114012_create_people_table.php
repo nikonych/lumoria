@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('biography')->nullable();
             $table->string('nationality')->nullable();
             $table->string('profile_image')->nullable();
+            $table->string('description')->nullable();
 
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');

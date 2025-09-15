@@ -42,7 +42,6 @@
                     class="w-20"
                     :options="[
                         ['value' => 6, 'text' => 6],
-                        ['value' => 7, 'text' => 7],
                         ['value' => 10, 'text' => 10],
                         ['value' => 20, 'text' => 20],
                         ['value' => 50, 'text' => 50],

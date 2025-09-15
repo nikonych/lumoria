@@ -20,6 +20,8 @@ Route::controller(MovieController::class)->prefix('movies')->name('movies.')->gr
 Route::controller(PersonController::class)->prefix('people')->name('people.')->group(function () {
     Route::get('/', 'index')->name('index'); // Was 'people'
     Route::get('/all', 'all')->name('all');
+    Route::get('/{person}', 'personDetails')->name('details');
+
 });
 
 require __DIR__.'/auth.php';

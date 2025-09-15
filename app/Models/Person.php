@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\PersonFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -102,5 +103,40 @@ class Person extends Model
     public function awards(): HasMany
     {
         return $this->hasMany(AwardWinner::class);
+    }
+
+    public function actedMovies(): BelongsToMany
+    {
+        return $this->belongsToMany(Movie::class, 'roles');
+    }
+
+    public function moviesGroupedByDepartment(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $departments = $this->departments()->get();
+
+                $departments->each(function ($department) {
+                    $department->movies = Movie::whereHas('crew', function ($query) use ($department) {
+                        $query->where('person_id', $this->id)
+                            ->whereHas('departments', function ($subQuery) use ($department) {
+                                $subQuery->where('departments.id', $department->id);
+                            });
+                    })->limit(3)->get();
+                });
+
+                return $departments;
+            }
+        );
+    }
+
+    protected function awardsGroupedByName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->awards()
+                ->with(['movie', 'award'])
+                ->get()
+                ->groupBy('award.name')
+        );
     }
 }

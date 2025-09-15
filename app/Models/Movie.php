@@ -136,7 +136,7 @@ class Movie extends Model
     public function crew(): BelongsToMany
     {
         return $this->belongsToMany(Person::class, 'crew_positions')
-            ->withPivot('position');
+            ->withPivot(['position', 'person_id']);
     }
 
     public function getAverageRatingAttribute(): float
