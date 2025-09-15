@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Livewire\movies;
+namespace App\Livewire\Movies;
 
 use App\Models\Movie;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,21 +16,26 @@ class MovieReviews extends Component
     public Movie $movie;
     public int $perPage = 3;
 
-    public function mount(Movie $movie)
+    public function mount(Movie $movie): void
     {
         $this->movie = $movie;
     }
 
-    public function render()
+    #[Computed]
+    public function reviews()
     {
-
-        $reviews = $this->movie
+        return $this->movie
             ->reviews()
+            ->with('user')
             ->latest()
             ->paginate($this->perPage);
+    }
+
+    public function render(): View|Factory
+    {
 
         return view('livewire.movies.movie-reviews', [
-            'reviews' => $reviews
+            'reviews' => $this->reviews
         ])->with(['wire:navigate' => true]);
     }
 }

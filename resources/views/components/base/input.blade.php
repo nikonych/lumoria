@@ -1,44 +1,58 @@
 @props([
-    'hasIcon' => false,
+    'label' => null,
+    'value' => '',
     'id' => 'input-' . uniqid(),
-    'type' => 'text'
+    'name' => null,
+    'placeholder' => '',
+    'hasIcon' => false,
+    'iconSvg' => null,
+    'type' => 'text',
 ])
 
-<div {{ $attributes->only('class')->merge(['class' => 'w-full h-full']) }}>
+@php
+    $name = $name ?? $id;
+@endphp
 
-    @if (isset($label))
-        <label for="{{ $id }}" class="block mb-1.5 text-sm">
+<div>
+    @if ($label)
+        <label for="{{ $id }}" {{ $label->attributes->class(['block mb-1 text-sm font-medium text-gray-300']) }}>
             {{ $label }}
         </label>
     @endif
 
-    <div class="relative group h-full rounded-sm overflow-hidden">
-
-        @if ($hasIcon)
+    <div {{ $attributes->whereDoesntStartWith('wire:model')->class(['relative group h-full']) }}>
+        @if($hasIcon)
             <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
-                {{ $icon }}
+                @if ($iconSvg)
+                    {!! $iconSvg !!}
+                @else
+                    <x-icons.search class="fill-slate-50 group-focus-within:fill-indigo-400"/>
+                @endif
             </div>
         @endif
 
         @if ($type === 'textarea')
             <textarea
                 id="{{ $id }}"
-                {{ $attributes->except('class')->merge([
-                    'class' => 'w-full h-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark ' .
-                               'rounded-sm ' .
-                               'appearance-none border-0 ' .
-                               'focus:ring-indigo-500 focus:border-indigo-500 ' .
-                               ($hasIcon ? ' pl-7' : '')
+                name="{{ $name }}"
+                placeholder="{{ $placeholder }}"
+                {{ $attributes->class([
+                    'w-full h-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500',
+                    'pl-7' => $hasIcon
                 ]) }}
-            ></textarea>
+            >{{ $value }}</textarea>
         @else
             <input
-                id="{{ $id }}"
                 type="{{ $type }}"
-                {{ $attributes->except('class')->merge([
-                    'class' => 'w-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500' . ($hasIcon ? ' pl-7' : '')
+                id="{{ $id }}"
+                name="{{ $name }}"
+                placeholder="{{ $placeholder }}"
+                value="{{ $value }}"
+                {{ $attributes->class([
+                    'w-full h-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500',
+                    'pl-7' => $hasIcon
                 ]) }}
-            >
+            />
         @endif
     </div>
 </div>

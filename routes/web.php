@@ -4,29 +4,22 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('movies', [MovieController::class, 'index'])->name('movies');
-Route::get('movies/genres', [MovieController::class, 'genres'])->name('genres');
-Route::get('movies/top-actual', [MovieController::class, 'topActual'])->name('topActual');
-Route::get('movies/all', [MovieController::class, 'all'])->name('all');
-Route::get('movies/new', [MovieController::class, 'new'])->name('new');
+Route::controller(MovieController::class)->prefix('movies')->name('movies.')->group(function () {
+    Route::get('/', 'index')->name('index'); // Was 'movies'
+    Route::get('/genres', 'genres')->name('genres');
+    Route::get('/top-actual', 'topActual')->name('top-actual'); // Changed name to kebab-case
+    Route::get('/all', 'all')->name('all');
+    Route::get('/new', 'new')->name('new');
+    Route::get('/genre/{genre}', 'showByGenre')->name('by-genre');
+    Route::get('/{movie}', 'movieDetails')->name('details');
+});
 
-Route::get('/movies/genre/{genre}', [MovieController::class, 'showByGenre'])->name('movies.by-genre');
-Route::get('/movies/{movie}', [MovieController::class, 'movieDetails'])->name('movies.details');
-
-
-Route::get('people', [PersonController::class, 'index'])->name('people');
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
-
-    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-    Volt::route('settings/password', 'settings.password')->name('settings.password');
-    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+Route::controller(PersonController::class)->prefix('people')->name('people.')->group(function () {
+    Route::get('/', 'index')->name('index'); // Was 'people'
+    Route::get('/all', 'all')->name('all');
 });
 
 require __DIR__.'/auth.php';

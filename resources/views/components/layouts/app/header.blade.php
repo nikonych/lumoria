@@ -27,9 +27,12 @@
             @endauth
 
 
-            <livewire:base.input
-                has-icon="true"
-                class="w-3xs"/>
+            <x-base.input
+                wire:model.live="searchQuery"
+                :has-icon="true"
+                class="w-3xs"
+                placeholder="Suche..."
+            />
 
             @auth
                 <div>

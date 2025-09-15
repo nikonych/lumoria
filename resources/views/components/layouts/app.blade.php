@@ -6,7 +6,9 @@
 </head>
 <body class="bg-slate-950 text-slate-50">
 <x-layouts.app.header/>
-{{ $slot }}
+<div class="mx-24 mt-12">
+    {{ $slot }}
+</div>
 
 @fluxScripts
 @livewireScripts

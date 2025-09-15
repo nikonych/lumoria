@@ -1,5 +1,19 @@
-<div x-data="{ open: false }" @click.outside="open = false" class="relative inline-block text-left {{ $class }}">
-    <button @click="open = !open" type="button" class="inline-flex w-full font-light text-sm justify-between items-center gap-x-1.5 rounded-sm bg-input-dark px-3 py-1.5 focus:outline-none cursor-pointer">
+<div x-data="{
+            open: false,
+            direction: 'down',
+            toggle() {
+            this.open = ! this.open;
+            if (this.open) {
+                let rect = this.$el.getBoundingClientRect();
+                let spaceBelow = window.innerHeight - rect.bottom;
+                this.direction = (spaceBelow < 260 && rect.top > 260) ? 'up' : 'down';
+                }
+            }
+            }"
+     @click.outside="open = false"
+     class="relative inline-block text-left {{ $class }}">
+    <button @click="toggle()"
+            type="button" class="inline-flex w-full font-light text-sm justify-between items-center gap-x-1.5 rounded-sm bg-input-dark px-3 py-1.5 focus:outline-none cursor-pointer">
         <span class="flex-grow text-left">{{ $this->selectedText }}</span>
         <svg x-bind:class="{ 'rotate-180': open }" viewBox="0 0 20 20" fill="currentColor" class="-mr-1 size-5 text-indigo-400 transition-transform duration-200">
             <path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
@@ -8,13 +22,12 @@
 
     <div
         x-show="open"
-        x-transition:enter="transition ease-out duration-100"
-        x-transition:enter-start="transform opacity-0 scale-95"
-        x-transition:enter-end="transform opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-75"
-        x-transition:leave-start="transform opacity-100 scale-100"
-        x-transition:leave-end="transform opacity-0 scale-95"
-        class="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-indigo-950 ring-1 ring-white/10 shadow-lg"
+        x-transition
+        :class="{
+            'origin-top-right mt-2': direction === 'down',
+            'origin-bottom-right bottom-full mb-2': direction === 'up'
+        }"
+        class="absolute right-0 z-10 w-full rounded-md bg-indigo-950 ring-1 ring-white/10 shadow-lg"
         style="display: none;"
     >
         <div class="py-1 max-h-64 overflow-y-auto">

@@ -11,4 +11,9 @@ class PersonController extends Controller
     {
         return view('pages.people');
     }
+
+    public function all(): View
+    {
+        return view('pages.people.all-people');
+    }
 }

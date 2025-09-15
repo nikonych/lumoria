@@ -1,34 +1,36 @@
-<div class="{{ $class }}">
-    @if ($hasIcon)
-        <div class="relative group h-full">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
-                @if ($iconSvg)
-                    {!! $iconSvg !!}
-                @else
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M11.8125 11.5391C12.0469 11.7734 12.0469 12.125 11.8125 12.3359C11.7188 12.4531 11.5781 12.5 11.4375 12.5C11.2734 12.5 11.1328 12.4531 11.0156 12.3359L7.875 9.19531C7.03125 9.875 5.97656 10.25 4.85156 10.25C2.17969 10.25 0 8.07031 0 5.375C0 2.70312 2.15625 0.5 4.85156 0.5C7.52344 0.5 9.72656 2.70312 9.72656 5.375C9.72656 6.52344 9.35156 7.57812 8.67188 8.39844L11.8125 11.5391ZM1.125 5.375C1.125 7.46094 2.78906 9.125 4.875 9.125C6.9375 9.125 8.625 7.46094 8.625 5.375C8.625 3.3125 6.9375 1.625 4.875 1.625C2.78906 1.625 1.125 3.3125 1.125 5.375Z"
-                            class="fill-slate-50 group-focus-within:fill-indigo-400"/>
-                    </svg>
-                @endif
-            </div>
-            <input
-                type="{{ $type }}"
-                id="{{ $id }}"
-                name="{{ $name }}"
-                wire:model.live="value"
-                class="w-full h-full pl-7 p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="{{ $placeholder }}" />
-        </div>
-    @else
-        <input
-            type="{{ $type }}"
-            id="{{ $id }}"
-            name="{{ $name }}"
-            wire:model.live="value"
-            class="w-full h-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="{{ $placeholder }}"
-        >
-    @endif
-</div>
+@props([
+    'id' => 'input-' . uniqid(),
+    'name' => null,
+    'placeholder' => 'Search...',
+    'hasIcon' => false,
+    'iconSvg' => null,
+    'type' => 'text',
+])
 
+@php
+    $name = $name ?? $id;
+@endphp
+
+<div {{ $attributes->whereDoesntStartWith('wire:model')->class(['relative group h-full']) }}>
+
+    @if ($hasIcon)
+        <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
+            @if ($iconSvg)
+                {!! $iconSvg !!}
+            @else
+                <x-icons.search class="fill-slate-50 group-focus-within:fill-indigo-400"/>
+            @endif
+        </div>
+    @endif
+
+    <input
+        type="{{ $type }}"
+        id="{{ $id }}"
+        name="{{ $name }}"
+        placeholder="{{ $placeholder }}"
+        {{ $attributes->class([
+            'w-full h-full p-2 focus:outline-none placeholder:text-slate-50 font-light text-xs bg-input-dark focus:border rounded-sm focus:ring-indigo-500 focus:border-indigo-500',
+            'pl-7' => $hasIcon
+        ]) }}
+    />
+</div>

@@ -9,11 +9,6 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            return view('pages.home', compact('user'));
-        } else {
-            return view('pages.home');
-        }
+        return view('pages.home');
     }
 }

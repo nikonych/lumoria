@@ -1,5 +1,3 @@
 <x-layouts.app>
-    <div class="mx-24 mt-12">
-        <x-movies.genres :genres="$genres" />
-    </div>
+    <x-movies.genres :genres="$genres"/>
 </x-layouts.app>

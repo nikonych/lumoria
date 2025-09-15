@@ -1,4 +1,3 @@
-{{-- В шаблоне livewire/movie-reviews.blade.php --}}
 <div>
     <div class="space-y-5">
         @foreach ($reviews as $review)

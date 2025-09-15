@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Livewire\movies;
+namespace App\Livewire\Movies;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class MovieFilter extends Component
 {
-    public bool $showGenres;
+
 
     public $countries;
     public $ageRatings;
@@ -19,49 +21,49 @@ class MovieFilter extends Component
     public array $selectedGenres = [];
     public $selectedRating = null;
 
+    private const FILTER_PROPERTIES = [
+        'countryId',
+        'yearFrom',
+        'yearTo',
+        'selectedAgeRatings',
+        'selectedGenres',
+        'selectedRating',
+    ];
+
     public function mount(
         $countries,
         $ageRatings,
         $genres = [],
-        bool $showGenres = true
-    ) {
+    ): void
+    {
         $this->countries = $countries;
         $this->ageRatings = $ageRatings;
         $this->genres = $genres;
-        $this->showGenres = $showGenres;
     }
 
-    public function updated(): void
+    public function updated(string $propertyName): void
     {
-        $this->dispatch('filtersUpdated', $this->getFilterState());
+        $basePropertyName = explode('.', $propertyName)[0];
+
+        if (in_array($basePropertyName, self::FILTER_PROPERTIES)) {
+            $this->dispatch('filtersUpdated', $this->getFilterState());
+        }
     }
 
     public function resetFilters(): void
     {
-        $this->reset([
-            'countryId',
-            'yearFrom',
-            'yearTo',
-            'selectedAgeRatings',
-            'selectedGenres',
-            'selectedRating'
-        ]);
+        $this->reset(self::FILTER_PROPERTIES);
         $this->dispatch('filtersUpdated', $this->getFilterState());
     }
 
     private function getFilterState(): array
     {
-        return [
-            'countryId' => $this->countryId,
-            'yearFrom' => $this->yearFrom,
-            'yearTo' => $this->yearTo,
-            'selectedAgeRatings' => $this->selectedAgeRatings,
-            'selectedGenres' => $this->selectedGenres,
-            'selectedRating' => $this->selectedRating,
-        ];
+        return collect($this->all())
+            ->only(self::FILTER_PROPERTIES)
+            ->toArray();
     }
 
-    public function render()
+    public function render(): View|Factory
     {
         return view('livewire.movies.movie-filter');
     }

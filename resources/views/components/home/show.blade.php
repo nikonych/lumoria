@@ -1,6 +1,6 @@
 <div class="flex gap-16">
     <div class="w-2/3 pb-5">
-        <h2 class="text-5xl">Hallo {{auth()->user()->name}}!</h2>
+        <h2 class="text-5xl">Hallo {{auth()->user()->name ?? 'Filmfreund'}}!</h2>
         <x-home.media-cards-list/>
         @livewire('movies.movie-list', [
             'type' => 'recommendations',

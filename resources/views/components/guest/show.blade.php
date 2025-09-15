@@ -4,4 +4,4 @@
     Listen, und entdecke personalisierte Empfehlungen. Melde dich jetzt an und tauche voll ins Filmvergnügen
     ein!</p>
 
-<x-gast.media-cards-list/>
+<x-guest.media-cards-list/>

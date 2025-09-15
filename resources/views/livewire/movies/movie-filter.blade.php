@@ -12,9 +12,9 @@
     <div>
         <label class="block text-sm font-medium">Erscheinungsjahr</label>
         <div class="flex items-center gap-2 mt-1">
-            <x-base.input type="number" min="1888" max="{{ date('Y') }}" class="w-full" wire:model.blur="yearFrom" />
+            <x-base.input type="number" class="w-full" wire:model.blur="yearFrom" />
             <span>-</span>
-            <x-base.input type="number" min="1888" max="{{ date('Y') }}" class="w-full" wire:model.blur="yearTo" />
+            <x-base.input type="number" class="w-full" wire:model.blur="yearTo" />
         </div>
     </div>
 
@@ -29,18 +29,16 @@
         </div>
     </div>
 
-    @if ($showGenres)
-        <div>
-            <h4 class="text-sm font-medium">Genre</h4>
-            <div class="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
-                @foreach($genres as $genre)
-                    <div class="flex items-center">
-                        <x-base.checkbox wire:model.live="selectedGenres" value="{{ $genre->id }}" label="{{ $genre->name }}" id="genre-{{ $loop->index }}" />
-                    </div>
-                @endforeach
-            </div>
+    <div>
+        <h4 class="text-sm font-medium">Genre</h4>
+        <div class="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
+            @foreach($genres as $genre)
+                <div class="flex items-center">
+                    <x-base.checkbox wire:model.live="selectedGenres" value="{{ $genre->id }}" label="{{ $genre->name }}" id="genre-{{ $loop->index }}" />
+                </div>
+            @endforeach
         </div>
-    @endif
+    </div>
 
     <div>
         <h4 class="text-sm font-medium text-gray-300">Bewertungen</h4>
