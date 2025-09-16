@@ -22,6 +22,7 @@
         }
         foreach($people as $person) {
             $departments[$department][] = [
+                'person' => $person,
                 'name' => $person->name,
                 'position' => $position
             ];
@@ -48,7 +49,7 @@
                 <div class="space-y-3">
                     @foreach($people as $person)
                         <div class="space-y-1">
-                            <a href="#" class="text-indigo-300 font-light hover:text-white block transition-colors duration-200">
+                            <a href="{{route('people.details', $person)}}" class="text-indigo-300 font-light hover:text-white block transition-colors duration-200">
                                 {{ $person['name'] }}
                             </a>
                         </div>
@@ -68,7 +69,7 @@
         <div class="grid grid-cols-2 gap-x-20 gap-y-3">
             @foreach($orderedDepartments['Sonstige'] as $person)
                 <div class="grid grid-cols-2 gap-x-16 items-center">
-                    <a href="#" class="text-indigo-300 font-light hover:text-white truncate pr-4 transition-colors duration-200">
+                    <a href="{{route('people.details', $person)}}" class="text-indigo-300 font-light hover:text-white truncate pr-4 transition-colors duration-200">
                         {{ $person['name'] }}
                     </a>
                     <p class="text-sm mr-16 font-light">

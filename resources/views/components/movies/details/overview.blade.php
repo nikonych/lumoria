@@ -99,32 +99,12 @@
             <div class="mt-5 font-light">
                 <p>{{$movie->description}}</p>
             </div>
+            @auth
             <div class="flex space-x-3.5 mt-5">
-                <button class="bg-indigo-700 text-white px-4 py-1.5 rounded-sm">
-                    <div class="flex items-center space-x-2.5 text-sm">
-                        <p>Watchlist</p>
-                        <svg class="w-4 h-4"
-                             stroke="currentColor"
-                             viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                        </svg>
-                    </div>
-
-                </button>
-                <button class="bg-indigo-700 text-white px-4 py-1.5 rounded-sm">
-
-                    <div class="flex items-center space-x-2.5 text-sm">
-                        <p>Sammlung</p>
-                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M11.4766 1.75C12.3203 1.75 12.9766 2.42969 12.9766 3.25V9.25C12.9766 10.0938 12.2969 10.75 11.4766 10.75H2.47656C1.63281 10.75 0.976562 10.0938 0.976562 9.25V1.75C0.976562 0.929688 1.63281 0.25 2.47656 0.25H5.24219C5.64062 0.25 6.01562 0.414062 6.29688 0.695312L7.44531 1.75H11.4766ZM11.8516 9.25V3.25C11.8516 3.0625 11.6641 2.875 11.4766 2.875H6.97656L5.47656 1.49219C5.40625 1.42188 5.3125 1.375 5.21875 1.375H2.47656C2.26562 1.375 2.10156 1.5625 2.10156 1.75V9.25C2.10156 9.46094 2.26562 9.625 2.47656 9.625H11.4766C11.6641 9.625 11.8516 9.46094 11.8516 9.25Z"
-                                fill="white"/>
-                        </svg>
-                    </div>
-                </button>
+                <x-base.primary-button icon="plus">Watchlist</x-base.primary-button>
+                <x-base.primary-button icon="directory">Sammlung</x-base.primary-button>
             </div>
+            @endauth
 
         </div>
     </div>

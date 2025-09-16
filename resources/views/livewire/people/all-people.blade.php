@@ -7,7 +7,7 @@
     :sortOptions="$sortOptions"
     :sortBy="$sortBy"
     :viewMode="$viewMode"
-    :people="$people"
+    :people="$this->people"
 >
     @php
         $cardComponent = $viewMode === 'grid' ? 'people.card' : 'people.card-list';

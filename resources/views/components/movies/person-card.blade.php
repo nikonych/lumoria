@@ -5,7 +5,7 @@
 <div class="flex flex-col overflow-hidden group">
 
     <div class="relative w-full overflow-hidden">
-        <a class="cursor-pointer" href="/">
+        <a class="cursor-pointer" href="{{route('people.details', $person)}}">
         <img src="{{$person->profile_image}}" alt="{{$person->name}}"
              class="w-full h-full object-cover rounded-sm">
         </a>
@@ -13,7 +13,7 @@
 
     <div class="flex flex-col flex-grow py-3">
         <div class="flex-grow">
-            <a class="cursor-pointer" href="/">
+            <a class="cursor-pointer" href="{{route('people.details', $person)}}">
             <p class="text-indigo-300 line-clamp-1 cursor-pointer">{{$person->name}}</p>
             </a>
         </div>

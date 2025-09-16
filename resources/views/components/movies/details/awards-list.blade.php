@@ -12,7 +12,7 @@
                 @foreach($winners as $winner)
                     @if ($winner->person)
                         <div class="grid grid-cols-2 gap-x-16 items-center">
-                            <a href="#" class="text-indigo-300 font-light hover:text-white truncate pr-4">
+                            <a href="{{route('people.details', $winner->person)}}" class="text-indigo-300 font-light hover:text-white truncate pr-4">
                                 {{ $winner->person->name }}
                             </a>
                             <p class="text-sm font-light">

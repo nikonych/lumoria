@@ -63,6 +63,7 @@ class PersonFilter extends Component
             ->toArray();
     }
 
+
     public function render(): View|Factory
     {
         return view('livewire.people.person-filter');

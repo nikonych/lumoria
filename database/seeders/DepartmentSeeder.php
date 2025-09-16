@@ -14,18 +14,19 @@ class DepartmentSeeder extends Seeder
     public function run(): void
     {
         $departments = [
-            'Directing',
-            'Producing',
-            'Writing',
-            'Cinematography',
-            'Sound',
-            'Editing',
-            'Art Direction',
-            'Costume & Wardrobe',
-            'Makeup',
-            'Visual Effects',
+            'Schauspieler',
+            'Kamera & Beleuchtung',
+            'Regie',
+            'Produktion',
+            'Ton',
+            'Schnitt',
+            'Casting',
+            'Visuelle Effekte',
+            'Drehbuch',
+            'Musik',
+            'Ausstattung',
             'Stunts',
-            'Camera',
+            'Kostüme & Make-Up',
         ];
 
         // Loop through the array and create each department if it does not already exist.

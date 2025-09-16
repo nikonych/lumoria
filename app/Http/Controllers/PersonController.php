@@ -30,4 +30,22 @@ class PersonController extends Controller
         return view('pages.people.details', compact('person', 'similarPeople'));
     }
 
+    public function withAwards(): View
+    {
+        return view('pages.people.with-awards');
+    }
+
+    public function showByDepartmentSlug(string $slug): View
+    {
+        $department = Department::where('name', $slug)->firstOrFail();
+
+        return view('pages.people.all-people', [
+            'preselectedDepartmentId' => $department->id
+        ]);
+    }
+
+
+
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Base;
 
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
@@ -34,7 +35,8 @@ class Selection extends Component
         $this->value = $value;
     }
 
-    public function getSelectedTextProperty(): string
+    #[Computed]
+    public function selectedText(): string
     {
         $selected = collect($this->options)->firstWhere('value', $this->value);
         return $selected['text'] ?? $this->label;

@@ -20,10 +20,7 @@
         </nav>
         <div class="flex space-x-6 items-center">
             @auth
-                <button
-                    class="bg-indigo-700 w-8 h-8 flex justify-center items-center rounded-md hover:bg-indigo-600 cursor-pointer">
-                    <img src="{{ Vite::asset('resources/images/plus.svg') }}" alt="plus" class="w-3 h-3">
-                </button>
+                <x-base.primary-button icon="plus" />
             @endauth
 
 

@@ -11,13 +11,30 @@
         </button>
 
         {{-- Page Number Buttons --}}
-        @foreach ($paginator->links()->elements[0] as $page => $url)
-            <button wire:click="gotoPage({{ $page }})"
-                    class="flex items-center justify-center w-8 h-8 rounded-sm border text-sm font-medium transition-colors
-                           {{ $page == $paginator->currentPage() ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-indigo-700 text-gray-300 hover:bg-gray-800' }}">
-                <span>{{ $page }}</span>
-            </button>
-        @endforeach
+        @if (is_array($paginator->links()->elements))
+            @foreach ($paginator->links()->elements as $element)
+                {{-- "Three Dots" Separator --}}
+                @if (is_string($element))
+                    <span class="flex items-center justify-center w-8 h-8 text-gray-500">{{ $element }}</span>
+                @endif
+
+                {{-- Array Of Links --}}
+                @if (is_array($element))
+                    @foreach ($element as $page => $url)
+                        @if ($page == $paginator->currentPage())
+                            <button class="flex items-center justify-center w-8 h-8 rounded-sm border bg-indigo-600 border-indigo-600 text-white text-sm font-medium">
+                                <span>{{ $page }}</span>
+                            </button>
+                        @else
+                            <button wire:click="gotoPage({{ $page }})"
+                                    class="flex items-center justify-center w-8 h-8 rounded-sm border border-indigo-700 text-gray-300 hover:bg-gray-800 text-sm font-medium transition-colors">
+                                <span>{{ $page }}</span>
+                            </button>
+                        @endif
+                    @endforeach
+                @endif
+            @endforeach
+        @endif
 
         {{-- Next Page Button --}}
         <button wire:click="nextPage"

@@ -3,13 +3,11 @@
 namespace App\Livewire\People;
 
 use App\Livewire\Traits\HandlesFilterUpdates;
-use App\Livewire\Traits\WithMovieFilters;
-use App\Livewire\Traits\WithMovieSorting;
 use App\Livewire\Traits\WithPersonFilters;
 use App\Livewire\Traits\WithPersonSorting;
 use App\Livewire\Traits\WithViewMode;
-use App\Models\Movie;
 use App\Models\Person;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -27,25 +25,48 @@ class AllPeople extends Component
 
     public string $title = 'Alle Personen';
     public int $perPage = 6;
+    public bool $withAwards = false;
 
 
-    public function mount(): void
+    public function mount($preselectedDepartmentId = null): void
     {
         $this->initializeWithPersonFilters();
         $this->initializePersonSorting();
+        if ($preselectedDepartmentId) {
+            $this->selectedDepartments = [$preselectedDepartmentId];
+        }
     }
+
+    private function getFilteredQuery(): Builder|Person
+    {
+        $query = Person::query()->with(['departments']);
+
+        if ($this->withAwards) {
+            $query->has('awards');
+        }
+
+        $this->applyPersonFilters($query);
+
+        return $query;
+    }
+
 
     public function updatedPerPage(): void
     {
-        $this->resetPage();
+        $currentPage = $this->getPage();
+        $totalItems = $this->getFilteredQuery()->count();
+        $maxPage = ceil($totalItems / $this->perPage);
+
+        if ($currentPage > $maxPage) {
+            $this->resetPage();
+        }
     }
+
 
     #[Computed]
     public function people(): LengthAwarePaginator
     {
-        $query = Person::query()->with(['departments']);
-
-        $this->applyPersonFilters($query);
+        $query = $this->getFilteredQuery();
         $this->applySorting($query);
 
         return $query->paginate($this->perPage);

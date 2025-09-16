@@ -20,6 +20,16 @@ Route::controller(MovieController::class)->prefix('movies')->name('movies.')->gr
 Route::controller(PersonController::class)->prefix('people')->name('people.')->group(function () {
     Route::get('/', 'index')->name('index'); // Was 'people'
     Route::get('/all', 'all')->name('all');
+    Route::get('/with-awards', 'withAwards')->name('withAwards');
+
+    Route::get('/actors', fn() => app(PersonController::class)->showByDepartmentSlug('Schauspieler'))->name('actors');
+    Route::get('/regisseurs', fn() => app(PersonController::class)->showByDepartmentSlug('Regie'))->name('regisseurs');
+    Route::get('/producers', fn() => app(PersonController::class)->showByDepartmentSlug('Produktion'))->name('producers');
+    Route::get('/writers', fn() => app(PersonController::class)->showByDepartmentSlug('Drehbuch'))->name('writers');
+    Route::get('/musicians', fn() => app(PersonController::class)->showByDepartmentSlug('Musik'))->name('musicians');
+    Route::get('/cameramen', fn() => app(PersonController::class)->showByDepartmentSlug('Kamera & Beleuchtung'))->name('cameramen');
+    Route::get('/editors', fn() => app(PersonController::class)->showByDepartmentSlug('Schnitt'))->name('editors');
+
     Route::get('/{person}', 'personDetails')->name('details');
 
 });
