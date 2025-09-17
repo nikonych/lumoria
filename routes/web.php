@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::controller(MovieController::class)->prefix('movies')->name('movies.')->group(function () {
-    Route::get('/', 'index')->name('index'); // Was 'movies'
+    Route::get('/', 'index')->name('index');
     Route::get('/genres', 'genres')->name('genres');
-    Route::get('/top-actual', 'topActual')->name('top-actual'); // Changed name to kebab-case
+    Route::get('/top-actual', 'topActual')->name('top-actual');
     Route::get('/all', 'all')->name('all');
     Route::get('/new', 'new')->name('new');
+
+    Route::get('/create', 'create')->name('create');
+
     Route::get('/genre/{genre}', 'showByGenre')->name('by-genre');
     Route::get('/{movie}', 'movieDetails')->name('details');
 });
@@ -29,6 +32,8 @@ Route::controller(PersonController::class)->prefix('people')->name('people.')->g
     Route::get('/musicians', fn() => app(PersonController::class)->showByDepartmentSlug('Musik'))->name('musicians');
     Route::get('/cameramen', fn() => app(PersonController::class)->showByDepartmentSlug('Kamera & Beleuchtung'))->name('cameramen');
     Route::get('/editors', fn() => app(PersonController::class)->showByDepartmentSlug('Schnitt'))->name('editors');
+
+    Route::get('/create', 'create')->name('create');
 
     Route::get('/{person}', 'personDetails')->name('details');
 

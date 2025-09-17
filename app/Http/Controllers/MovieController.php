@@ -78,4 +78,9 @@ class MovieController extends Controller
 
         return view('pages.movies.details', compact('movie', 'ratingPercentages', 'awards'));
     }
+
+    public function create(): View
+    {
+        return view('pages.movies.create');
+    }
 }

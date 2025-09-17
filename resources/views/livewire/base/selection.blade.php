@@ -27,7 +27,7 @@
             'origin-top-right mt-2': direction === 'down',
             'origin-bottom-right bottom-full mb-2': direction === 'up'
         }"
-        class="absolute right-0 z-10 w-full rounded-md bg-indigo-950 ring-1 ring-white/10 shadow-lg"
+        class="absolute right-0 z-10 w-full rounded-md bg-selection-bg ring-1 ring-white/10 shadow-lg"
         style="display: none;"
     >
         <div class="py-1 max-h-64 overflow-y-auto">

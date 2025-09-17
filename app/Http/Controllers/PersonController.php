@@ -44,7 +44,10 @@ class PersonController extends Controller
         ]);
     }
 
-
+    public function create(): View
+    {
+        return view('pages.people.create');
+    }
 
 
 

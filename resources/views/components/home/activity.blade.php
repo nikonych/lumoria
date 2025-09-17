@@ -51,7 +51,7 @@
                 <button class="w-1/2 bg-bg-secondary hover:bg-gray-600 text-xs py-3 rounded-md">
                     Ablehnen
                 </button>
-                <x-base.primary-button class="w-1/2 text-xs font-extralight">Akzeptieren</x-base.primary-button>
+                <x-base.button class="w-1/2 text-xs font-extralight">Akzeptieren</x-base.button>
             </div>
         </div>
     </div>

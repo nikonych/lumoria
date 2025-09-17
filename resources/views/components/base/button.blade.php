@@ -1,16 +1,25 @@
 @props([
     'href' => null,
     'icon' => null,
-    'iconPosition' => 'right'
+    'iconPosition' => 'right',
+    'variant' => 'primary'
 ])
 
 @php
     $tag = $href ? 'a' : 'button';
     $isIconOnly = $icon && $slot->isEmpty();
 
+    $variants = [
+        'primary' => 'bg-indigo-700 text-slate-50 hover:bg-indigo-600',
+        'secondary' => 'bg-slate-700 text-slate-200 hover:bg-slate-600',
+        'danger' => 'bg-red-600 text-white hover:bg-red-500',
+    ];
+
+    $variantClasses = $variants[$variant] ?? $variants['primary'];
+
     $attributes = $attributes->class([
-        'inline-flex items-center justify-center gap-2 transition-colors',
-        'bg-indigo-700 text-slate-50 hover:bg-indigo-600 rounded-sm',
+        'inline-flex cursor-pointer items-center justify-center gap-2 transition-colors font-light rounded-sm',
+        $variantClasses,
         'w-8 h-8' => $isIconOnly,
         'px-4 py-2 text-sm' => !$isIconOnly,
         'flex-row-reverse' => $iconPosition === 'right'

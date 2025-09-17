@@ -20,7 +20,28 @@
         </nav>
         <div class="flex space-x-6 items-center">
             @auth
-                <x-base.primary-button icon="plus" />
+                <div x-data="{ open: false }" @click.outside="open = false" class="relative">
+                    <x-base.button icon="plus" @click="open = !open" />
+
+                    <div
+                        x-show="open"
+                        x-transition
+                        @click="open = false"
+                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-indigo-950 ring-1 ring-white/10 shadow-lg"
+                        style="display: none;"
+                    >
+                        <div class="py-1">
+                            <a href="{{route('movies.create')}}"
+                            class="block px-4 py-2 text-sm text-slate-200 hover:bg-indigo-600 hover:text-white">
+                                Film hinzufügen
+                            </a>
+                            <a href="{{route('people.create')}}"
+                            class="block px-4 py-2 text-sm text-slate-200 hover:bg-indigo-600 hover:text-white">
+                                Person hinzufügen
+                            </a>
+                        </div>
+                    </div>
+                </div>
             @endauth
 
 

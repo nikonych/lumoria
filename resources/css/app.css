@@ -92,6 +92,7 @@ input[type=number] {
 
     --background-image-main-bg: url('../images/background.png');
     --color-input-dark: #EEF2FF26;
+    --color-selection-bg: #26293A;
     --color-bg-card: rgba(30, 27, 75, 0.4);
     --color-bg-secondary: #334155B2;
     --color-rot: #B20707;

@@ -101,8 +101,8 @@
             </div>
             @auth
             <div class="flex space-x-3.5 mt-5">
-                <x-base.primary-button icon="plus">Watchlist</x-base.primary-button>
-                <x-base.primary-button icon="directory">Sammlung</x-base.primary-button>
+                <x-base.button icon="plus">Watchlist</x-base.button>
+                <x-base.button icon="directory">Sammlung</x-base.button>
             </div>
             @endauth
 

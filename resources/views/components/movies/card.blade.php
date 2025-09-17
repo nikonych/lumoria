@@ -9,7 +9,7 @@
         <img src="{{$movie->poster_image}}" alt="{{$movie->title}}"
              class="w-full h-full object-cover">
         </a>
-        <x-base.primary-button class="absolute top-2.5 right-2.5" icon="plus"/>
+        <x-base.button class="absolute top-2.5 right-2.5" icon="plus"/>
     </div>
 
     <div class="flex flex-col flex-grow py-3">
