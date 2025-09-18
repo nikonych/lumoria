@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,8 +23,8 @@ return new class extends Migration
             $table->string('profile_image')->nullable();
             $table->string('description')->nullable();
 
-            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignIdFor(User::class, 'created_by')->nullable()->constrained('users');
+            $table->foreignIdFor(User::class, 'updated_by')->nullable()->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });

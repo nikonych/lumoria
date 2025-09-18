@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Userstamps;
 use Database\Factories\CountryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,7 @@ class Country extends Model
 {
     /** @use HasFactory<CountryFactory> */
     use HasFactory, SoftDeletes;
+    use Userstamps;
 
     protected $fillable = [
         'name',

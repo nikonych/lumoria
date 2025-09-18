@@ -2,8 +2,12 @@
 
 namespace App\Livewire\Forms;
 
+use App\Enums\AgeRating;
+use App\Models\Award;
+use App\Models\AwardWinner;
 use App\Models\Movie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
@@ -12,19 +16,25 @@ class MovieForm extends Form
     #[Rule('required|string|max:255')]
     public string $title = '';
 
-    #[Rule('nullable|string|max:255')]
+    #[Rule('required|string|max:255')]
     public string $original_title = '';
 
-    #[Rule('nullable|integer|min:1888')]
+    #[Rule('required|exists:countries,id')]
+    public ?int $original_country_id = null;
+
+    #[Rule('required|exists:languages,id')]
+    public ?int $original_language_id = null;
+
+    #[Rule('required|integer|min:1888')]
     public ?int $release_year = null;
 
-    #[Rule('nullable|integer|min:1')]
+    #[Rule('required|integer|min:1')]
     public ?int $duration_minutes = null;
 
-    #[Rule('nullable|string|max:10')]
-    public string $age_rating = '';
+    #[Rule(['required', new Enum(AgeRating::class)])]
+    public ?AgeRating $age_rating = null;
 
-    #[Rule('nullable|url')]
+    #[Rule('required|url')]
     public string $trailer_url = '';
 
     #[Rule('nullable|string')]
@@ -33,17 +43,26 @@ class MovieForm extends Form
     #[Rule('required|array|min:1')]
     public array $selectedGenres = [];
 
-    // УБИРАЕМ ВСЮ ВАЛИДАЦИЮ для cast и crew
+    #[Rule([
+        'awards' => 'nullable|array',
+        'awards.*.award_name' => 'required|string',
+        'awards.*.category' => 'required|string',
+        'awards.*.person_ids' => 'nullable|array',
+        'awards.*.person_ids.*' => 'exists:people,id',
+    ])]
     public array $awards = [];
 
-    #[Rule('nullable|image|max:1024')]
-    public $poster;
+    #[Rule('required|image|max:1024')]
+    public $poster_image;
+
+    #[Rule([
+        'photos' => 'required|array|min:1',
+        'photos.*' => 'image',
+    ])]
+    public array $photos = [];
 
     public function store(array $castData, array $crewData): void
     {
-
-        $this->validate();
-
         DB::transaction(function () use ($castData, $crewData) {
             $movie = Movie::create([
                 'title' => $this->title,
@@ -57,10 +76,22 @@ class MovieForm extends Form
 
             $movie->genres()->attach($this->selectedGenres);
 
-            if ($this->poster) {
+            if ($this->poster_image) {
                 $movie->update([
-                    'poster_image' => $this->poster->store('posters', 'public')
+                    'poster_image' => $this->poster_image->store('posters', 'public')
                 ]);
+            }
+
+            if (!empty($this->photos)) {
+                foreach ($this->photos as $photo) {
+                    $path = $photo->store('movies/gallery', 'public');
+                    $movie->photos()->create([
+                        'path' => $path,
+                        'original_name' => $photo->getClientOriginalName(),
+                        'size' => $photo->getSize(),
+                        'mime_type' => $photo->getMimeType(),
+                    ]);
+                }
             }
 
             foreach ($castData as $actor) {
@@ -72,7 +103,6 @@ class MovieForm extends Form
                 }
             }
 
-            // Используем переданные данные
             foreach ($crewData as $member) {
                 if (!empty($member['person_id']) && !empty($member['department_id']) && !empty($member['position'])) {
                     $movie->crew()->create([
@@ -80,6 +110,33 @@ class MovieForm extends Form
                         'department_id' => $member['department_id'],
                         'position' => $member['position'],
                     ]);
+                }
+            }
+
+            foreach ($this->awards as $awardData) {
+                if (!empty($awardData['award_name']) && !empty($awardData['category'])) {
+                    $award = Award::firstOrCreate(
+                        [
+                            'name' => $awardData['award_name'],
+                            'category' => $awardData['category']
+                        ]
+                    );
+
+                    AwardWinner::create([
+                        'award_id' => $award->id,
+                        'movie_id' => $movie->id,
+                        'person_id' => null,
+                    ]);
+
+                    if (!empty($awardData['person_ids'])) {
+                        foreach ($awardData['person_ids'] as $personId) {
+                            AwardWinner::create([
+                                'award_id' => $award->id,
+                                'movie_id' => $movie->id,
+                                'person_id' => $personId,
+                            ]);
+                        }
+                    }
                 }
             }
         });

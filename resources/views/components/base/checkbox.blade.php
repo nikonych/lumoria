@@ -13,8 +13,22 @@
     }
 
     $checked = false;
-    if ($wireModel && isset($this->{$wireModel}) && is_array($this->{$wireModel})) {
-        $checked = in_array($value, $this->{$wireModel});
+    if ($wireModel) {
+        $parts = explode('.', $wireModel);
+        $value_to_check = $this;
+
+        foreach ($parts as $part) {
+            if (isset($value_to_check->{$part})) {
+                $value_to_check = $value_to_check->{$part};
+            } else {
+                $value_to_check = null;
+                break;
+            }
+        }
+
+        if (is_array($value_to_check)) {
+            $checked = in_array($value, $value_to_check);
+        }
     }
 @endphp
 

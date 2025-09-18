@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Userstamps;
 use Database\Factories\AwardWinnerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +44,8 @@ class AwardWinner extends Model
 {
     /** @use HasFactory<AwardWinnerFactory> */
     use HasFactory, SoftDeletes;
+    use Userstamps;
+
 
     protected $fillable = [
         'award_id',
