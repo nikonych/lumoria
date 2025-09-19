@@ -18,6 +18,9 @@ class CrewPosition extends Model
 
 
     protected $fillable = [
+        'movie_id',
+        'person_id',
+        'department_id',
         'position',
     ];
 

@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('awards', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('category');
 
             $table->foreignIdFor(User::class, 'created_by')->nullable()->constrained('users');
             $table->foreignIdFor(User::class, 'updated_by')->nullable()->constrained('users');

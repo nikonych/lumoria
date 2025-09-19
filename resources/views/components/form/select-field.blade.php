@@ -26,7 +26,15 @@
             class="w-full"
             wire:key="selection-{{ $name }}"
             :modelClass="$modelClass"
+            label="{{$label}}"
             :modelCreateField="$modelCreateField"
+        />
+    @else
+        <livewire:base.selection
+            :wire:model.blur="$wireModel"
+            :options="$options"
+            class="w-full"
+            wire:key="selection-{{ $name }}"
         />
     @endif
 </x-form.field>

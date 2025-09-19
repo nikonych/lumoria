@@ -4,29 +4,38 @@ namespace App\Livewire\Traits\CreateMovie;
 
 trait ManagesCast
 {
-    public array $cast = [];
 
     public function initializeCast(): void
     {
         if (empty($this->cast)) {
-            $this->cast[] = ['person_id' => '', 'role_name' => ''];
+            $this->cast[] = [
+                'id' => $this->castCounter++,
+                'person_id' => '',
+                'role_name' => ''
+            ];
         }
     }
 
     public function addActor(): void
     {
-        $this->cast[] = ['person_id' => '', 'role_name' => ''];
+        $this->cast[] = [
+            'id' => $this->castCounter++,
+            'person_id' => '',
+            'role_name' => ''
+        ];
     }
 
-    public function removeActor(int $index): void
+    public function removeActor(int $id): void
     {
-        unset($this->cast[$index]);
-        $this->cast = array_values($this->cast);
+        $this->cast = collect($this->cast)->reject(fn($actor) => $actor['id'] === $id)->values()->toArray();
     }
 
-    public function clearActor(int $index): void
+    public function clearActor(int $id): void
     {
-        $this->cast[$index]['person_id'] = '';
-        $this->cast[$index]['role_name'] = '';
+        $index = collect($this->cast)->search(fn($actor) => $actor['id'] === $id);
+        if ($index !== false) {
+            $this->cast[$index]['person_id'] = '';
+            $this->cast[$index]['role_name'] = '';
+        }
     }
 }

@@ -9,7 +9,7 @@
             @if($movie)
                 <x-media-card
                     :title="$genre->name"
-                    :imageUrl="$movie->poster_image"
+                    :imageUrl="$movie->poster_url"
                     :linkUrl="route('movies.by-genre', $genre)"
                 />
             @endif

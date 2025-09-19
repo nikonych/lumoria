@@ -36,6 +36,9 @@
                             label="Originalsprache"
                             wire-model="form.original_language_id"
                             :options="$this->languages"
+                            type="search-select-with-add"
+                            :model-class="\App\Models\Language::class"
+                            model-create-field="name"
                         />
                     </div>
                     <div class="w-1/2">
@@ -80,6 +83,7 @@
                             label="Altersfreigabe"
                             wire-model="form.age_rating"
                             :options="$ageRatingOptions"
+                            type="selection"
                         />
                     </div>
                 </div>

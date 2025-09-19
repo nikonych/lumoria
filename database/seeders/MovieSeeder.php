@@ -25,7 +25,7 @@ class MovieSeeder extends Seeder
                 $movie->genres()->attach($allGenres->random(rand(1, 3))->pluck('id')->toArray());
 
                 if ($allLanguages->isNotEmpty()) {
-                    $movie->language_id = $allLanguages->random()->id;
+                    $movie->original_language_id = $allLanguages->random()->id;
                     $movie->save(); // Save the updated movie with the language_id
                 }
             });

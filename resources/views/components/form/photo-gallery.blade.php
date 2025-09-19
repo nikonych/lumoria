@@ -58,7 +58,7 @@
         <div class="flex flex-col items-center justify-center space-y-3 {{ $photos && count($photos) > 0 ? 'min-w-[200px]' : 'flex-1' }} transition-all duration-300">
             <!-- Иконка и текст -->
             <div class="flex flex-col items-center space-y-2">
-                <div class="p-3 rounded-full bg-slate-600 text-slate-400">
+                <div class="p-3">
                     <x-icons.inbox-in class="w-8 h-8"/>
                 </div>
 

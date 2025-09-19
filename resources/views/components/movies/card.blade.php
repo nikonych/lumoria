@@ -6,7 +6,7 @@
 
     <div class="relative w-full rounded-sm overflow-hidden">
         <a class="cursor-pointer" href="{{route('movies.details', $movie)}}">
-        <img src="{{$movie->poster_image}}" alt="{{$movie->title}}"
+        <img src="{{$movie->poster_url}}" alt="{{$movie->title}}"
              class="w-full h-full object-cover">
         </a>
         <x-base.button class="absolute top-2.5 right-2.5" icon="plus"/>

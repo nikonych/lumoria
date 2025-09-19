@@ -9,11 +9,13 @@ use App\Livewire\Traits\CreateMovie\ManagesCast;
 use App\Livewire\Traits\CreateMovie\ManagesCrew;
 use App\Livewire\Traits\HandleFormValidation;
 use App\Models\Award;
+use App\Models\Category;
 use App\Models\Country;
 use App\Models\Department;
 use App\Models\Genre;
 use App\Models\Language;
 use App\Models\Person;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -26,12 +28,31 @@ class CreateMovie extends Component
     public MovieForm $form;
 
     public array $photos = [];
-    public array $ageRatingOptions = [];
-    public $genres = [];
-    public $people = [];
-    public $departments = [];
 
-    protected $listeners = ['photosUpdated' => 'handlePhotosUpdate'];
+    public array $cast = [];
+    public int $castCounter = 0;
+    public array $crew = [];
+    public int $crewCounter = 0;
+
+    public array $awardsData = [];
+
+    public int $awardCounter = 0;
+    public int $categoryCounter = 0;
+    public array $ageRatingOptions = [];
+
+    protected $listeners = ['photosUpdated' => 'handlePhotosUpdate', 'optionsUpdated' => 'refreshOptions'];
+
+
+    public function refreshOptions(string $modelClass): void
+    {
+
+        if ($modelClass === Person::class) {
+            $this->dispatch('updatePeopleOptions',
+                options: $this->people
+            );
+        }
+
+    }
 
     public function updatedPhotos(): void
     {
@@ -58,56 +79,74 @@ class CreateMovie extends Component
         $this->form->photos = $photos;
     }
 
-    public function getCountriesProperty()
+    #[Computed]
+    public function countries()
     {
-        return cache()->remember('countries_options', 3600, function() {
-            return Country::orderBy('name')
-                ->get()
-                ->map(fn($c) => ['value' => $c->id, 'text' => $c->name])
-                ->toArray();
-        });
+        return Country::orderBy('name')
+            ->get()
+            ->map(fn($c) => ['value' => $c->id, 'text' => $c->name])
+            ->toArray();
     }
 
-    public function getLanguagesProperty()
+    #[Computed]
+    public function languages()
     {
-        return cache()->remember('languages_options', 3600, function() {
-            return Language::orderBy('name')
-                ->get()
-                ->map(fn($l) => ['value' => $l->id, 'text' => $l->name])
-                ->toArray();
-        });
+        return Language::orderBy('name')
+            ->get()
+            ->map(fn($c) => ['value' => $c->id, 'text' => $c->name])
+            ->toArray();
     }
 
-    public function getAwardNamesProperty()
+    #[Computed]
+    public function departments()
     {
-        return cache()->remember('award_names', 3600, function() {
-            $predefinedAwards = [
-                'Oscar',
-                'Golden Globe',
-                'BAFTA',
-                'Cannes Film Festival',
-                'Berlin International Film Festival',
-                'Venice Film Festival'
-            ];
-
-            $dbAwards = Award::select('name')
-                ->distinct()
-                ->orderBy('name')
-                ->pluck('name')
-                ->toArray();
-
-            $allAwards = array_unique(array_merge($predefinedAwards, $dbAwards));
-            sort($allAwards);
-
-            return array_map(fn($name) => ['value' => $name, 'text' => $name], $allAwards);
-        });
+        return Department::orderBy('name')
+            ->get()
+            ->map(fn($c) => ['value' => $c->id, 'text' => $c->name])
+            ->toArray();
     }
+
+    #[Computed]
+    public function genres()
+    {
+        return Genre::orderBy('name')
+            ->get();
+    }
+
+    #[Computed]
+    public function people()
+    {
+        return Person::orderBy('name')
+            ->get()
+            ->map(fn($c) => ['value' => $c->id, 'text' => $c->name])
+            ->toArray();
+    }
+
+    #[Computed]
+    public function awardOptions()
+    {
+        return Award::orderBy('name')
+            ->get()
+            ->unique('name')
+            ->map(fn($c) => ['value' => $c->name, 'text' => $c->name])
+            ->toArray();
+    }
+
+    #[Computed]
+    public function categoryOptions()
+    {
+        return Category::orderBy('name')
+            ->get()
+            ->unique('name')
+            ->map(fn($c) => ['value' => $c->name, 'text' => $c->name])
+            ->toArray();
+    }
+
 
     public function mount(): void
     {
-        $this->genres = Genre::orderBy('name')->get();
-        $this->people = Person::orderBy('name')->get();
-        $this->departments = Department::orderBy('name')->get();
+
+        $this->castCounter = 0;
 
         foreach (AgeRating::cases() as $case) {
             $this->ageRatingOptions[] = ['value' => $case->value, 'text' => $case->value];
@@ -120,17 +159,13 @@ class CreateMovie extends Component
 
     public function save()
     {
-        $this->form->validate();
 
-        if (!$this->validateAwards()) {
-            return;
-        }
+        $this->form->validate();
 
 
         try {
-            $this->form->awardsData = $this->awardsData;
 
-            $this->form->store($this->castData, $this->crewData);
+            $this->form->store();
 
             session()->flash('message', 'Film erfolgreich erstellt!');
             return $this->redirect('/movies');

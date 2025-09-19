@@ -1,17 +1,18 @@
 <?php
+// app/Models/Category.php
 
 namespace App\Models;
 
 use App\Models\Traits\Userstamps;
-use Database\Factories\AwardFactory;
+use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Award extends Model
+class Category extends Model
 {
-    /** @use HasFactory<AwardFactory> */
+    /** @use HasFactory<CategoryFactory> */
     use HasFactory, SoftDeletes;
     use Userstamps;
 
@@ -19,10 +20,8 @@ class Award extends Model
         'name',
     ];
 
-
-    public function winners(): HasMany
+    public function awardWinners(): HasMany
     {
         return $this->hasMany(AwardWinner::class);
     }
-
 }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Movie extends Model
 {
@@ -28,12 +29,39 @@ class Movie extends Model
         'description',
         'trailer_url',
         'poster_image',
-        'rating'
+        'rating',
+        'original_country_id',
+        'original_language_id',
     ];
+
+    public function originalCountry(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'original_country_id');
+    }
+
+    public function originalLanguage(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'original_language_id');
+    }
 
     public function country(): BelongsTo
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'original_country_id');
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'original_language_id');
+    }
+
+    public function roles(): HasMany
+    {
+        return $this->hasMany(Role::class);
+    }
+
+    public function crewPositions(): HasMany
+    {
+        return $this->hasMany(CrewPosition::class);
     }
 
     public function genres(): BelongsToMany
@@ -46,10 +74,6 @@ class Movie extends Model
         return $this->morphMany(Photo::class, 'imageable');
     }
 
-    public function language(): BelongsTo
-    {
-        return $this->belongsTo(Language::class);
-    }
 
     public function people(): BelongsToMany
     {
@@ -76,7 +100,26 @@ class Movie extends Model
     public function crew(): BelongsToMany
     {
         return $this->belongsToMany(Person::class, 'crew_positions')
-            ->withPivot(['position', 'person_id']);
+            ->withPivot(['position', 'department_id'])
+            ->withTimestamps();
+    }
+
+    public function getPosterUrlAttribute(): ?string
+    {
+        if (!$this->poster_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->poster_image, 'http')) {
+            return $this->poster_image;
+        }
+
+        return Storage::url($this->poster_image);
+    }
+
+    public function getPosterUrlWithFallbackAttribute(): string
+    {
+        return $this->poster_url ?? asset('images/no-poster.jpg');
     }
 
     public function getAverageRatingAttribute(): float

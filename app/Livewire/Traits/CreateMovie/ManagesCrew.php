@@ -4,30 +4,41 @@ namespace App\Livewire\Traits\CreateMovie;
 
 trait ManagesCrew
 {
-    public array $crew = [];
 
     public function initializeCrew(): void
     {
         if (empty($this->crew)) {
-            $this->crew[] = ['person_id' => '', 'department_id' => '', 'position' => ''];
+            $this->crew[] = [
+                'id' => ++$this->crewCounter,
+                'person_id' => '',
+                'department_id' => '',
+                'position' => ''
+            ];
         }
     }
 
     public function addCrewMember(): void
     {
-        $this->crew[] = ['person_id' => '', 'department_id' => '', 'position' => ''];
+        $this->crew[] = [
+            'id' => ++$this->crewCounter,
+            'person_id' => '',
+            'department_id' => '',
+            'position' => ''
+        ];
     }
 
-    public function removeCrewMember(int $index): void
+    public function removeCrewMember(int $id): void
     {
-        unset($this->crew[$index]);
-        $this->crew = array_values($this->crew);
+        $this->crew = collect($this->crew)->reject(fn($member) => $member['id'] === $id)->values()->toArray();
     }
 
-    public function clearCrewMember(int $index): void
+    public function clearCrewMember(int $id): void
     {
-        $this->crew[$index]['person_id'] = '';
-        $this->crew[$index]['department_id'] = '';
-        $this->crew[$index]['position'] = '';
+        $index = collect($this->crew)->search(fn($member) => $member['id'] === $id);
+        if ($index !== false) {
+            $this->crew[$index]['person_id'] = '';
+            $this->crew[$index]['department_id'] = '';
+            $this->crew[$index]['position'] = '';
+        }
     }
 }

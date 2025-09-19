@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PersonSeeder::class,
 
             AwardSeeder::class,
+            CategorySeeder::class,
             AwardWinnerSeeder::class,
             ReviewSeeder::class,
             CrewPositionsSeeder::class,

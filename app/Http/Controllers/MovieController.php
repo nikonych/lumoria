@@ -71,7 +71,7 @@ class MovieController extends Controller
         }
 
         $awards = AwardWinner::where('movie_id', $movie->id)
-            ->with(['award', 'person'])
+            ->with(['award', 'person', 'category'])
             ->get()
             ->groupBy('award.name');
 

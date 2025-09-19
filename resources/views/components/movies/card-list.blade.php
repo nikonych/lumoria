@@ -21,7 +21,7 @@
                 'ml-2' => !$rank,
         ])>
         <a class="cursor-pointer" href="{{route('movies.details', $movie)}}">
-            <img src="{{ $movie->poster_image }}"
+            <img src="{{ $movie->poster_url }}"
                  alt="{{ $movie->title }}"
                  class="w-16 h-24 object-cover rounded-xs">
         </a>

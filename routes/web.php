@@ -14,7 +14,11 @@ Route::controller(MovieController::class)->prefix('movies')->name('movies.')->gr
     Route::get('/all', 'all')->name('all');
     Route::get('/new', 'new')->name('new');
 
-    Route::get('/create', 'create')->name('create');
+    Route::get('/create', 'create')->name('create')->middleware('auth');
+    Route::post('/', 'store')->name('store')->middleware('auth');
+    Route::get('/{movie}/edit', 'edit')->name('edit')->middleware('auth');
+    Route::put('/{movie}', 'update')->name('update')->middleware('auth');
+    Route::delete('/{movie}', 'destroy')->name('destroy')->middleware('auth');
 
     Route::get('/genre/{genre}', 'showByGenre')->name('by-genre');
     Route::get('/{movie}', 'movieDetails')->name('details');

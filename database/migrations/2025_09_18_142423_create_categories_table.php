@@ -12,14 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('award_winners', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('award_id')->constrained('awards')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-
-            $table->foreignId('movie_id')->nullable()->constrained('movies')->onDelete('cascade');
-            $table->foreignId('person_id')->nullable()->constrained('people')->onDelete('cascade');
-
+            $table->string('name');
 
             $table->foreignIdFor(User::class, 'created_by')->nullable()->constrained('users');
             $table->foreignIdFor(User::class, 'updated_by')->nullable()->constrained('users');
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('award_winners');
+        Schema::dropIfExists('categories');
     }
 };

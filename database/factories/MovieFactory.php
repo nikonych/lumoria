@@ -27,7 +27,7 @@ class MovieFactory extends Factory
             'description' => $this->faker->paragraph(4),
             'trailer_url' => 'https://www.youtube.com/watch?v=wqAp4h7cjoM',
             'poster_image' =>'https://picsum.photos/seed/' . fake()->word() . '/400/600',
-            'country_id' => Country::inRandomOrder()->first()->id ?? null, // Assign a random existing country
+            'original_country_id' => Country::inRandomOrder()->first()->id ?? null, // Assign a random existing country
         ];
     }
 }

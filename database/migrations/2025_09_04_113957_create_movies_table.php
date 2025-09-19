@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('trailer_url')->nullable();
             $table->string('poster_image')->nullable();
             $table->decimal('rating', 3, 2)->default(0);
-            $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
-            $table->foreignId('language_id')->nullable()->constrained('languages')->onDelete('set null');
+            $table->foreignId('original_country_id')->nullable()->constrained('countries')->onDelete('set null');
+            $table->foreignId('original_language_id')->nullable()->constrained('languages')->onDelete('set null');
 
             $table->foreignIdFor(User::class, 'created_by')->nullable()->constrained('users');
             $table->foreignIdFor(User::class, 'updated_by')->nullable()->constrained('users');
