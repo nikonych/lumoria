@@ -21,7 +21,7 @@
         'inline-flex cursor-pointer items-center justify-center gap-2 transition-colors font-light rounded-sm',
         $variantClasses,
         'w-8 h-8' => $isIconOnly,
-        'px-4 py-2 text-sm' => !$isIconOnly,
+        'px-4 py-1.5 text-sm' => !$isIconOnly,
         'flex-row-reverse' => $iconPosition === 'right'
     ]);
 @endphp

@@ -12,8 +12,17 @@ class SearchSelectWithAdd extends Component
 
     protected $listeners = ['updatePeopleOptions' => 'updateOptions'];
 
-    public function updateOptions($options)
+    public function updateOptions($options, $modelClass = null)
     {
+        if (is_array($options) && isset($options['modelClass'])) {
+            $modelClass = $options['modelClass'];
+            $options = $options['options'];
+        }
+
+        if ($modelClass && $this->modelClass !== $modelClass) {
+            return;
+        }
+
         $this->options = $options;
     }
 

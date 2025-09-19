@@ -122,6 +122,11 @@ class Movie extends Model
         return $this->poster_url ?? asset('images/no-poster.jpg');
     }
 
+    public function userCollections(): BelongsToMany
+    {
+        return $this->belongsToMany(UserCollection::class, 'movie_user_collection');
+    }
+
     public function getAverageRatingAttribute(): float
     {
         return $this->reviews_avg_rating ?? 0;

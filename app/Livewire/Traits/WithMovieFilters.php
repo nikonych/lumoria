@@ -6,6 +6,7 @@ use App\Models\Country;
 use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Computed;
 
 trait WithMovieFilters
 {
@@ -15,7 +16,6 @@ trait WithMovieFilters
     public ?int $selectedRating = null;
     public $selectedGenres = [];
 
-    public $countries = [];
     public array $ageRatings = [];
     public $genres = [];
     public ?int $yearFrom = null;
@@ -24,9 +24,16 @@ trait WithMovieFilters
     public function initializeWithMovieFilters(): void
     {
 
-        $this->countries = $this->getCountriesWithAll();
         $this->ageRatings = Movie::distinct()->pluck('age_rating')->sort()->toArray();
         $this->genres = Genre::all();
+    }
+
+    #[Computed]
+    public function countries()
+    {
+        return $this->getCountriesWithAll()
+            ->map(fn($c) => ['value' => $c->id, 'text' => $c->name])
+            ->toArray();
     }
 
     protected function getCountriesWithAll(): Collection
@@ -86,7 +93,7 @@ trait WithMovieFilters
     protected function applyMovieFilters($query)
     {
         if ($this->countryId) {
-            $query->where('country_id', $this->countryId);
+            $query->where('original_country_id', $this->countryId);
         }
 
         if (!empty($this->selectedAgeRatings)) {

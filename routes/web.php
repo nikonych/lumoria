@@ -15,10 +15,8 @@ Route::controller(MovieController::class)->prefix('movies')->name('movies.')->gr
     Route::get('/new', 'new')->name('new');
 
     Route::get('/create', 'create')->name('create')->middleware('auth');
-    Route::post('/', 'store')->name('store')->middleware('auth');
+//    TODO only that user who created the movie can edit it
     Route::get('/{movie}/edit', 'edit')->name('edit')->middleware('auth');
-    Route::put('/{movie}', 'update')->name('update')->middleware('auth');
-    Route::delete('/{movie}', 'destroy')->name('destroy')->middleware('auth');
 
     Route::get('/genre/{genre}', 'showByGenre')->name('by-genre');
     Route::get('/{movie}', 'movieDetails')->name('details');

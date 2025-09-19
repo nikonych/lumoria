@@ -1,6 +1,6 @@
 <x-layouts.movie-index
     :title="$title"
-    :countries="$countries"
+    :countries="$this->countries"
     :ageRatings="$ageRatings"
     :genres="$genres"
     :sortOptions="$sortOptions"

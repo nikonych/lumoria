@@ -3,10 +3,17 @@
     'movie_id' => uniqid(),
     'size' => 7,
     'spacing' => "space-x-1",
-    'color' => 'text-indigo-600'
+    'color' => 'text-indigo-600',
+    'interactive' => false,
+    'wireClick' => null
 ])
 
-<div class="flex items-center {{ $spacing }}">
+<div class="flex items-center {{ $spacing }}"
+     @if($interactive)
+         x-data="{ hoverRating: 0, currentRating: {{ $rating }} }"
+     @mouseleave="hoverRating = 0"
+    @endif
+>
     @for ($i = 1; $i <= 5; $i++)
         @php
             $state = 'empty';
@@ -17,28 +24,19 @@
             }
         @endphp
 
-        <div class="{{ $color }}">
+        <div class="{{ $color }} {{ $interactive ? 'cursor-pointer hover:scale-110 transition-transform' : '' }}"
+             @if($interactive)
+                 @mouseenter="hoverRating = {{ $i }}"
+             wire:click="updateRating({{ $i }})"
+             :class="{ 'opacity-50': hoverRating > 0 && hoverRating < {{ $i }} }"
+            @endif
+        >
             @if ($state === 'full')
-                <svg class="w-{{ $size }} h-{{ $size }} fill-current" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M26.9843 10.1279L18.4999 8.81543L14.6562 0.75293C14.3749 0.19043 13.6249 0.19043 13.3437 0.75293L9.49992 8.8623L1.06243 10.1279C0.45305 10.2217 0.218675 11.0186 0.687425 11.4404L6.82805 17.7686L5.37493 26.6279C5.28118 27.2373 5.89055 27.7529 6.45305 27.3779L14.0937 23.2061L21.6874 27.3779C22.203 27.6592 22.8593 27.1904 22.7187 26.6279L21.2655 17.7686L27.4062 11.4404C27.7812 11.0186 27.5937 10.2217 26.9843 10.1279Z"/>
-                </svg>
-
+                <x-icons.star-full :size="$size" :movie_id="$movie_id"/>
             @elseif ($state === 'half')
-                <svg class="w-{{ $size }} h-{{ $size }}" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="half-gradient-{{ $movie_id }}-{{ $i }}">
-                            <stop offset="50%" stop-color="currentColor"/>
-                            <stop offset="50%" stop-color="transparent" stop-opacity="0"/>
-                        </linearGradient>
-                    </defs>
-                    <path fill="url(#half-gradient-{{ $movie_id }}-{{ $i }})" d="M26.9843 10.1279L18.4999 8.81543L14.6562 0.75293C14.3749 0.19043 13.6249 0.19043 13.3437 0.75293L9.49992 8.8623L1.06243 10.1279C0.45305 10.2217 0.218675 11.0186 0.687425 11.4404L6.82805 17.7686L5.37493 26.6279C5.28118 27.2373 5.89055 27.7529 6.45305 27.3779L14.0937 23.2061L21.6874 27.3779C22.203 27.6592 22.8593 27.1904 22.7187 26.6279L21.2655 17.7686L27.4062 11.4404C27.7812 11.0186 27.5937 10.2217 26.9843 10.1279Z"/>
-                    <path stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none" d="M26.9843 10.1279L18.4999 8.81543L14.6562 0.75293C14.3749 0.19043 13.6249 0.19043 13.3437 0.75293L9.49992 8.8623L1.06243 10.1279C0.45305 10.2217 0.218675 11.0186 0.687425 11.4404L6.82805 17.7686L5.37493 26.6279C5.28118 27.2373 5.89055 27.7529 6.45305 27.3779L14.0937 23.2061L21.6874 27.3779C22.203 27.6592 22.8593 27.1904 22.7187 26.6279L21.2655 17.7686L27.4062 11.4404C27.7812 11.0186 27.5937 10.2217 26.9843 10.1279Z"/>
-                </svg>
-
+                <x-icons.star-half :size="$size" :i="$i"/>
             @else
-                <svg class="w-{{ $size }} h-{{ $size }} stroke-current" fill="none" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-width="2" stroke-linejoin="round" d="M26.9843 10.1279L18.4999 8.81543L14.6562 0.75293C14.3749 0.19043 13.6249 0.19043 13.3437 0.75293L9.49992 8.8623L1.06243 10.1279C0.45305 10.2217 0.218675 11.0186 0.687425 11.4404L6.82805 17.7686L5.37493 26.6279C5.28118 27.2373 5.89055 27.7529 6.45305 27.3779L14.0937 23.2061L21.6874 27.3779C22.203 27.6592 22.8593 27.1904 22.7187 26.6279L21.2655 17.7686L27.4062 11.4404C27.7812 11.0186 27.5937 10.2217 26.9843 10.1279Z"/>
-                </svg>
+                <x-icons.star-empty :size="$size" :movie_id="$movie_id"/>
             @endif
         </div>
     @endfor

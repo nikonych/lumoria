@@ -7,7 +7,6 @@ use App\Livewire\Forms\MovieForm;
 use App\Livewire\Traits\CreateMovie\ManagesAwards;
 use App\Livewire\Traits\CreateMovie\ManagesCast;
 use App\Livewire\Traits\CreateMovie\ManagesCrew;
-use App\Livewire\Traits\HandleFormValidation;
 use App\Models\Award;
 use App\Models\Category;
 use App\Models\Country;
@@ -23,7 +22,6 @@ class CreateMovie extends Component
 {
     use WithFileUploads;
     use ManagesCast, ManagesCrew, ManagesAwards;
-    use HandleFormValidation;
 
     public MovieForm $form;
 
@@ -48,7 +46,8 @@ class CreateMovie extends Component
 
         if ($modelClass === Person::class) {
             $this->dispatch('updatePeopleOptions',
-                options: $this->people
+                options: $this->people,
+                modelClass: $modelClass
             );
         }
 
@@ -78,7 +77,6 @@ class CreateMovie extends Component
         $this->photos = $photos;
         $this->form->photos = $photos;
     }
-
     #[Computed]
     public function countries()
     {
@@ -157,18 +155,18 @@ class CreateMovie extends Component
         $this->initializeAwards();
     }
 
+
+
     public function save()
     {
 
         $this->form->validate();
 
-
         try {
 
             $this->form->store();
 
-            session()->flash('message', 'Film erfolgreich erstellt!');
-            return $this->redirect('/movies');
+            return $this->redirect('/movies/all');
 
         } catch (\Exception $e) {
             $this->addError('general', 'Fehler beim Speichern: ' . $e->getMessage());

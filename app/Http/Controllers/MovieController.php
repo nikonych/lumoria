@@ -83,4 +83,9 @@ class MovieController extends Controller
     {
         return view('pages.movies.create');
     }
+
+    public function edit(): View
+    {
+        return view('pages.movies.edit');
+    }
 }

@@ -44,7 +44,7 @@
                                  class="flex scrollbar-hide overflow-x-auto scroll-smooth snap-x snap-mandatory space-x-3">
                                 @foreach($person->photos as $photo)
                                     <div class="snap-start flex-shrink-0 w-full sm:w-1/2 lg:w-1/4">
-                                        <img src="{{$photo->file_path}}" alt="Galeriebild"
+                                        <img src="{{$photo->url}}" alt="Galeriebild"
                                              class="w-full rounded-sm aspect-5/3 object-cover">
                                     </div>
                                 @endforeach
@@ -67,7 +67,7 @@
                             <div x-ref="container"
                                  class="flex scrollbar-hide overflow-x-auto scroll-smooth snap-x snap-mandatory space-x-5">
                                 @foreach($person->actedMovies as $movie)
-                                    <div class="flex-shrink-0 w-full sm:w-1/3 lg:w-1/6">
+                                    <div class="flex-shrink-0">
                                         <x-movies.card :movie="$movie"/>
                                     </div>
                                 @endforeach

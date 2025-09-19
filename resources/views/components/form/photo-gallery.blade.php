@@ -26,7 +26,6 @@
         x-on:drop.prevent="handleDrop"
         :class="{ 'bg-slate-600': isDragging }"
     >
-        <!-- Фотографии слева -->
         @if ($photos && count($photos) > 0)
             <div class="flex-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 pr-6">
                 @foreach ($photos as $index => $photo)
@@ -40,7 +39,6 @@
                             <p class="truncate text-center">{{ number_format($photo->getSize() / 1024, 0) }}KB</p>
                         </div>
 
-                        <!-- Кнопка удаления -->
                         <button type="button"
                                 wire:click="removePhoto({{ $index }})"
                                 class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
@@ -54,9 +52,7 @@
             </div>
         @endif
 
-        <!-- Зона загрузки справа -->
         <div class="flex flex-col items-center justify-center space-y-3 {{ $photos && count($photos) > 0 ? 'min-w-[200px]' : 'flex-1' }} transition-all duration-300">
-            <!-- Иконка и текст -->
             <div class="flex flex-col items-center space-y-2">
                 <div class="p-3">
                     <x-icons.inbox-in class="w-8 h-8"/>
@@ -73,7 +69,6 @@
                 @endif
             </div>
 
-            <!-- Кнопка загрузки -->
             <label for="photoUpload" class="cursor-pointer">
                 <span class="bg-bg-secondary hover:bg-slate-600 text-xs py-2.5 px-4 rounded-md transition-colors duration-200 block text-center">
                     {{ $photos && count($photos) > 0 ? '+ Weitere Fotos' : 'Dateien durchsuchen' }}
@@ -81,10 +76,8 @@
             </label>
         </div>
 
-        <!-- Скрытый input -->
         <input type="file" id="photoUpload" class="hidden" wire:model.live="{{ $wireModel }}" multiple accept="image/*">
 
-        <!-- Индикатор загрузки -->
         <div wire:loading wire:target="{{ $wireModel }}" class="absolute inset-0 bg-slate-800 bg-opacity-75 flex items-center justify-center rounded-sm">
             <div class="flex items-center space-x-3 text-white">
                 <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
@@ -93,7 +86,6 @@
         </div>
     </div>
 
-    <!-- Ошибки -->
     @error($wireModel)
     <span class="text-red-500 text-xs mt-2 block">{{ $message }}</span>
     @enderror
@@ -102,7 +94,6 @@
     <span class="text-red-500 text-xs mt-2 block">{{ $message }}</span>
     @enderror
 
-    <!-- Подсказка -->
     @if ($photos && count($photos) > 0)
         <div class="mt-3 text-xs text-slate-500 flex items-center justify-between">
             <span>💡 Tipp: Klicken Sie auf ein Foto, um Details zu sehen</span>

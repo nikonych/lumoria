@@ -34,32 +34,7 @@
                 @endif
             </div>
         </div>
-        <div class="flex flex-col w-2/3 bg-bg-card p-5 rounded-sm">
-            <div class="flex justify-between">
-                <p class="text-2xl font-semibold">Deine Bewertung:</p>
-                <x-base.stars :rating="0" :movie_id="$movie->id"
-                              spacing="space-x-3" size="8"/>
-
-            </div>
-            <div class="mt-4">
-                <x-base.input>
-                    <x-slot name="label">
-                        Titel (optional)
-                    </x-slot>
-                </x-base.input>
-            </div>
-            <div class="mt-4 flex flex-col flex-1 overflow-hidden min-h-0 rounded-sm">
-                <x-base.input type="textarea">
-                    <x-slot name="label" class="">
-                        Bewertung (optional)
-                    </x-slot>
-                </x-base.input>
-            </div>
-            <div class="mt-4 flex justify-end">
-                <button class="bg-indigo-700 text-sm py-2 px-4 rounded-sm">Bewertung abschicken
-                </button>
-            </div>
-        </div>
+        @livewire('movies.create-review', ['movie' => $movie])
     </div>
     <div class="mt-5">
         <livewire:movies.movie-reviews :movie="$movie" />

@@ -10,7 +10,7 @@
         @auth
             @if(auth()->user()->id === $movie->created_by)
                 <div class="flex space-x-2.5">
-                    <x-base.button variant="secondary" icon="pen">
+                    <x-base.button variant="secondary" icon="pen" href="{{route('movies.edit', $movie)}}">
                         Bearbeiten
                     </x-base.button>
                     <x-base.button variant="danger" icon="trash">
@@ -24,24 +24,16 @@
     <div class="flex space-x-12">
         <!-- Movie poster and info here -->
         <div class="flex-shrink-0">
+            @if(!empty($movie->poster_url))
             <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" class="w-xs rounded-xs">
+            @else
+                <img src="{{ Vite::asset('resources/images/no_movie.svg') }}" alt="{{ $movie->title }}" class="w-xs rounded-xs">
+            @endif
         </div>
         <div class="flex-1">
             <div class="flex justify-between items-center">
                 <h1 class="text-5xl font-bold">{{ $movie->title }}</h1>
-                <button
-                    class="group/btn rounded-full transition-all duration-300 text-gray-400 }}"
-                    data-movie-id="{{ $movie->id }}"
-                    disabled
-                >
-                    <svg class="w-12 h-12 text-gray-700"
-                         stroke="currentColor"
-                         fill="none"
-                         viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </button>
+                @livewire('movies.favorite-button', ['movie' => $movie])
             </div>
             <div class="flex items-center space-x-2.5 mt-3.5">
                                 <span class="bg-indigo-200 text-indigo-700 px-3 py-1 rounded-full text-sm">
@@ -76,12 +68,12 @@
                     <dt class="">Originaltitel:</dt>
                     <dd class="text-slate-400">{{$movie->original_title}}</dd>
                     @if(!empty($movie->language))
-                    <dt class="">Originalsprache:</dt>
-                    <dd class="text-slate-400">{{$movie->language->name}}</dd>
+                        <dt class="">Originalsprache:</dt>
+                        <dd class="text-slate-400">{{$movie->language->name}}</dd>
                     @endif
                     @if(!empty($movie->country))
-                    <dt class="">Produktionsland:</dt>
-                    <dd class="text-slate-400">{{$movie->country->name}}</dd>
+                        <dt class="">Produktionsland:</dt>
+                        <dd class="text-slate-400">{{$movie->country->name}}</dd>
                     @endif
                 </dl>
             </div>
@@ -89,10 +81,10 @@
                 <p>{{$movie->description}}</p>
             </div>
             @auth
-            <div class="flex space-x-3.5 mt-5">
-                <x-base.button icon="plus">Watchlist</x-base.button>
-                <x-base.button icon="directory">Sammlung</x-base.button>
-            </div>
+                <div class="flex space-x-3.5 mt-5">
+                    @livewire('movies.watchlist-button', ['movie' => $movie])
+                    @livewire('movies.collection-button', ['movie' => $movie])
+                </div>
             @endauth
 
         </div>

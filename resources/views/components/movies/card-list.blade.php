@@ -21,9 +21,15 @@
                 'ml-2' => !$rank,
         ])>
         <a class="cursor-pointer" href="{{route('movies.details', $movie)}}">
-            <img src="{{ $movie->poster_url }}"
-                 alt="{{ $movie->title }}"
-                 class="w-16 h-24 object-cover rounded-xs">
+            @if(!empty($movie->poster_url))
+                <img src="{{ $movie->poster_url }}"
+                     alt="{{ $movie->title }}"
+                     class="w-16 h-24 object-cover rounded-xs">
+            @else
+                <img src="{{ Vite::asset('resources/images/no_movie.svg') }}"
+                     alt="{{ $movie->title }}"
+                     class="w-16 h-24 object-cover rounded-xs">
+            @endif
         </a>
     </div>
 
@@ -51,24 +57,13 @@
 
     </div>
 
-    {{-- Action Buttons --}}
     <div class="flex flex-col items-end justify-center gap-3 ml-6">
         @auth
             <div class="flex items-center gap-5">
-                <button
-                    class="group/btn rounded-full cursor-pointer transition-all duration-300 {{ $movie->is_favorite ? 'text-pink-400' : 'text-gray-400 hover:text-pink-400' }}"
-                    data-movie-id="{{ $movie->id }}"
-                    data-favorite="{{ $movie->is_favorite ? 'true' : 'false' }}"
-                >
-                    <svg class="w-8 h-8 text-indigo-700 hover:text-indigo-600"
-                         fill="{{ $movie->is_favorite ? 'currentColor' : 'none' }}"
-                         stroke="currentColor"
-                         viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </button>
-                <x-base.button class="group/btn p-1.5" icon="plus"/>
+                <div class="mt-1.5">
+                    @livewire('movies.favorite-button', ['movie' => $movie, 'size' => 'w-8 h-8'])
+                </div>
+                <x-base.button icon="plus"/>
             </div>
         @endauth
         @guest

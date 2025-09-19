@@ -66,6 +66,7 @@ class MovieForm extends Form
 
     public function store(): void
     {
+//        TODO
         DB::transaction(function () {
             $movie = Movie::create([
                 'title' => $this->title,
@@ -81,29 +82,25 @@ class MovieForm extends Form
 
 
 
-            // Добавляем жанры
             if (!empty($this->selectedGenres)) {
                 $movie->genres()->attach($this->selectedGenres);
             }
 
-            // Сохраняем постер
             if ($this->poster_image) {
                 $movie->update([
                     'poster_image' => $this->poster_image->store('posters', 'public')
                 ]);
             }
 
-            // Сохраняем фотографии
             if (!empty($this->photos)) {
                 foreach ($this->photos as $photo) {
-                    $path = $photo->store('movies/gallery', 'public');
+                    $path = $photo->store('movies/'. $movie->id .'/gallery', 'public');
                     $movie->photos()->create([
                         'file_path' => $path,
                     ]);
                 }
             }
 
-            // Обрабатываем актерский состав
             if (!empty($this->cast)) {
                 foreach ($this->cast as $actor) {
                     if (!empty($actor['person_id']) && !empty($actor['role_name'])) {
@@ -117,7 +114,6 @@ class MovieForm extends Form
             }
 
 
-            // Обрабатываем съемочную группу
             if (!empty($this->crew)) {
                 foreach ($this->crew as $member) {
                     if (!empty($member['person_id']) && !empty($member['department_id']) && !empty($member['position'])) {
@@ -130,23 +126,19 @@ class MovieForm extends Form
                     }
                 }
             }
-            // Обрабатываем награды
             if (!empty($this->awardsData)) {
                 foreach ($this->awardsData as $awardData) {
                     if (!empty($awardData['award_name']) && !empty($awardData['categories'])) {
                         foreach ($awardData['categories'] as $categoryData) {
                             if (!empty($categoryData['category'])) {
-                                // Создаем или находим награду
                                 $award = Award::firstOrCreate([
                                     'name' => $awardData['award_name']
                                 ]);
 
-                                // Создаем или находим категорию
                                 $category = Category::firstOrCreate([
                                     'name' => $categoryData['category']
                                 ]);
 
-                                // Создаем запись о победителе награды
                                 AwardWinner::create([
                                     'award_id' => $award->id,
                                     'category_id' => $category->id,

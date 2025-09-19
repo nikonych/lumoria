@@ -87,7 +87,13 @@ trait WithPersonFilters
     protected function applyPersonFilters($query)
     {
         if ($this->countryId) {
-            $query->where('country_id', $this->countryId);
+            $countryNames = Country::where('id', $this->countryId)->pluck('name')->toArray();
+
+            $query->where(function($q) use ($countryNames) {
+                foreach ($countryNames as $countryName) {
+                    $q->orWhere('birth_place', 'LIKE', '%' . $countryName . '%');
+                }
+            });
         }
 
         if ($this->nationality) {

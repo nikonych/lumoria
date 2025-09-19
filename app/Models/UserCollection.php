@@ -5,28 +5,10 @@ namespace App\Models;
 use Database\Factories\UserCollectionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @property int $id
- * @property int $user_id
- * @property string $name
- * @property int $is_public
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Database\Factories\UserCollectionFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection whereIsPublic($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserCollection whereUserId($value)
- * @mixin \Eloquent
- */
 class UserCollection extends Model
 {
     /** @use HasFactory<UserCollectionFactory> */
@@ -37,14 +19,19 @@ class UserCollection extends Model
         'is_public'
     ];
 
-    protected function movies(): belongsToMany
+    protected $casts = [
+        'is_public' => 'boolean'
+    ];
+
+
+    public function user(): BelongsTo
     {
-        return $this->belongsToMany(Movie::class);
+        return $this->belongsTo(User::class);
     }
 
-    protected function user(): BelongsToMany
+    public function movies(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Movie::class, 'movie_user_collection');
     }
 
 }

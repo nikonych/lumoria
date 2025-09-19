@@ -3,7 +3,7 @@
         <label for="country" class="block text-sm font-medium mb-1">Produktionsland</label>
         <livewire:base.selection
             wire:model.live="countryId"
-            :options="$countries->map(fn($c) => ['value' => $c->id, 'text' => $c->name])->toArray()"
+            :options="$countries"
             label="Alle Länder"
             class="w-full"
         />

@@ -1,0 +1,23 @@
+<svg width="297" height="440" viewBox="0 0 297 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_i_1095_12871)">
+<g clip-path="url(#clip0_1095_12871)">
+<rect y="-5.79102" width="296.857" height="470.082" fill="#EEF2FF" fill-opacity="0.15"/>
+<path d="M135.261 203.001C138.511 203.001 141.261 205.751 141.261 209.001C141.261 212.376 138.511 215.001 135.261 215.001C131.886 215.001 129.261 212.376 129.261 209.001C129.261 205.751 131.886 203.001 135.261 203.001ZM172.136 192.001C176.636 192.001 180.136 195.626 180.136 200.001V240.001C180.136 244.501 176.511 248.001 172.136 248.001H124.136C119.761 248.001 116.136 244.501 116.136 240.001V200.001C116.136 195.626 119.761 192.001 124.136 192.001H172.136ZM174.136 239.251V200.001C174.136 199.001 173.261 198.001 172.136 198.001H124.136C123.136 198.001 122.136 199.001 122.136 200.001L122.261 240.001L131.636 228.251C132.136 227.751 132.761 227.376 133.511 227.376C134.261 227.376 134.886 227.751 135.386 228.251L140.011 234.001L153.261 216.001C153.761 215.376 154.386 215.001 155.261 215.001C156.011 215.001 156.636 215.376 157.011 216.001L174.136 239.251Z" fill="#94A3B8"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_i_1095_12871" x="0" y="0" width="300.913" height="444.398" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="4.3978" dy="4.3978"/>
+<feGaussianBlur stdDeviation="3.29835"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.124757 0 0 0 0 0.124757 0 0 0 0 0.124757 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_1095_12871"/>
+</filter>
+<clipPath id="clip0_1095_12871">
+<path d="M0 4C0 1.79086 1.79086 0 4 0H292.516C294.725 0 296.516 1.79086 296.516 4V436C296.516 438.209 294.725 440 292.516 440H4.00001C1.79087 440 0 438.209 0 436V4Z" fill="white"/>
+</clipPath>
+</defs>
+</svg>

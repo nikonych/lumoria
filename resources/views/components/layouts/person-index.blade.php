@@ -33,8 +33,8 @@
         <div class="my-10">
             {{ $slot }}
         </div>
-        <div class="flex justify-between items-center">
-            <x-pagination :paginator="$people" />
+        <div class="flex justify-between items-center mb-20">
+            <x-pagination :paginator="$people"/>
             <div class="flex items-center space-x-3 mt-8">
                 <p>Elemente pro Seite</p>
                 <livewire:base.selection
