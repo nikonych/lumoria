@@ -10,12 +10,10 @@
         @auth
             @if(auth()->user()->id === $movie->created_by)
                 <div class="flex space-x-2.5">
-                    <x-base.button variant="secondary" icon="pen" href="{{route('movies.edit', $movie)}}">
+                    <x-base.button variant="secondary" icon="pen" href="{{ route('movies.edit', $movie) }}">
                         Bearbeiten
                     </x-base.button>
-                    <x-base.button variant="danger" icon="trash">
-                        Löschen
-                    </x-base.button>
+                    @livewire('movies.delete-movie-button', ['movie' => $movie])
                 </div>
             @endif
         @endauth

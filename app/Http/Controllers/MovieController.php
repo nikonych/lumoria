@@ -84,8 +84,8 @@ class MovieController extends Controller
         return view('pages.movies.create');
     }
 
-    public function edit(): View
+    public function edit(Movie $movie): View
     {
-        return view('pages.movies.edit');
+        return view('pages.movies.edit', compact('movie'));
     }
 }

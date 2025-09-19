@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
+use App\Livewire\Movies\EditMovie;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -15,7 +16,6 @@ Route::controller(MovieController::class)->prefix('movies')->name('movies.')->gr
     Route::get('/new', 'new')->name('new');
 
     Route::get('/create', 'create')->name('create')->middleware('auth');
-//    TODO only that user who created the movie can edit it
     Route::get('/{movie}/edit', 'edit')->name('edit')->middleware('auth');
 
     Route::get('/genre/{genre}', 'showByGenre')->name('by-genre');
