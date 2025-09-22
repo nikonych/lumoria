@@ -8,7 +8,8 @@
     'wrapperClass' => 'w-full',
     'containerClass' => 'relative pb-5',
     'modelClass' => null,
-    'modelCreateField' => 'name'
+    'modelCreateField' => 'name',
+    'value' => ''
 ])
 
 <x-form.field :name="$name" :label="$label" :wrapper-class="$wrapperClass" :container-class="$containerClass">
@@ -17,6 +18,7 @@
             :wire:model.blur="$wireModel"
             :options="$options"
             class="w-full"
+            :value="$value"
             wire:key="search-select-{{ $name }}"
         />
     @elseif($type === 'search-select-with-add')
@@ -27,6 +29,7 @@
             wire:key="selection-{{ $name }}"
             :modelClass="$modelClass"
             label="{{$label}}"
+            :value="$value"
             :modelCreateField="$modelCreateField"
         />
     @else
@@ -34,6 +37,7 @@
             :wire:model.blur="$wireModel"
             :options="$options"
             class="w-full"
+            :value="$value"
             wire:key="selection-{{ $name }}"
         />
     @endif

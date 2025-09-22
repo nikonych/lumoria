@@ -30,7 +30,6 @@
                 @endif
             </div>
         @endif
-
         <input
             type="{{ $type }}"
             id="{{ $id }}"

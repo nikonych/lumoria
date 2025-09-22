@@ -11,6 +11,7 @@
                     type="search-select-with-add"
                     :model-class="\App\Models\Person::class"
                     model-create-field="name"
+                    :value="$member['person_id']"
                 />
             </div>
             <div class="w-1/3">
@@ -22,6 +23,7 @@
                     type="search-select-with-add"
                     :model-class="\App\Models\Department::class"
                     model-create-field="name"
+                    :value="$member['department_id']"
                 />
             </div>
             <div class="w-1/3">

@@ -29,7 +29,6 @@ class DeleteMovieButton extends Component
     public function delete()
     {
         try {
-            // Удаляем файлы
             if ($this->movie->poster_image) {
                 Storage::disk('public')->delete($this->movie->poster_image);
             }
@@ -40,7 +39,6 @@ class DeleteMovieButton extends Component
 
             $this->movie->delete();
 
-            session()->flash('success', 'Film erfolgreich gelöscht!');
             return redirect()->route('movies.index');
 
         } catch (\Exception $e) {

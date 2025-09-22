@@ -11,6 +11,7 @@
                     type="search-select-with-add"
                     :model-class="\App\Models\Person::class"
                     model-create-field="name"
+                    :value="$actor['person_id']"
                 />
             </div>
             <div class="w-1/2">
@@ -18,7 +19,6 @@
                     name="form.cast.{{ $actor['id'] }}.role_name"
                     label="Rolle"
                     wire-model="form.cast.{{ $actor['id'] }}.role_name"
-                    update-on="blur"
                 />
             </div>
             @if(count($cast) > 1)

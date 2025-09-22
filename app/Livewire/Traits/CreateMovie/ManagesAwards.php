@@ -24,7 +24,7 @@ trait ManagesAwards
 
     public function addAward(): void
     {
-        $this->awardsData[] = [
+        $newAward = [
             'id' => $this->awardCounter++,
             'award_name' => '',
             'categories' => [
@@ -35,6 +35,9 @@ trait ManagesAwards
                 ]
             ]
         ];
+        $this->awardsData[] = $newAward;
+        $this->form->awardsData[] = $newAward;
+
     }
 
     public function addCategory(int $awardId): void
@@ -58,6 +61,7 @@ trait ManagesAwards
     public function removeCategory(int $awardId, int $categoryId): void
     {
         $awardIndex = collect($this->awardsData)->search(fn($award) => $award['id'] === $awardId);
+        $awardFormIndex = collect($this->form->awardsData)->search(fn($award) => $award['id'] === $awardId);
         if ($awardIndex !== false) {
             $this->awardsData[$awardIndex]['categories'] = collect($this->awardsData[$awardIndex]['categories'])
                 ->reject(fn($category) => $category['id'] === $categoryId)
@@ -65,11 +69,21 @@ trait ManagesAwards
                 ->toArray();
 
         }
+        if ($awardFormIndex !== false) {
+            $this->form->awardsData[$awardFormIndex]['categories'] = collect($this->form->awardsData[$awardFormIndex]['categories'])
+                ->reject(fn($category) => $category['id'] === $categoryId)
+                ->values()
+                ->toArray();
+        }
     }
 
     public function removeAward(int $awardId): void
     {
         $this->awardsData = collect($this->awardsData)
+            ->reject(fn($award) => $award['id'] === $awardId)
+            ->values()
+            ->toArray();
+        $this->form->awardsData = collect($this->form->awardsData)
             ->reject(fn($award) => $award['id'] === $awardId)
             ->values()
             ->toArray();

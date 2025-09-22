@@ -30,6 +30,7 @@ trait ManagesCrew
     public function removeCrewMember(int $id): void
     {
         $this->crew = collect($this->crew)->reject(fn($member) => $member['id'] === $id)->values()->toArray();
+        $this->form->crew = collect($this->crew)->reject(fn($member) => $member['id'] === $id)->values()->toArray();
     }
 
     public function clearCrewMember(int $id): void

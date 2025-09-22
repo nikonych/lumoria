@@ -30,6 +30,11 @@ class Selection extends Component
         }
     }
 
+    public function updatedValue()
+    {
+
+    }
+
     public function selectOption(string $value)
     {
         $this->value = $value;
@@ -38,8 +43,12 @@ class Selection extends Component
     #[Computed]
     public function selectedText(): string
     {
+        if (!$this->value) {
+            return $this->label ?: '';
+        }
+
         $selected = collect($this->options)->firstWhere('value', $this->value);
-        return $selected['text'] ?? $this->label;
+        return $selected['text'] ?? $this->label ?: '';
     }
 
     public function render()

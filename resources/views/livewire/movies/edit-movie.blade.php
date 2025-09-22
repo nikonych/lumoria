@@ -14,17 +14,20 @@
         @enderror
 
         <form wire:submit="save">
-                @include('livewire.movies.create.movie-information-manager')
+            @include('livewire.movies.create.movie-information-manager')
 
-                @include('livewire.movies.create.genre-manager')
+            @include('livewire.movies.create.genre-manager')
 
-                @include('livewire.movies.create.photo-manager')
+            @include('livewire.movies.create.photo-manager', [
+            'existingPhotos' => $existingPhotos,
+            'newPhotos' => $newPhotos
+            ])
 
-                @include('livewire.movies.create.cast-manager')
+            @include('livewire.movies.create.cast-manager')
 
-                @include('livewire.movies.create.crew-manager')
+            @include('livewire.movies.create.crew-manager')
 
-                @include('livewire.movies.create.award-manager')
+            @include('livewire.movies.create.award-manager')
 
             <div class="flex justify-end items-center mt-16">
 
@@ -41,7 +44,6 @@
         </form>
     </div>
 
-    {{-- Loading состояние --}}
     <div wire:loading wire:target="save"
          class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-6 flex items-center space-x-3">

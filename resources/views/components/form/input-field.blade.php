@@ -8,7 +8,7 @@
     'icon' => null,
     'wrapperClass' => 'w-full',
     'containerClass' => 'relative pb-5',
-    'updateOn' => 'blur'
+    'updateOn' => 'blur',
 ])
 
 <x-form.field :name="$name" :label="$label" :wrapper-class="$wrapperClass" :container-class="$containerClass">

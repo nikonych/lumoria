@@ -1,5 +1,13 @@
+@props([
+    'existingPhotos' => [],
+    'newPhotos' => [],
+    'wireModel' => 'newPhotos',
+    'title' => 'Fotos hinzufügen'
+])
+
 <x-form.photo-gallery
-    :photos="$photos"
-    wire-model="photos"
-    title="Fotos hinzufügen"
+    :existing-photos="$existingPhotos"
+    :new-photos="$newPhotos"
+    :wire-model="$wireModel"
+    :title="$title"
 />

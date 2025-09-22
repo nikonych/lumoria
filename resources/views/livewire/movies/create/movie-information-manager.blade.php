@@ -24,6 +24,7 @@
                     label="Produktionsland"
                     wire-model="form.original_country_id"
                     :options="$this->countries"
+                    :value="$form->original_country_id"
                     type="search-select-with-add"
                     :model-class="\App\Models\Country::class"
                     model-create-field="name"
@@ -36,6 +37,7 @@
                             label="Originalsprache"
                             wire-model="form.original_language_id"
                             :options="$this->languages"
+                            :value="$form->original_language_id"
                             type="search-select-with-add"
                             :model-class="\App\Models\Language::class"
                             model-create-field="name"
@@ -83,6 +85,7 @@
                             label="Altersfreigabe"
                             wire-model="form.age_rating"
                             :options="$ageRatingOptions"
+                            :value="$form->age_rating"
                             type="selection"
                         />
                     </div>

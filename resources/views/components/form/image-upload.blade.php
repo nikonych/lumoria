@@ -39,9 +39,15 @@
         :class="dragover ? 'border-indigo-500 bg-slate-600' : 'border-slate-600'">
 
         @if ($currentImage)
-            <img src="{{ $currentImage->temporaryUrl() }}"
-                 class="object-cover h-full w-full rounded-sm"
-                 alt="{{ $label }}">
+            @if (is_string($currentImage))
+                <img src="{{ asset('storage/' . $currentImage) }}"
+                     class="object-cover h-full w-full rounded-sm"
+                     alt="{{ $label }}">
+            @else
+                <img src="{{ $currentImage->temporaryUrl() }}"
+                     class="object-cover h-full w-full rounded-sm"
+                     alt="{{ $label }}">
+            @endif
         @else
             <div class="text-center">
                 <div class="text-slate-500 mb-2">

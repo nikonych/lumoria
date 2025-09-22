@@ -28,6 +28,7 @@ trait ManagesCast
     public function removeActor(int $id): void
     {
         $this->cast = collect($this->cast)->reject(fn($actor) => $actor['id'] === $id)->values()->toArray();
+        $this->form->cast = collect($this->cast)->reject(fn($actor) => $actor['id'] === $id)->values()->toArray();
     }
 
     public function clearActor(int $id): void

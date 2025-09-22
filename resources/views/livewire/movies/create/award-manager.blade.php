@@ -12,6 +12,7 @@
                     type="search-select-with-add"
                     :model-class="\App\Models\Award::class"
                     model-create-field="name"
+                    :value="$award['award_name']"
                 />
             </div>
 
