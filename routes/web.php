@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\ProfileController;
 use App\Livewire\Movies\EditMovie;
 use Illuminate\Support\Facades\Route;
 
@@ -35,11 +36,17 @@ Route::controller(PersonController::class)->prefix('people')->name('people.')->g
     Route::get('/cameramen', fn() => app(PersonController::class)->showByDepartmentSlug('Kamera & Beleuchtung'))->name('cameramen');
     Route::get('/editors', fn() => app(PersonController::class)->showByDepartmentSlug('Schnitt'))->name('editors');
 
-    Route::get('/create', 'create')->name('create');
+    Route::get('/create', 'create')->name('create')->middleware('auth');
+    Route::get('/{person}/edit', 'edit')->name('edit')->middleware('auth');
 
     Route::get('/{person}', 'personDetails')->name('details');
 
 });
+
+Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
+    Route::get('/', 'index')->name('index');
+});
+
 
 Route::get('/phpinfo', function () {
     return response()->json([
@@ -52,4 +59,4 @@ Route::get('/phpinfo', function () {
     ]);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

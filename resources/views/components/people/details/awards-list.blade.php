@@ -15,7 +15,7 @@
                                 {{ $winner->movie->title }}
                             </a>
                             <p class="text-sm font-light">
-                                {{ $winner->award->category }}
+                                {{ $winner->category->name }}
                             </p>
                         </div>
                     @endif

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Award;
+use App\Models\Country;
 use App\Models\Department;
 use App\Models\Language;
 use App\Models\Person;
@@ -19,6 +20,7 @@ class PersonSeeder extends Seeder
     {
         $languages = Language::all();
         $departments = Department::all();
+        $countries = Country::all();
 
         // Create 200 people using the factory
         Person::factory(200)
@@ -27,13 +29,14 @@ class PersonSeeder extends Seeder
             // For each person, also create 2 to 7 related roles in movies
             ->has(Role::factory()->count(rand(2, 7)))
             ->create()
-            ->each(function (Person $person) use ($languages, $departments) {
+            ->each(function (Person $person) use ($countries, $languages, $departments) {
                 // Now, attach the many-to-many relationships for each created person
 
                 // Attach a random number of languages (1 to 3)
                 $person->languages()->attach(
                     $languages->random(rand(1, 3))->pluck('id')->toArray()
                 );
+
 
                 // Attach a random number of departments (1 or 2)
                 $person->departments()->attach(

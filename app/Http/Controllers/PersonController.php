@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Movie;
 use App\Models\Person;
 use Illuminate\View\View;
 
@@ -47,6 +48,11 @@ class PersonController extends Controller
     public function create(): View
     {
         return view('pages.people.create');
+    }
+
+    public function edit(Person $person): View
+    {
+        return view('pages.people.edit', compact('person'));
     }
 
 

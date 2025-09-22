@@ -1,29 +1,30 @@
 <?php
 
-namespace App\Livewire\Movies;
+namespace App\Livewire\People;
 
 use App\Enums\AgeRating;
-use App\Livewire\Forms\MovieForm;
-use App\Livewire\Traits\CreateMovie\ManagesAwards;
-use App\Livewire\Traits\CreateMovie\ManagesCast;
-use App\Livewire\Traits\CreateMovie\ManagesCrew;
+use App\Livewire\Forms\PersonForm;
+use App\Livewire\Traits\CreatePerson\ManagesAwards;
+use App\Livewire\Traits\CreatePerson\ManagesCast;
+use App\Livewire\Traits\CreatePerson\ManagesCrew;
 use App\Models\Award;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Department;
 use App\Models\Genre;
 use App\Models\Language;
+use App\Models\Movie;
 use App\Models\Person;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class CreateMovie extends Component
+class CreatePerson extends Component
 {
     use WithFileUploads;
     use ManagesCast, ManagesCrew, ManagesAwards;
 
-    public MovieForm $form;
+    public PersonForm $form;
 
     public array $photos = [];
 
@@ -35,11 +36,10 @@ class CreateMovie extends Component
     public array $awardsData = [];
 
     public int $awardCounter = 0;
-    public int $categoryCounter = 0;
 
     public array $existingPhotos = [];
     public array $newPhotos = [];
-    public array $ageRatingOptions = [];
+    public int $categoryCounter = 0;
 
     protected $listeners = ['photosUpdated' => 'handlePhotosUpdate', 'optionsUpdated' => 'refreshOptions'];
 
@@ -47,23 +47,13 @@ class CreateMovie extends Component
     public function refreshOptions(string $modelClass): void
     {
 
-        if ($modelClass === Person::class) {
-            $this->dispatch('updatePeopleOptions',
-                options: $this->people,
-                modelClass: $modelClass
-            );
-        }
+//        if ($modelClass === Person::class) {
+//            $this->dispatch('updatePeopleOptions',
+//                options: $this->people,
+//                modelClass: $modelClass
+//            );
+//        }
 
-    }
-
-    public function updatedNewPhotos(): void
-    {
-        $this->validateOnly('newPhotos', [
-            'newPhotos' => 'nullable|array|max:10',
-            'newPhotos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
-        ]);
-
-        $this->form->photos = $this->newPhotos;
     }
 
     public function updatedPhotos(): void
@@ -118,20 +108,14 @@ class CreateMovie extends Component
     }
 
     #[Computed]
-    public function genres()
+    public function movies()
     {
-        return Genre::orderBy('name')
-            ->get();
-    }
-
-    #[Computed]
-    public function people()
-    {
-        return Person::orderBy('name')
+        return Movie::orderBy('title')
             ->get()
-            ->map(fn($c) => ['value' => $c->id, 'text' => $c->name])
+            ->map(fn($c) => ['value' => $c->id, 'text' => $c->title])
             ->toArray();
     }
+
 
     #[Computed]
     public function awardOptions()
@@ -159,13 +143,20 @@ class CreateMovie extends Component
 
         $this->castCounter = 0;
 
-        foreach (AgeRating::cases() as $case) {
-            $this->ageRatingOptions[] = ['value' => $case->value, 'text' => $case->value];
-        }
 
         $this->initializeCast();
         $this->initializeCrew();
         $this->initializeAwards();
+    }
+
+    public function updatedNewPhotos(): void
+    {
+        $this->validateOnly('newPhotos', [
+            'newPhotos' => 'nullable|array|max:10',
+            'newPhotos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        $this->form->photos = $this->newPhotos;
     }
 
 
@@ -179,7 +170,7 @@ class CreateMovie extends Component
 
             $this->form->store();
 
-            return $this->redirect('/movies/all');
+            return $this->redirect('/people/all');
 
         } catch (\Exception $e) {
             $this->addError('general', 'Fehler beim Speichern: ' . $e->getMessage());
@@ -188,6 +179,6 @@ class CreateMovie extends Component
 
     public function render()
     {
-        return view('livewire.movies.create-movie');
+        return view('livewire.people.create-person');
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 trait WithPersonFilters
 {
     public ?int $countryId = null;
-    public ?string $nationality = null;
+    public ?int $nationalityId = null;
     public ?int $languageId = null;
     public array $selectedDepartments = [];
     public ?int $yearFrom = null;
@@ -26,7 +26,7 @@ trait WithPersonFilters
     public function initializeWithPersonFilters(): void
     {
         $this->countries = $this->getCountriesWithAll();
-        $this->nationalities = Person::query()->distinct()->whereNotNull('nationality')->orderBy('nationality')->pluck('nationality');
+        $this->nationalities = Country::orderBy('name')->get();
         $this->languages = Language::orderBy('name')->get();
         $this->departments = Department::orderBy('name')->get();
     }
@@ -46,7 +46,7 @@ trait WithPersonFilters
         $this->resetPage();
     }
 
-    public function updatedNationality(): void
+    public function updatedNationalityId(): void
     {
         $this->resetPage();
     }
@@ -75,7 +75,7 @@ trait WithPersonFilters
     {
         $this->reset([
             'countryId',
-            'nationality',
+            'nationalityId',
             'languageId',
             'selectedDepartments',
             'yearFrom',
@@ -95,9 +95,9 @@ trait WithPersonFilters
                 }
             });
         }
+        if ($this->nationalityId) {
+            $query->where('nationality_id', $this->nationalityId);
 
-        if ($this->nationality) {
-            $query->where('nationality', $this->nationality);
         }
 
         if ($this->languageId) {

@@ -7,10 +7,12 @@ use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Person extends Model
 {
@@ -25,10 +27,15 @@ class Person extends Model
         'death_date',
         'birth_place',
         'biography',
-        'nationality',
+        'nationality_id',
         'profile_image',
         'description',
     ];
+
+    public function nationality(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'nationality_id');
+    }
 
     function languages(): BelongsToMany
     {
@@ -62,7 +69,16 @@ class Person extends Model
 
     public function actedMovies(): BelongsToMany
     {
-        return $this->belongsToMany(Movie::class, 'roles');
+        return $this->belongsToMany(Movie::class, 'roles')
+            ->withPivot('name')
+            ->withTimestamps();
+    }
+
+    public function crew(): BelongsToMany
+    {
+        return $this->belongsToMany(Movie::class, 'crew_positions')
+            ->withPivot(['position', 'department_id'])
+            ->withTimestamps();
     }
 
     public function moviesGroupedByDepartment(): Attribute
@@ -93,5 +109,28 @@ class Person extends Model
                 ->get()
                 ->groupBy('award.name')
         );
+    }
+
+    public function getProfileUrlAttribute(): ?string
+    {
+        if (!$this->profile_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->profile_image, 'http')) {
+            return $this->profile_image;
+        }
+
+        return Storage::url($this->profile_image);
+    }
+
+    public function getNationalityNameAttribute(): ?string
+    {
+        return $this->nationality?->name;
+    }
+
+    public function getLanguagesListAttribute(): array
+    {
+        return $this->languages->pluck('name')->toArray();
     }
 }

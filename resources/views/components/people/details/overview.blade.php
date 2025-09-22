@@ -7,37 +7,25 @@
             <a href="{{route('people.details', $person)}}"
                class="font-semibold cursor-pointer">{{$person->name}}</a>
         </p>
-        <div class="flex space-x-2.5">
-            <button class="bg-bg-secondary text-white px-4 py-1.5 rounded-sm">
-                <div class="flex items-center space-x-2.5 text-sm">
-                    <p>Bearbeiten</p>
-                   <x-icons.pen/>
+        @auth
+            @if(auth()->user()->id === $person->created_by)
+                <div class="flex space-x-2.5">
+                    <x-base.button variant="secondary" icon="pen" href="{{ route('people.edit', $person) }}">
+                        Bearbeiten
+                    </x-base.button>
+                    @livewire('people.delete-person-button', ['person' => $person])
                 </div>
-
-            </button>
-            <button class="bg-rot text-white px-4 py-1.5 rounded-sm">
-
-                <div class="flex items-center space-x-2.5 text-sm">
-                    <p>Löschen</p>
-                    <x-icons.trash/>
-                </div>
-            </button>
-        </div>
+            @endif
+        @endauth
     </div>
     <div class="flex space-x-12">
         <div class="flex-shrink-0">
-            <img src="{{ $person->profile_image }}" alt="{{ $person->name }}" class="w-xs rounded-xs">
+            <img src="{{ $person->profile_url }}" alt="{{ $person->name }}" class="w-xs rounded-xs">
         </div>
         <div class="flex-1">
             <div class="flex justify-between items-center">
                 <h1 class="text-5xl font-bold">{{ $person->name }}</h1>
-                <button
-                    class="group/btn rounded-full transition-all duration-300 text-gray-400 }}"
-                    data-person-id="{{ $person->id }}"
-                    disabled
-                >
-                   <x-icons.heart/>
-                </button>
+                @livewire('people.favorite-button', ['person' => $person])
             </div>
             <div class="flex items-center space-x-2.5 mt-3.5">
                 @foreach($person->departments as $department)
@@ -50,10 +38,10 @@
                 <dl class="grid grid-cols-2 max-w-2/3 font-light gap-y-1.5">
                     <dt class="">Geboren:</dt>
                     <dd class="text-slate-400">{{$person->birth_date}}</dd>
-
-                    <dt class="">Nationalität:</dt>
-                    <dd class="text-slate-400">{{$person->nationality}}</dd>
-
+                    @if($person->nationality)
+                        <dt class="">Nationalität:</dt>
+                        <dd class="text-slate-400">{{$person->nationality->name}}</dd>
+                    @endif
                     <dt class="">Wohnort:</dt>
                     <dd class="text-slate-400">{{$person->birth_place}}</dd>
 

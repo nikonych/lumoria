@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -44,6 +45,11 @@ class User extends Authenticatable
     public function favoriteMovies(): BelongsToMany
     {
         return $this->belongsToMany(Movie::class, 'favorite_movie');
+    }
+
+    public function favoritePeople(): BelongsToMany
+    {
+        return $this->belongsToMany(Person::class, 'favorite_people');
     }
 
     public function watchlist(): BelongsToMany
@@ -97,6 +103,19 @@ class User extends Authenticatable
     public function ratings(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getProfileUrlAttribute(): ?string
+    {
+        if (!$this->profile_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->profile_image, 'http')) {
+            return $this->profile_image;
+        }
+
+        return Storage::url($this->profile_image);
     }
 
     /**

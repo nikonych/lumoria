@@ -6,7 +6,7 @@
 
     <div class="relative w-full overflow-hidden">
         <a class="cursor-pointer" href="{{route('people.details', $person)}}">
-        <img src="{{$person->profile_image}}" alt="{{$person->name}}"
+        <img src="{{$person->profile_url}}" alt="{{$person->name}}"
              class="w-full h-full object-cover rounded-sm">
         </a>
     </div>

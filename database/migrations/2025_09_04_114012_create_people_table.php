@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('death_date')->nullable();
             $table->string('birth_place')->nullable();
             $table->string('biography')->nullable();
-            $table->string('nationality')->nullable();
+            $table->foreignId('nationality_id')->nullable()->constrained('countries')->onDelete('set null');
             $table->string('profile_image')->nullable();
             $table->string('description')->nullable();
 

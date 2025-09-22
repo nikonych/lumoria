@@ -11,8 +11,8 @@
     <div>
         <label for="nationality" class="block text-sm font-medium mb-1">Nationalität</label>
         <livewire:base.selection
-            wire:model.live="nationality"
-            :options="$nationalities->map(fn($n) => ['value' => $n, 'text' => $n])->toArray()"
+            wire:model.live="nationalityId"
+            :options="$nationalities->map(fn($n) => ['value' => $n->id, 'text' => $n->name])->toArray()"
             class="w-full"
         />
     </div>

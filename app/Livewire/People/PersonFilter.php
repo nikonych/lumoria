@@ -14,7 +14,7 @@ class PersonFilter extends Component
     public $departments;
 
     public $countryId = null;
-    public $nationality = null;
+    public $nationalityId = null;
     public $languageId = null;
     public array $selectedDepartments = [];
     public $yearFrom = null;
@@ -22,7 +22,7 @@ class PersonFilter extends Component
 
     private const FILTER_PROPERTIES = [
         'countryId',
-        'nationality',
+        'nationalityId',
         'languageId',
         'selectedDepartments',
         'yearFrom',

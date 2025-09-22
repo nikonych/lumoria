@@ -44,6 +44,12 @@ return new class extends Migration
             $table->foreignId('movie_id')->constrained()->onDelete('cascade');
         });
 
+        Schema::create('favorite_people', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('person_id')->constrained()->onDelete('cascade');
+        });
+
         Schema::create('favorite_genre', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -69,6 +75,7 @@ return new class extends Migration
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
         Schema::dropIfExists('favorite_movie');
+        Schema::dropIfExists('favorite_people');
         Schema::dropIfExists('favorite_genre');
         Schema::dropIfExists('watchlist');
     }
