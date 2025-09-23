@@ -96,4 +96,6 @@ input[type=number] {
     --color-bg-card: rgba(30, 27, 75, 0.4);
     --color-bg-secondary: #334155B2;
     --color-rot: #B20707;
+    --color-main-green: #30A226;
+    --color-main-green-hover: #4fba46;
 }

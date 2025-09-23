@@ -1,5 +1,5 @@
-<div class="flex flex-col space-y-12 ml-2">
-    <div>
+<div class="flex flex-col space-y-12">
+    <div class="">
         <div class="mb-5 flex space-x-2.5 items-center">
             <p class="text-3xl">Filme</p>
             <span class="bg-indigo-200 text-indigo-700 px-3.5 py-1.5 rounded-full text-xs">
@@ -10,14 +10,14 @@
             <div x-ref="container"
                  class="flex scrollbar-hide overflow-x-auto scroll-smooth snap-x snap-mandatory">
                 @foreach(auth()->user()->favoriteMovies as $movie)
-                    <div class="flex-shrink-0 w-1/2 sm:w-1/4 md:w-1/3 lg:w-1/8">
+                    <div class="flex-shrink-0 w-1/2 sm:w-1/4 md:w-1/3 lg:w-1/7">
                         <x-movies.card-mini :movie="$movie"/>
                     </div>
                 @endforeach
             </div>
         </x-carousel-pagination>
     </div>
-    <div>
+    <div class="">
         <div class="mb-5 flex space-x-2.5 items-center">
             <p class="text-3xl">Personen</p>
             <span class="bg-indigo-200 text-indigo-700 px-3.5 py-1.5 rounded-full text-xs">

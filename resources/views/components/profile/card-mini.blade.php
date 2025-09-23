@@ -1,0 +1,45 @@
+@props([
+    'movie' => null,
+    'showCheckbox' => true
+])
+
+<div class="flex flex-col w-32 rounded-sm overflow-hidden group">
+
+    <div class="relative w-full rounded-sm overflow-hidden">
+        <a class="cursor-pointer" href="{{route('movies.details', $movie)}}">
+            @if(!empty($movie->poster_url))
+                <img src="{{$movie->poster_url}}" alt="{{$movie->title}}"
+                     class="w-full h-full object-cover">
+            @else
+                <img src="{{Vite::asset('resources/images/no_movie.svg')}}" alt="{{$movie->title}}"
+                     class="w-full h-full object-cover">
+            @endif
+        </a>
+        @if($showCheckbox)
+            <div class="absolute top-2.5 right-2.5">
+                    <x-base.checkbox-big
+                        wire:model.live="selectedMovies"
+                        value="{{ $movie->id }}"
+                        id="movie_{{ $movie->id }}"
+                        wire:key="checkbox-{{ $movie->id }}"
+                    />
+            </div>
+        @endif
+    </div>
+
+    <div class="flex flex-col flex-grow py-3">
+        <div class="flex-grow">
+            <a class="cursor-pointer" href="{{route('movies.details', $movie)}}">
+                <p class="text-indigo-300 text-lg line-clamp-2 h-13 cursor-pointer">{{$movie->title}}</p>
+            </a>
+        </div>
+
+        @if (!empty($movie->genres))
+            <p class="text-sm font-light text-slate-50 line-clamp-1 mt-auto pt-1">
+                @foreach($movie->genres as $key => $genre)
+                    <span>{{$genre->name}}</span>{{ !$loop->last ? ',' : '' }}
+                @endforeach
+            </p>
+        @endif
+    </div>
+</div>

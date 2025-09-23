@@ -44,7 +44,7 @@ Route::controller(PersonController::class)->prefix('people')->name('people.')->g
 });
 
 Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
-    Route::get('/', 'index')->name('index');
+    Route::get('/', 'index')->name('index')->middleware('auth');;
 });
 
 

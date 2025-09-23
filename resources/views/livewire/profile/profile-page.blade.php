@@ -1,6 +1,6 @@
-<div class="w-3/4" x-data="{ activeTab: 'favoriten' }">
+<div x-data="{ activeTab: 'favoriten' }">
     <div class="border-b border-indigo-950 mb-8">
-        <nav class="-mb-px flex space-x-8">
+        <nav class=" flex space-x-8">
             <button
                 wire:click="$set('activeTab', 'favoriten')"
                 class="py-4 px-1 border-b-2  text-lg whitespace-nowrap transition-colors duration-200 {{ $activeTab === 'favoriten' ? 'border-indigo-500 text-slate-50' : 'border-transparent text-slate-400 hover:text-gray-300 hover:border-gray-300' }}">

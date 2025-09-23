@@ -1,0 +1,51 @@
+@props([
+    'value' => '',
+    'label' => '',
+    'checked' => false,
+])
+
+@php
+    $wireModel = null;
+    foreach ($attributes->getAttributes() as $key => $attr) {
+        if (str_starts_with($key, 'wire:model')) {
+            $wireModel = $attr;
+            break;
+        }
+    }
+
+    $isChecked = $checked; // Используем переданный проп как приоритет
+
+    // Если checked не передан явно, пытаемся определить из wire:model
+    if (!$checked && $wireModel) {
+        $parts = explode('.', $wireModel);
+        $value_to_check = $this;
+
+        foreach ($parts as $part) {
+            if (isset($value_to_check->{$part})) {
+                $value_to_check = $value_to_check->{$part};
+            } else {
+                $value_to_check = null;
+                break;
+            }
+        }
+
+        if (is_array($value_to_check)) {
+            $isChecked = in_array($value, $value_to_check) || in_array((int)$value, $value_to_check);
+        }
+    }
+@endphp
+
+<label for="{{ $attributes->get('id') }}" class="inline-flex items-center cursor-pointer group">
+    <input {{ $attributes->merge(['class' => 'sr-only peer']) }}
+           type="checkbox"
+           value="{{ $value }}"
+           @if($isChecked) checked @endif>
+
+    <div class="relative flex items-center justify-center w-4 h-4 bg-transparent border border-indigo-700 rounded-xs group-hover:border-indigo-600 transition-colors">
+        <div class="absolute w-2.5 h-2.5 bg-indigo-700 transition-opacity {{ $isChecked ? 'opacity-100' : 'opacity-0' }}"></div>
+    </div>
+
+    @if($label !== '' && $label !== null)
+        <span class="ml-2 text-slate-200">{{ $label }}</span>
+    @endif
+</label>

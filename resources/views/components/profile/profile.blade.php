@@ -31,11 +31,17 @@
             </div>
 
             <div class="flex-shrink-0 mb-8">
-                <x-base.button variant="danger" icon="exit">
-                    Ausloggen
-                </x-base.button>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <x-base.button variant="danger" icon="exit" type="submit">
+                        Ausloggen
+                    </x-base.button>
+                </form>
             </div>
         </div>
     </div>
-    <livewire:profile.profile-page/>
+    <div class="w-3/4">
+        <livewire:profile.profile-page/>
+
+    </div>
 </div>

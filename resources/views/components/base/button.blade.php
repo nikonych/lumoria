@@ -11,6 +11,7 @@
 
     $variants = [
         'primary' => 'bg-indigo-700 text-slate-50 hover:bg-indigo-600',
+        'success' => 'bg-main-green text-slate-50 hover:bg-main-green-hover',
         'secondary' => 'bg-bg-secondary text-slate-200 hover:bg-slate-600',
         'danger' => 'bg-rot text-white hover:bg-red-500',
     ];
