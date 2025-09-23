@@ -14,7 +14,10 @@
                      class="w-full h-full object-cover">
             @endif
         </a>
-        <x-base.button class="absolute top-2.5 right-2.5" icon="plus"/>
+        <div class="absolute top-2.5 right-2.5">
+            @livewire('movies.watchlist-button', ['movie' => $movie, 'isOnlyIcon' => true])
+
+        </div>
     </div>
 
     <div class="flex flex-col flex-grow py-3">

@@ -10,10 +10,12 @@ class WatchlistButton extends Component
 {
     public Movie $movie;
     public bool $isInWatchlist = false;
+    public bool $isOnlyIcon = false;
 
-    public function mount(Movie $movie)
+    public function mount(Movie $movie, bool $isOnlyIcon = false)
     {
         $this->movie = $movie;
+        $this->isOnlyIcon = $isOnlyIcon;
         $this->checkWatchlistStatus();
     }
 

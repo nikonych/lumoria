@@ -41,15 +41,14 @@
             </div>
         </div>
 
-        <!-- Über mich -->
+
         <div>
             <label class="block text-sm text-slate-300 mb-2">Über mich (max. 300 Zeichen)</label>
             <x-base.textarea
                 rows="4"
                 maxlength="300"
                 wire:model="profileForm.biography"
-                value="{{ !$isEditingProfile ? (auth()->user()->biography ?? '') : '' }}"
-                placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+                value="{{ auth()->user()->biography ?? '' }}"
                 :disabled="!$isEditingProfile"
             />
         </div>

@@ -63,7 +63,7 @@
                 <div class="mt-1.5">
                     @livewire('movies.favorite-button', ['movie' => $movie, 'size' => 'w-8 h-8'])
                 </div>
-                <x-base.button icon="plus"/>
+                @livewire('movies.watchlist-button', ['movie' => $movie, 'isOnlyIcon' => true])
             </div>
         @endauth
         @guest

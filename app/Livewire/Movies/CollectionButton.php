@@ -13,8 +13,6 @@ class CollectionButton extends Component
     public bool $showCollectionModal = false;
     public array $userCollections = [];
     public array $selectedCollections = [];
-    public string $newCollectionName = '';
-    public bool $newCollectionIsPublic = false;
 
     public function mount(Movie $movie)
     {
@@ -25,13 +23,11 @@ class CollectionButton extends Component
     public function loadUserCollections()
     {
         if (Auth::check()) {
-            // Получаем коллекции пользователя
             $this->userCollections = Auth::user()->collections()
                 ->select('id', 'name', 'is_public')
                 ->get()
                 ->toArray();
 
-            // Проверяем какие коллекции уже содержат этот фильм
             $this->selectedCollections = Auth::user()->collections()
                 ->whereHas('movies', function($query) {
                     $query->where('movies.id', $this->movie->id);
@@ -54,38 +50,11 @@ class CollectionButton extends Component
     public function closeCollectionModal()
     {
         $this->showCollectionModal = false;
-        $this->newCollectionName = '';
-        $this->newCollectionIsPublic = false;
-    }
-
-    public function createNewCollection()
-    {
-        $this->validate([
-            'newCollectionName' => 'required|string|max:255',
-        ]);
-
-        try {
-            $collection = UserCollection::create([
-                'user_id' => Auth::id(),
-                'name' => $this->newCollectionName,
-                'is_public' => $this->newCollectionIsPublic,
-            ]);
-
-            $this->newCollectionName = '';
-            $this->newCollectionIsPublic = false;
-            $this->loadUserCollections();
-
-            session()->flash('collection-message', 'Neue Sammlung erstellt');
-
-        } catch (\Exception $e) {
-            session()->flash('error', 'Fehler beim Erstellen der Sammlung');
-        }
     }
 
     public function updateMovieCollections()
     {
         try {
-            // Получаем текущие коллекции с этим фильмом
             $currentCollections = Auth::user()->collections()
                 ->whereHas('movies', function($query) {
                     $query->where('movies.id', $this->movie->id);
@@ -93,13 +62,10 @@ class CollectionButton extends Component
                 ->pluck('id')
                 ->toArray();
 
-            // Коллекции для добавления
             $toAdd = array_diff($this->selectedCollections, $currentCollections);
 
-            // Коллекции для удаления
             $toRemove = array_diff($currentCollections, $this->selectedCollections);
 
-            // Добавляем фильм в выбранные коллекции
             foreach ($toAdd as $collectionId) {
                 $collection = UserCollection::find($collectionId);
                 if ($collection && $collection->user_id === Auth::id()) {
@@ -107,7 +73,6 @@ class CollectionButton extends Component
                 }
             }
 
-            // Удаляем фильм из невыбранных коллекций
             foreach ($toRemove as $collectionId) {
                 $collection = UserCollection::find($collectionId);
                 if ($collection && $collection->user_id === Auth::id()) {

@@ -11,37 +11,18 @@
                 {{-- Существующие коллекции --}}
                 <div class="space-y-2 mb-4">
                     @foreach($userCollections as $collection)
-                        <label class="flex items-center space-x-2">
-                            <input type="checkbox"
-                                   wire:model="selectedCollections"
-                                   value="{{ $collection['id'] }}"
-                                   class="rounded">
-                            <span>{{ $collection['name'] }}</span>
-                            @if($collection['is_public'])
-                                <span class="text-xs text-green-600">(öffentlich)</span>
-                            @endif
-                        </label>
+                        <div class="flex items-center" wire:key="collection-{{ $collection['id'] }}">
+                            <x-base.checkbox-profile
+                                wire:model.live="selectedCollections"
+                                value="{{ $collection['id'] }}"
+                                label="{{ $collection['name'] }}"
+                                id="genre-{{ $collection['id'] }}"
+                                :checked="in_array($collection['id'], $this->selectedCollections ?? [])"
+                            />
+                        </div>
                     @endforeach
                 </div>
 
-                {{-- Новая коллекция --}}
-                <div class="border-t pt-4 mb-4">
-                    <h4 class="font-medium mb-2">Neue Sammlung erstellen</h4>
-                    <input type="text"
-                           wire:model="newCollectionName"
-                           placeholder="Name der Sammlung"
-                           class="w-full px-3 py-2 border rounded-md mb-2">
-
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" wire:model="newCollectionIsPublic" class="rounded">
-                        <span class="text-sm">Öffentlich machen</span>
-                    </label>
-
-                    <button wire:click="createNewCollection"
-                            class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                        Sammlung erstellen
-                    </button>
-                </div>
 
                 {{-- Buttons --}}
                 <div class="flex justify-end space-x-2">

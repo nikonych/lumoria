@@ -40,7 +40,6 @@
                 <div class="mt-1.5">
                     @livewire('people.favorite-button', ['person' => $person, 'size' => 'w-8 h-8'])
                 </div>
-                <x-base.button icon="plus"/>
             </div>
         @endauth
         @guest

@@ -21,7 +21,7 @@
         <div class="flex space-x-6 items-center">
             @auth
                 <div x-data="{ open: false }" @click.outside="open = false" class="relative">
-                    <x-base.button icon="plus" @click="open = !open" />
+                    <x-base.button icon="plus" @click="open = !open"/>
 
                     <div
                         x-show="open"
@@ -32,11 +32,11 @@
                     >
                         <div class="py-1">
                             <a href="{{route('movies.create')}}"
-                            class="block px-4 py-2 text-sm text-slate-200 hover:bg-indigo-600 hover:text-white">
+                               class="block px-4 py-2 text-sm text-slate-200 hover:bg-indigo-600 hover:text-white">
                                 Film hinzufügen
                             </a>
                             <a href="{{route('people.create')}}"
-                            class="block px-4 py-2 text-sm text-slate-200 hover:bg-indigo-600 hover:text-white">
+                               class="block px-4 py-2 text-sm text-slate-200 hover:bg-indigo-600 hover:text-white">
                                 Person hinzufügen
                             </a>
                         </div>
@@ -45,12 +45,7 @@
             @endauth
 
 
-            <x-base.input
-                wire:model.live="searchQuery"
-                :has-icon="true"
-                class="w-3xs"
-                placeholder="Suche..."
-            />
+            <livewire:global-search/>
 
             @auth
                 <div>

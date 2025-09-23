@@ -1,10 +1,13 @@
 <div>
     <x-base.button
-        icon="plus"
+        icon="{{ $isInWatchlist ? ($isOnlyIcon ? 'check': '') : 'plus' }}"
         wire:click="toggleWatchlist"
-        class="{{ $isInWatchlist ? 'bg-green-500 text-white' : '' }}"
+        variant="{{ $isInWatchlist ? 'primary_hell' : 'primary' }}"
+        :isIcon="$isOnlyIcon"
     >
-        {{ $isInWatchlist ? 'In Watchlist' : 'Watchlist' }}
+        @if(!$isOnlyIcon)
+            {{ $isInWatchlist ? 'In Watchlist' : 'Watchlist' }}
+        @endif
     </x-base.button>
 
     @if (session()->has('watchlist-message'))

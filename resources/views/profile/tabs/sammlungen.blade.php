@@ -1,6 +1,5 @@
 <div class="flex flex-col space-y-12 mr-24">
 
-    <!-- Режим просмотра списка коллекций -->
     @if(!$isEditing && !$viewingCollection)
         <div class="space-y-12">
             <div class="flex justify-between">
@@ -10,8 +9,7 @@
                 </x-base.button>
             </div>
 
-            <div class="grid grid-cols-3 gap-x-5">
-                <!-- Стандартные коллекции -->
+            <div class="grid grid-cols-3 gap-x-5 gap-y-5">
                 <x-profile.media-card
                     title="Watchlist"
                     :image-url="Vite::asset('resources/images/movies/shawshank.png')"
@@ -23,7 +21,6 @@
                     :count="auth()->user()->favoriteMovies()->count()"
                 />
 
-                <!-- Пользовательские коллекции -->
                 @foreach($this->userCollections as $collection)
                     <div wire:click="viewCollection({{ $collection->id }})" class="cursor-pointer">
                         <x-profile.media-card
