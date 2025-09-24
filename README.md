@@ -4,30 +4,30 @@ Eine moderne Filmdatenbank-Anwendung gebaut mit Laravel und Livewire.
 
 ## Features
 
-### 🎥 Filmverwaltung
+###  Filmverwaltung
 - Detaillierte Filmseiten mit Galerie, Besetzung und Crew
 - Bewertungssystem mit 5-Sterne-Rating
 - Trailer-Integration
 - Auszeichnungen und Awards-Tracking
 
-### 👥 Benutzerverwaltung
+###  Benutzerverwaltung
 - Benutzerprofile mit Biografie und Lieblings-Genres
 - Freundschaftssystem mit Anfragen
 - Aktivitäts-Feed für Freundesaktivitäten
 - Private und öffentliche Sammlungen
 
-### 📚 Sammlungen & Listen
+###  Sammlungen & Listen
 - Persönliche Film-Sammlungen erstellen
 - Watchlist-Funktionalität
 - Favoriten-System für Filme und Personen
 - Öffentliche/Private Sichtbarkeitseinstellungen
 
-### 🔍 Such- & Empfehlungssystem
+###  Such- & Empfehlungssystem
 - Erweiterte Filmsuche
 - Personalisierte Empfehlungen basierend auf Lieblings-Genres
 - Genre-basierte Filterung
 
-### 🎭 Personen & Crew
+###  Personen & Crew
 - Detaillierte Personen-Profile
 - Schauspieler- und Crew-Verwaltung
 - Filmografie-Anzeige
