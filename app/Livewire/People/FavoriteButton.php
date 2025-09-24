@@ -4,6 +4,7 @@ namespace App\Livewire\People;
 
 use App\Models\Movie;
 use App\Models\Person;
+use App\Services\ActivityLogger;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
