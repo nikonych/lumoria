@@ -9,7 +9,6 @@
 @php
     $tag = $href ? 'a' : 'button';
     $isIconOnly = $icon && ($slot->isEmpty() || $isIcon);
-
     $variants = [
         'primary' => 'bg-indigo-700 text-slate-50 hover:bg-indigo-600',
         'primary_hell' => 'bg-indigo-500 text-slate-50 hover:bg-indigo-400',

@@ -47,6 +47,8 @@ Route::controller(ProfileController::class)->prefix('profile')->name('profile.')
     Route::get('/', 'index')->name('index')->middleware('auth');;
 });
 
+Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('user.show');
+
 
 Route::get('/phpinfo', function () {
     return response()->json([

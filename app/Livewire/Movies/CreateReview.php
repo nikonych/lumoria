@@ -4,12 +4,14 @@ namespace App\Livewire\Movies;
 
 use App\Models\Movie;
 use App\Models\Review;
+use App\Services\ActivityLogger;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
 class CreateReview extends Component
 {
     public Movie $movie;
+    public ?Review $existingReview = null;
 
     public int $rating = 0;
     public string $title = '';
@@ -32,6 +34,18 @@ class CreateReview extends Component
     public function mount(Movie $movie)
     {
         $this->movie = $movie;
+
+        // Check if user already has a review for this movie
+        $this->existingReview = Review::where('user_id', Auth::id())
+            ->where('movie_id', $this->movie->id)
+            ->first();
+
+        // If existing review found, populate the form with its data
+        if ($this->existingReview) {
+            $this->rating = $this->existingReview->rating;
+            $this->title = $this->existingReview->title ?? '';
+            $this->description = $this->existingReview->description ?? '';
+        }
     }
 
     public function updateRating($rating)
@@ -44,31 +58,65 @@ class CreateReview extends Component
     {
         $this->validate();
 
-        $existingReview = Review::where('user_id', Auth::id())
-            ->where('movie_id', $this->movie->id)
-            ->first();
+        try {
+            if ($this->existingReview) {
+                // Update existing review
+                $this->existingReview->update([
+                    'rating' => $this->rating,
+                    'title' => $this->title ?: null,
+                    'description' => $this->description ?: null,
+                ]);
 
-        if ($existingReview) {
-            $this->addError('general', 'Sie haben bereits eine Bewertung für diesen Film abgegeben.');
+                // Логируем обновление оценки
+                ActivityLogger::logMovieRated(auth()->user(), $this->existingReview->fresh());
+
+                session()->flash('success', 'Ihre Bewertung wurde erfolgreich aktualisiert!');
+            } else {
+                // Create new review
+                $review = Review::create([
+                    'user_id' => Auth::id(),
+                    'movie_id' => $this->movie->id,
+                    'rating' => $this->rating,
+                    'title' => $this->title ?: null,
+                    'description' => $this->description ?: null,
+                ]);
+
+                $review->load('movie');
+
+                ActivityLogger::logMovieRated(auth()->user(), $review);
+
+                session()->flash('success', 'Ihre Bewertung wurde erfolgreich gespeichert!');
+            }
+
+            $this->updateMovieRating();
+
+        } catch (\Exception $e) {
+            $this->addError('general', 'Fehler beim Speichern der Bewertung: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteReview()
+    {
+        if (!$this->existingReview) {
+            $this->addError('general', 'Keine Bewertung zum Löschen gefunden.');
             return;
         }
 
         try {
-            Review::create([
-                'user_id' => Auth::id(),
-                'movie_id' => $this->movie->id,
-                'rating' => $this->rating,
-                'title' => $this->title ?: null,
-                'description' => $this->description ?: null,
-            ]);
+            $this->existingReview->delete();
 
             $this->updateMovieRating();
 
-            session()->flash('success', 'Ihre Bewertung wurde erfolgreich gespeichert!');
+            // Reset form
+            $this->existingReview = null;
+            $this->rating = 0;
+            $this->title = '';
+            $this->description = '';
 
+            session()->flash('success', 'Ihre Bewertung wurde erfolgreich gelöscht!');
 
         } catch (\Exception $e) {
-            $this->addError('general', 'Fehler beim Speichern der Bewertung: ' . $e->getMessage());
+            $this->addError('general', 'Fehler beim Löschen der Bewertung: ' . $e->getMessage());
         }
     }
 
@@ -78,7 +126,7 @@ class CreateReview extends Component
             ->avg('rating');
 
         $this->movie->update([
-            'rating' => round($averageRating, 2),
+            'rating' => $averageRating ? round($averageRating, 2) : null,
         ]);
     }
 

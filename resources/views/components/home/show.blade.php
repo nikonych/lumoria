@@ -12,6 +12,6 @@
         ])
     </div>
     <div class="w-1/3">
-        <x-home.activity/>
+        <livewire:home.friends-activity/>
     </div>
 </div>

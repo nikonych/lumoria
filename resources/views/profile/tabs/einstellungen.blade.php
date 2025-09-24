@@ -1,4 +1,4 @@
-<div class="space-y-12 mr-24 mb-24">
+<div class="space-y-12 mb-24">
     <!-- Konto Informationen -->
     <div class="space-y-6">
         <div class="flex justify-between items-center">
@@ -62,12 +62,55 @@
         </div>
 
         <!-- Profilbild -->
-        <div class="flex items-center space-x-4">
-            <span class="text-sm text-slate-300">Profilbild</span>
-            <x-base.button variant="secondary" size="sm">
-                Datei hochladen
-            </x-base.button>
-            <span class="text-xs text-gray-400">jpg, png, im Format 400x400px</span>
+        <div class="flex items-center space-y-4 space-x-8">
+            <span class="block text-sm text-slate-300">Profilbild</span>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <input type="file"
+                           wire:model="profilePhoto"
+                           accept="image/*"
+                           class="hidden"
+                           id="profile-photo-upload">
+
+                    <label for="profile-photo-upload"
+                           class="cursor-pointer inline-flex items-center px-3 py-2 text-xs rounded-sm text-slate-200 bg-slate-700 hover:bg-slate-600 transition-colors">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Datei auswählen
+                    </label>
+
+                    @if($profilePhoto)
+                        <x-base.button variant="success" size="sm" wire:click="uploadProfilePhoto"
+                                       wire:loading.attr="disabled">
+                            <span wire:loading.remove>Hochladen</span>
+                            <span wire:loading>Lädt...</span>
+                        </x-base.button>
+                        <x-base.button variant="secondary" size="sm" wire:click="$set('profilePhoto', null)">
+                            Abbrechen
+                        </x-base.button>
+                    @endif
+                </div>
+
+                <!-- Информация о требованиях -->
+                <div class="text-xs text-gray-400">
+                    <p>JPG, PNG • 400x400px</p>
+                    @if($profilePhoto)
+                        <p class="text-indigo-400 mt-1">{{ $profilePhoto->getClientOriginalName() }}</p>
+                    @endif
+                </div>
+
+                <!-- Ошибки валидации -->
+                @error('profilePhoto')
+                <span class="text-red-400 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Индикатор загрузки -->
+            <div wire:loading wire:target="profilePhoto" class="text-indigo-400 text-sm">
+                Datei wird verarbeitet...
+            </div>
         </div>
     </div>
 
@@ -84,7 +127,8 @@
                     class="sr-only peer"
                     :disabled="!$isEditingProfile"
                 >
-                <div class="relative w-11 h-6 bg-input-dark/85 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
+                <div
+                    class="relative w-11 h-6 bg-input-dark/85 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
                 <span class="ml-3.5 text-sm font-extralight text-indigo-50">E-Mail Benachrichtigungen zu den neuesten Filmnews und Empfehlungen aktivieren?</span>
             </label>
 
@@ -96,7 +140,8 @@
                     class="sr-only peer"
                     :disabled="!$isEditingProfile"
                 >
-                <div class="relative w-11 h-6 bg-input-dark/85 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
+                <div
+                    class="relative w-11 h-6 bg-input-dark/85 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
                 <span class="ml-3.5 text-sm font-extralight text-indigo-50">E-Mail Benachrichtigungen zu neuen Empfehlungen?</span>
             </label>
 
@@ -108,7 +153,8 @@
                     class="sr-only peer"
                     :disabled="!$isEditingProfile"
                 >
-                <div class="relative w-11 h-6 bg-input-dark/85 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
+                <div
+                    class="relative w-11 h-6 bg-input-dark/85 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-700"></div>
                 <span class="ml-3.5 text-sm font-extralight text-indigo-50">E-Mail Benachrichtigungen zu neuen Freundschaftsanfragen?</span>
             </label>
         </div>
@@ -151,13 +197,15 @@
     </div>
 
     @if($showPasswordModal)
-        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" wire:click="closePasswordModal">
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+             wire:click="closePasswordModal">
             <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4" wire:click.stop>
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl text-white">Passwort ändern</h2>
                     <button wire:click="closePasswordModal" class="text-gray-400 hover:text-white">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
                 </div>

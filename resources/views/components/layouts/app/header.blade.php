@@ -50,8 +50,8 @@
             @auth
                 <div>
                     <a href="/profile">
-                        @if (auth()->user()->profile_image)
-                            <img src="{{ auth()->user()->profile_image }}" alt="avatar"
+                        @if (auth()->user()->profile_url)
+                            <img src="{{ auth()->user()->profile_url }}" alt="avatar"
                                  class="w-10 h-10 rounded-full object-cover">
                         @else
                             <div class="w-10 h-10 rounded-full bg-indigo-900 flex items-center justify-center">

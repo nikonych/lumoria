@@ -3,9 +3,14 @@
 <div class="bg-bg-card rounded-sm h-full">
     <div class="flex justify-between pt-5 px-7">
         <div class="flex items-center space-x-3 border-b pb-2.5 border-indigo-950 w-full">
-            <img class="rounded-full w-14 h-14" src="{{$review->user->profile_url}}" alt="{{$review->user->name}}">
+            <a href="{{ route('movies.details', $review->movie) }}">
+                <img class="rounded-full w-14 h-14" src="{{$review->movie->poster_url}}"
+                     alt="{{$review->movie->title}}">
+            </a>
             <div class="flex flex-col">
-                <span class="text-indigo-200 text-lg">{{$review->user->name}}</span>
+                <a href="{{ route('movies.details', $review->movie) }}">
+                    <span class="text-indigo-200 text-lg">{{$review->movie->title}}</span>
+                </a>
                 <span class="font-light text-sm">{{ $review->created_at->format('j, M Y') }}</span>
             </div>
         </div>

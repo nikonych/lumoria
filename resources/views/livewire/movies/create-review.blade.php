@@ -14,7 +14,9 @@
 
     <form wire:submit="submit">
         <div class="flex justify-between">
-            <p class="text-2xl font-semibold">Deine Bewertung:</p>
+            <p class="text-2xl font-semibold">
+                {{ $existingReview ? 'Ihre Bewertung bearbeiten:' : 'Deine Bewertung:' }}
+            </p>
             <x-base.stars
                 :rating="$rating"
                 :movie_id="$movie->id"
@@ -51,10 +53,24 @@
             @enderror
         </div>
 
-        <div class="mt-4 flex justify-end">
-            <x-base.button type="submit">
-                Bewertung abschicken
-            </x-base.button>
+        <div class="mt-4 flex justify-end gap-3">
+            @if ($existingReview)
+                <x-base.button
+                    type="button"
+                    wire:click="deleteReview"
+                    wire:confirm="Sind Sie sicher, dass Sie Ihre Bewertung löschen möchten?"
+                    class="bg-red-500 hover:bg-red-600 text-white"
+                >
+                    Bewertung löschen
+                </x-base.button>
+                <x-base.button type="submit">
+                    Bewertung aktualisieren
+                </x-base.button>
+            @else
+                <x-base.button type="submit">
+                    Bewertung abschicken
+                </x-base.button>
+            @endif
         </div>
     </form>
 </div>

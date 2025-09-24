@@ -1,4 +1,4 @@
-<div x-data="{ activeTab: 'favoriten' }">
+<div class="mr-24" x-data="{ activeTab: 'favoriten' }">
     <div class="border-b border-indigo-950 mb-8">
         <nav class=" flex space-x-8">
             <button

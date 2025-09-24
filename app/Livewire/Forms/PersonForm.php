@@ -10,6 +10,7 @@ use App\Models\CrewPosition;
 use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Role;
+use App\Services\ActivityLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Enum;
@@ -285,6 +286,8 @@ class PersonForm extends Form
 
 
             DB::commit();
+            ActivityLogger::logPersonCreated(auth()->user(), $person);
+
 
         } catch (\Throwable $e) {
             DB::rollBack();

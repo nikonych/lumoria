@@ -118,6 +118,16 @@ class User extends Authenticatable
         return Storage::url($this->profile_image);
     }
 
+    public function activities(): HasMany
+    {
+        return $this->hasMany(UserActivity::class);
+    }
+
+    public function getFriendsActivities($limit = 20)
+    {
+        return UserActivity::getFriendsActivities($this->id, $limit);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

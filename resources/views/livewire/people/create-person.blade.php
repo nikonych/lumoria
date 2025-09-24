@@ -20,7 +20,7 @@
                 Abbrechen
             </x-base.button>
             <x-base.button type="submit">
-                Film hinzufügen
+                Person hinzufügen
             </x-base.button>
         </div>
     </form>

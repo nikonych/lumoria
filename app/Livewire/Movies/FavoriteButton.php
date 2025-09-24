@@ -3,6 +3,7 @@
 namespace App\Livewire\Movies;
 
 use App\Models\Movie;
+use App\Services\ActivityLogger;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +48,7 @@ class FavoriteButton extends Component
             } else {
                 $user->favoriteMovies()->attach($this->movie->id);
                 $this->isInFavorites = true;
+                ActivityLogger::logMovieFavorited($user, $this->movie);
             }
 
         } catch (\Exception $e) {

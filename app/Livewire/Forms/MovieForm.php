@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\CrewPosition;
 use App\Models\Movie;
 use App\Models\Role;
+use App\Services\ActivityLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Enum;
@@ -146,7 +147,11 @@ class MovieForm extends Form
                 }
             }
 
+
             DB::commit();
+            ActivityLogger::logMovieCreated(auth()->user(), $movie);
+
+
 
 
         } catch (\Throwable $e) {
