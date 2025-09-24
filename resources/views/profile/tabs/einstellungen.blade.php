@@ -93,7 +93,6 @@
                     @endif
                 </div>
 
-                <!-- Информация о требованиях -->
                 <div class="text-xs text-gray-400">
                     <p>JPG, PNG • 400x400px</p>
                     @if($profilePhoto)
@@ -101,13 +100,11 @@
                     @endif
                 </div>
 
-                <!-- Ошибки валидации -->
                 @error('profilePhoto')
                 <span class="text-red-400 text-xs">{{ $message }}</span>
                 @enderror
             </div>
 
-            <!-- Индикатор загрузки -->
             <div wire:loading wire:target="profilePhoto" class="text-indigo-400 text-sm">
                 Datei wird verarbeitet...
             </div>

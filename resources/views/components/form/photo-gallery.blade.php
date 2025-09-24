@@ -36,7 +36,6 @@
                 @foreach ($allPhotos as $index => $photo)
                     <div class="relative aspect-square group">
                         @if ($index < count($existingPhotos))
-                            {{-- Существующие фото --}}
                             <img src="{{ asset('storage/' . $photo) }}"
                                  class="object-cover w-full h-full rounded-md border-2 border-slate-500"
                                  alt="Existing photo">
@@ -49,7 +48,6 @@
                                 <p class="truncate text-center">Vorhandenes Foto</p>
                             </div>
                         @else
-                            {{-- Новые фото --}}
                             <img src="{{ $photo->temporaryUrl() }}"
                                  class="object-cover w-full h-full rounded-md border-2 border-slate-500"
                                  alt="Preview">

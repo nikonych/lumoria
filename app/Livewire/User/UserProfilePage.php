@@ -41,7 +41,7 @@ class UserProfilePage extends Component
     public function userCollections()
     {
         return $this->user->collections()
-            ->where('is_public', true) // Показываем только публичные коллекции
+            ->where('is_public', true)
             ->withCount('movies')
             ->with(['movies' => function ($query) {
                 $query->select('movies.id', 'movies.poster_image')->limit(1);
@@ -94,7 +94,6 @@ class UserProfilePage extends Component
             'status' => 'pending'
         ]);
 
-        // Обновляем computed property
         unset($this->friendship);
         session()->flash('message', 'Freundschaftsanfrage gesendet!');
     }

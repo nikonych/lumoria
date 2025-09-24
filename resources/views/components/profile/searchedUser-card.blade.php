@@ -33,7 +33,6 @@
                     @endphp
 
                     @if($friendship->user_id === auth()->id() && $friendship->status === 'pending')
-                        {{-- Отправленная заявка --}}
                         @if($diffInMinutes < 1)
                             gerade eben angefragt
                         @elseif($diffInMinutes < 60)
@@ -45,7 +44,6 @@
                         @endif
 
                     @elseif($friendship->friend_id === auth()->id() && $friendship->status === 'pending')
-                        {{-- Полученная заявка --}}
                         @if($diffInMinutes < 1)
                             gerade eben Anfrage erhalten
                         @elseif($diffInMinutes < 60)
@@ -57,7 +55,6 @@
                         @endif
 
                     @elseif($friendship->status === 'accepted')
-                        {{-- Друзья --}}
                         @if($diffInMonths > 0)
                             seit {{ $diffInMonths == 1 ? '1 Monat' : $diffInMonths . ' Monaten' }} befreundet
                         @elseif($diffInWeeks > 0)
@@ -84,13 +81,11 @@
         @endphp
 
         @if($friendship && $friendship->user_id === auth()->id() && $friendship->status === 'pending')
-            {{-- Отправленная заявка - показываем часы --}}
             <button class="w-12 h-12 rounded-full flex items-center justify-center">
                 <x-icons.time/>
             </button>
 
         @elseif($friendship && $friendship->friend_id === auth()->id() && $friendship->status === 'pending')
-            {{-- Полученная заявка - показываем принять/отклонить --}}
             <div class="flex gap-2">
                 <button
                     wire:click="acceptFriendRequestByUserId({{ $user->id }})"
@@ -109,7 +104,6 @@
             </div>
 
         @elseif($friendship && $friendship->status === 'accepted')
-            {{-- Уже друзья - показываем галочку или сердечко --}}
             <button class="w-12 h-12 rounded-full flex items-center justify-center cursor-default">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -117,7 +111,6 @@
             </button>
 
         @else
-            {{-- Нет связи - показываем кнопку добавить в друзья --}}
             <button
                 wire:click="sendFriendRequest({{ $user->id }})"
                 class="w-12 h-12 cursor-pointer hover:bg-indigo-900 rounded-full flex items-center justify-center transition-colors duration-200">

@@ -54,7 +54,6 @@
                 </div>
             </div>
 
-            <!-- Правая колонка -->
             <div class="w-1/2">
                 <x-form.input-field
                     name="form.original_title"

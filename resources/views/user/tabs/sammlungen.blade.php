@@ -5,7 +5,6 @@
         </div>
 
         <div class="grid grid-cols-3 gap-x-5 gap-y-5">
-            {{-- Показываем только публичные коллекции --}}
             @foreach($this->userCollections as $collection)
                 <div class="cursor-pointer" wire:click="viewCollection({{ $collection->id }})">
                     <x-profile.media-card
@@ -25,7 +24,6 @@
         </div>
     </div>
 
-    {{-- Collection View (без возможности редактирования) --}}
     @if($viewingCollection)
         <div class="space-y-12">
             <p class="text-indigo-400 text-sm">

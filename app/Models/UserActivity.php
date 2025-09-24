@@ -22,7 +22,6 @@ class UserActivity extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Получение активностей друзей
     public static function getFriendsActivities($userId, $limit = 20)
     {
         $friendIds = Friendship::where(function($query) use ($userId) {
@@ -38,12 +37,10 @@ class UserActivity extends Model
             });
 
         return self::where(function($query) use ($friendIds, $userId) {
-            // Активности друзей (НО НЕ заявки на дружбу)
             $query->where(function($subQuery) use ($friendIds) {
                 $subQuery->whereIn('user_id', $friendIds)
                     ->where('activity_type', '!=', 'friend_request_sent');
             })
-                // ИЛИ заявки на дружбу, адресованные конкретно вам
                 ->orWhere(function($subQuery) use ($userId) {
                     $subQuery->where('activity_type', 'friend_request_sent')
                         ->whereRaw("JSON_EXTRACT(activity_data, '$.target_user_id') = ?", [$userId])

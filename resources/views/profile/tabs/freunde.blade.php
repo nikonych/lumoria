@@ -1,7 +1,5 @@
 <div>
-    <!-- Проверяем, находимся ли мы на странице поиска друзей -->
     @if($showAddFriendsPage ?? false)
-        <!-- Страница поиска друзей -->
         <div>
             <div class="flex items-center gap-4 mb-8">
                 <x-base.button
@@ -15,7 +13,6 @@
                 <p class="text-3xl font-family-helvetica">Freunde hinzufügen</p>
             </div>
 
-            <!-- Поисковое поле -->
             <div class="mb-8">
                 <x-base.input :has-icon="true" wire:model.live="friendSearchQuery" wire:key="friendSearchQuery"/>
             </div>
@@ -30,9 +27,7 @@
             </div>
         </div>
     @else
-        <!-- Основная страница друзей -->
         <div>
-            <!-- Header с заголовком и кнопкой добавления друзей -->
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-3xl font-family-helvetica text-slate-50">Deine Freunde</h2>
                 <x-base.button
@@ -43,7 +38,6 @@
                 </x-base.button>
             </div>
 
-            <!-- Уведомление о заявке -->
             <div class="mb-6 grid grid-cols-2 gap-5">
                 @if($this->sentRequests->count() > 0)
                     @foreach($this->sentRequests as $request)
@@ -57,7 +51,6 @@
                     @endforeach
                 @endif
 
-                <!-- Список друзей -->
                 @foreach($this->friends as $friend)
                     <x-profile.friend-card :friend="$friend"/>
                 @endforeach

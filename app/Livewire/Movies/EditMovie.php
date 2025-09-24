@@ -119,7 +119,6 @@ class EditMovie extends Component
         }
         $this->form->awardsData = $this->awardsData;
 
-        // Загружаем фото
         $this->existingPhotos = $this->movie->photos->pluck('file_path')->toArray();
         $this->newPhotos = [];
         $this->castCounter = count($this->cast);

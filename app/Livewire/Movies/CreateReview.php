@@ -67,7 +67,6 @@ class CreateReview extends Component
                     'description' => $this->description ?: null,
                 ]);
 
-                // Логируем обновление оценки
                 ActivityLogger::logMovieRated(auth()->user(), $this->existingReview->fresh());
 
                 session()->flash('success', 'Ihre Bewertung wurde erfolgreich aktualisiert!');

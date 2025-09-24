@@ -8,7 +8,6 @@
             <div class="rounded-lg bg-slate-900 p-6 max-w-md w-full mx-4">
                 <h3 class="text-lg font-semibold mb-4">Film zu Sammlung hinzufügen</h3>
 
-                {{-- Существующие коллекции --}}
                 <div class="space-y-2 mb-4">
                     @foreach($userCollections as $collection)
                         <div class="flex items-center" wire:key="collection-{{ $collection['id'] }}">

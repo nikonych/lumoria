@@ -32,7 +32,6 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      # ИСПРАВЛЕНИЕ: Создаем среду Laravel ДО установки зависимостей
       - name: Setup Laravel Environment
         run: |
           cp .env.example .env

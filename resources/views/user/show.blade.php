@@ -31,7 +31,6 @@
                     </div>
                 </div>
 
-                {{-- Кнопка действий с друзьями --}}
                 <div class="flex-shrink-0 mb-8">
                     <livewire:user.friend-actions :user="$user"/>
                 </div>

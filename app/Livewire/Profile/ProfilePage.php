@@ -320,11 +320,10 @@ class ProfilePage extends Component
         $request->update(['status' => 'accepted']);
 
         unset($this->friendRequests, $this->friends);
-        $this->searchUsers(); // Обновляем поиск
+        $this->searchUsers();
         session()->flash('message', 'Freundschaftsanfrage angenommen!');
     }
 
-    // Продолжение метода declineFriendRequestByUserId
     public function declineFriendRequestByUserId($userId)
     {
         $request = Friendship::where('user_id', $userId)
@@ -340,11 +339,10 @@ class ProfilePage extends Component
         $request->update(['status' => 'declined']);
 
         unset($this->friendRequests);
-        $this->searchUsers(); // Обновляем поиск
+        $this->searchUsers();
         session()->flash('message', 'Freundschaftsanfrage abgelehnt.');
     }
 
-// Обновить метод для проверки статуса заявки
     private function getFriendshipStatus($userId)
     {
         $sentRequest = Friendship::where('user_id', auth()->id())
@@ -374,7 +372,6 @@ class ProfilePage extends Component
         return null;
     }
 
-// Обновить метод поиска пользователей
     public function searchUsers()
     {
         if (strlen($this->friendSearchQuery) < 2) {
@@ -394,7 +391,7 @@ class ProfilePage extends Component
     public function updatedProfilePhoto()
     {
         $this->validate([
-            'profilePhoto' => 'image|max:2048|mimes:jpeg,png,jpg', // 2MB максимум
+            'profilePhoto' => 'image|max:2048|mimes:jpeg,png,jpg',
         ], [
             'profilePhoto.image' => 'Datei muss ein Bild sein.',
             'profilePhoto.max' => 'Bilddatei darf maximal 2MB groß sein.',
@@ -412,19 +409,16 @@ class ProfilePage extends Component
         try {
             $user = auth()->user();
 
-            // Удаляем старое фото если есть
             if ($user->profile_image && Storage::exists($user->profile_image)) {
                 Storage::delete($user->profile_image);
             }
 
-            // Сохраняем новое фото
             $path = $this->profilePhoto->store('profile-photos', 'public');
 
             $user->update([
                 'profile_image' => $path
             ]);
 
-            // Очищаем временный файл
             $this->profilePhoto = null;
 
             session()->flash('message', 'Profilbild erfolgreich hochgeladen!');
@@ -454,7 +448,6 @@ class ProfilePage extends Component
         }
     }
 
-    // Методы для работы с паролем
     public function openPasswordModal()
     {
         $this->showPasswordModal = true;
@@ -567,14 +560,12 @@ class ProfilePage extends Component
 
         $user = auth()->user();
 
-        // Обновляем основные данные пользователя
         $user->update([
             'name' => $this->profileForm['name'],
             'email' => $this->profileForm['email'],
             'biography' => $this->profileForm['biography'],
         ]);
 
-        // Обновляем настройки уведомлений
         $user->settings()->updateOrCreate(
             ['user_id' => $user->id],
             [
@@ -584,7 +575,6 @@ class ProfilePage extends Component
             ]
         );
 
-        // Обновляем любимые жанры
         $user->favoriteGenres()->sync($this->profileForm['selectedGenres']);
 
         $this->isEditingProfile = false;
@@ -756,7 +746,6 @@ class ProfilePage extends Component
         $this->viewingFavorites = false;
         $this->isEditing = false;
 
-        // Загружаем фильмы из watchlist пользователя
         $this->watchlistMovies = auth()->user()->watchlist()->get();
     }
 
@@ -767,7 +756,6 @@ class ProfilePage extends Component
         $this->viewingWatchlist = false;
         $this->isEditing = false;
 
-        // Загружаем любимые фильмы пользователя
         $this->favoriteMovies = auth()->user()->favoriteMovies()->get();
     }
 

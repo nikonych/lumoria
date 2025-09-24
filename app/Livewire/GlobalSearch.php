@@ -42,7 +42,6 @@ class GlobalSearch extends Component
 
     public function selectResult($type, $id)
     {
-        // Очищаем поиск
         $this->searchQuery = '';
         $this->clearResults();
 

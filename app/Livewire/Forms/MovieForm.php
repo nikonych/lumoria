@@ -206,7 +206,6 @@ class MovieForm extends Form
                 'description' => $this->description,
             ]);
 
-            // Обновляем жанры
             if (!empty($this->selectedGenres)) {
                 $movie->genres()->sync($this->selectedGenres);
             } else {
@@ -269,7 +268,6 @@ class MovieForm extends Form
             }
             $movie->crew()->sync($syncData);
 
-            // Обновляем награды
             AwardWinner::where('movie_id', $movie->id)->delete();
 
             if (!empty($this->awardsData)) {

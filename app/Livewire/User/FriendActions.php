@@ -43,12 +43,10 @@ class FriendActions extends Component
 
         $friendship->delete();
 
-        // Очищаем computed property
         unset($this->friendship);
 
         session()->flash('message', 'Freund entfernt.');
 
-        // Перенаправляем обратно к списку друзей или профилю
         return redirect()->route('profile');
     }
 

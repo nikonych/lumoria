@@ -3,7 +3,7 @@
 namespace App\Livewire\Traits;
 
 use App\Models\Country;
-use App\Models\Department; // Предполагаем, что у тебя есть модель для профессий (актер, режиссер)
+use App\Models\Department;
 use App\Models\Language;
 use App\Models\Person;
 use Illuminate\Support\Collection;

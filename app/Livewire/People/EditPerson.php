@@ -115,7 +115,6 @@ class EditPerson extends Component
         }
         $this->form->awardsData = $this->awardsData;
 
-        // Загружаем фото
         $this->existingPhotos = $this->person->photos->pluck('file_path')->toArray();
         $this->newPhotos = [];
         $this->castCounter = count($this->cast);

@@ -67,7 +67,6 @@
                             </x-base.button>
                         </div>
                     @else
-                        {{-- Показываем статус, если заявка уже обработана --}}
                         <div class="mt-2">
                             @if($currentFriendship && $currentFriendship->status === 'accepted')
                                 <p class="text-green-400 text-sm">✓ Freundschaft angenommen</p>

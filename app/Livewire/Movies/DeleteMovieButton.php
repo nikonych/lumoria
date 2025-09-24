@@ -18,7 +18,6 @@ class DeleteMovieButton extends Component
 
     public function confirmDelete()
     {
-        // Проверяем права доступа
         if (auth()->user()->id !== $this->movie->created_by) {
             abort(403, 'Unauthorized');
         }

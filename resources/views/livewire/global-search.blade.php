@@ -11,7 +11,6 @@
         x-ref="searchInput"
     />
 
-    <!-- Результаты поиска -->
     <div
         x-show="showDropdown"
         x-transition:enter="transition ease-out duration-100"
@@ -23,7 +22,6 @@
         class="absolute top-full right-0 mt-2 w-96 bg-indigo-950 rounded-lg shadow-xl z-50 max-h-96 overflow-y-auto"
         style="display: none;"
     >
-        <!-- Фильмы -->
         @if(count($movies) > 0)
             <div class="px-4 py-2">
                 <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Filme</h3>
@@ -58,7 +56,6 @@
             @endforeach
         @endif
 
-        <!-- Персоны -->
         @if(count($people) > 0)
             @if(count($movies) > 0)
                 <div class="border-t border-slate-600"></div>
@@ -90,7 +87,6 @@
             @endforeach
         @endif
 
-        <!-- Нет результатов -->
         @if(count($movies) === 0 && count($people) === 0 && strlen($searchQuery) >= 2)
             <div class="px-4 py-6 text-center">
                 <p class="text-sm text-slate-400">Keine Ergebnisse für "{{ $searchQuery }}"</p>

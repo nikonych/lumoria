@@ -13,9 +13,8 @@
         }
     }
 
-    $isChecked = $checked; // Используем переданный проп как приоритет
+    $isChecked = $checked;
 
-    // Если checked не передан явно, пытаемся определить из wire:model
     if (!$checked && $wireModel) {
         $parts = explode('.', $wireModel);
         $value_to_check = $this;

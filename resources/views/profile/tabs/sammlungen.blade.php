@@ -158,7 +158,6 @@
                 @endforeach
             </div>
 
-            <!-- Кнопка добавления фильмов -->
             <div class="flex justify-center">
                 <x-base.button
                     type="button"
@@ -224,7 +223,6 @@
         </div>
     @endif
 
-    <!-- Режим создания новой коллекции -->
     @if($isEditing && !$viewingCollection)
         <div class="space-y-12">
             <div class="flex justify-between items-center">
@@ -301,7 +299,6 @@
         </div>
     @endif
 
-    <!-- Модальное окно добавления фильмов -->
     @if($showAddMoviesModal)
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" wire:click="closeAddMoviesModal">
             <div class="bg-gray-800 rounded-lg p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto" wire:click.stop>
@@ -314,7 +311,6 @@
                     </button>
                 </div>
 
-                <!-- Поиск в модальном окне -->
                 <div class="mb-6">
                     <x-base.input
                         wire:model.live="modalSearchQuery"
@@ -324,7 +320,6 @@
                     />
                 </div>
 
-                <!-- Список фильмов в модальном окне -->
                 <div class="grid grid-cols-4 gap-4 mb-6">
                     @foreach($this->modalMovies as $movie)
                         <div wire:key="modal-movie-{{ $movie->id }}">
@@ -343,10 +338,8 @@
                     @endforeach
                 </div>
 
-                <!-- Пагинация -->
                 {{ $this->modalMovies->links() }}
 
-                <!-- Кнопки действий -->
                 <div class="flex justify-end space-x-3 mt-6">
                     <x-base.button
                         type="button"
