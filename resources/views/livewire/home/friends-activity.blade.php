@@ -9,11 +9,18 @@
                 <div class="bg-bg-card p-6 rounded-md">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-4">
-                            @if($displayData['movie_poster'])
-                                <img src="{{ $displayData['movie_poster'] }}"
-                                     alt="{{ $displayData['movie_title'] }} Poster"
-                                     class="w-12 h-12 rounded-full object-cover">
-                            @endif
+                            <div
+                                class="w-12 h-12 rounded-full overflow-hidden bg-slate-600 flex items-center justify-center flex-shrink-0">
+                                @if($displayData['movie_poster'])
+                                    <a href="/movies/{{ $displayData['movie_id'] }}" class="block">
+                                        <img src="{{ $displayData['movie_poster'] }}" alt="{{ $displayData['movie_title'] }}"
+                                             class="w-full h-full object-cover">
+                                    </a>
+                                @else
+                                    <span
+                                        class="text-slate-300 text-xl">{{ $displayData['movie_title'] }}</span>
+                                @endif
+                            </div>
                             <div>
                                 <p class="text-lg text-indigo-200">{{ $displayData['movie_title'] }}</p>
                                 <p class="text-sm font-light">von <span
