@@ -2,6 +2,8 @@
 
 Eine moderne Filmdatenbank-Anwendung gebaut mit Laravel und Livewire.
 
+![Homepage](screenshots/homepage.png)
+
 ## Features
 
 ###  Filmverwaltung
@@ -89,6 +91,9 @@ php artisan serve
 - **Media Management**: Upload und Verwaltung von Postern/Galeriebildern
 
 ## Screenshots
+
+![Movie Details](screenshots/movie-details.png)
+![Profile Page](screenshots/profile.png)
 
 Die Anwendung bietet eine moderne, dunkle UI mit:
 - Responsive Design für alle Geräte
